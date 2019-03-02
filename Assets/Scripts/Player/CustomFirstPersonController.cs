@@ -27,6 +27,9 @@ public class CustomFirstPersonController : MonoBehaviour
     [SerializeField] private float _wallRunSpeed;
     [SerializeField] private float _wallRunClimbFactor;
     [SerializeField] private float _wallRunChargeDepletionRate;
+    [SerializeField] private float _wallRunTilt;
+    [SerializeField] private float _wallRunTiltSpeed;
+    [SerializeField] private Transform _cameraPivot;
 
     [SerializeField]
     private AudioClip[] m_FootstepSounds; // an array of footstep sounds that will be randomly selected from.
@@ -53,6 +56,13 @@ public class CustomFirstPersonController : MonoBehaviour
     private Vector3 _wallNormal = Vector3.zero;
     private Vector3 _wallRunDir = Vector3.zero;
     private float _wallRunChargeLeft = 100f;
+
+    private class GizmosData
+    {
+        public Vector3 raycastDir;
+    }
+
+    private GizmosData _gizmosData = new GizmosData();
 
     // Use this for initialization
     private void Start()
@@ -85,6 +95,9 @@ public class CustomFirstPersonController : MonoBehaviour
 
         Gizmos.color = Color.green;
         Gizmos.DrawRay(transform.position, _wallRunDir.normalized * 10);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(transform.position, _gizmosData.raycastDir * 10);
 
 //        Gizmos.DrawWireSphere(transform.position, 10f);
     }
@@ -133,14 +146,25 @@ public class CustomFirstPersonController : MonoBehaviour
 
     private void Move(float speed)
     {
+        float targetZRotation = 0;
+
         if (WallRun(speed))
         {
-            Debug.Log("Wall Run: " + m_MoveDir);
+//            Debug.Log("Wall Run: " + m_MoveDir);
+            targetZRotation = _wallRunTilt;
+            if (Vector3.Angle(transform.right, _wallNormal) <= 90)
+            {
+                targetZRotation *= -1;
+            }
         }
         else
         {
             StandardMove(speed);
         }
+
+        Quaternion targetRotation = Quaternion.Euler(_cameraPivot.rotation.eulerAngles.x,
+            _cameraPivot.rotation.eulerAngles.y, targetZRotation);
+        _cameraPivot.rotation = Quaternion.Lerp(_cameraPivot.rotation, targetRotation, Time.fixedDeltaTime * _wallRunTiltSpeed);
 
         m_CollisionFlags = m_CharacterController.Move(m_MoveDir * Time.fixedDeltaTime);
     }
@@ -186,12 +210,15 @@ public class CustomFirstPersonController : MonoBehaviour
 
         Vector3 move = new Vector3(m_Input.x, 0, m_Input.y);
 
+        Vector3 moveWorldDir = transform.TransformDirection(move.normalized);
+        _gizmosData.raycastDir = moveWorldDir;
+
         if (move.z > 0 && _wallRunChargeLeft > 0)
         {
             if (!_isWallRunning && playerInput.Jump)
             {
                 RaycastHit hit;
-                if (Physics.Raycast(transform.position, transform.forward + move.normalized, out hit,
+                if (Physics.Raycast(transform.position, moveWorldDir, out hit,
                     _wallRunMaxDistance,
                     LayerMask.NameToLayer("Player")))
                 {
@@ -202,20 +229,24 @@ public class CustomFirstPersonController : MonoBehaviour
                     Vector3 wallNormalYLess = _wallNormal;
                     wallNormalYLess.y = 0;
 
-                    Vector3 moveYLess = move;
+                    Vector3 moveYLess = moveWorldDir;
                     moveYLess.y = 0;
 
                     Vector3 forwardYLess = transform.forward;
                     forwardYLess.y = 0;
 
                     float angle = Vector3.Angle(wallNormalYLess, moveYLess);
-                    Debug.Log("Angle: " + angle);
+//                    Debug.Log("Angle: " + Vector3.SignedAngle(wallNormalYLess, moveYLess, Vector3.up));
 
                     float compAngle = 90 - angle;
 
                     float diff = moveYLess.magnitude * Mathf.Sin(compAngle * Mathf.Deg2Rad);
 
                     _wallRunDir = moveYLess - (wallNormalYLess.normalized * diff);
+                    if (Vector3.Angle(_wallRunDir, moveYLess) > 90)
+                    {
+                        _wallRunDir *= -1;
+                    }
                 }
             }
 
