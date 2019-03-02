@@ -433,7 +433,7 @@ public class CustomFirstPersonController : MonoBehaviour
     {
         PlayerInputController.PlayerInput playerInput = _playerInputController.GetPlayerInput();
 
-        if (!_isSliding && playerInput.SlideStart && _slidingChargeLeft >= 100)
+        if (!_isWallRunning && !_isSliding && playerInput.SlideStart && _slidingChargeLeft >= 100)
         {
             _isSliding = true;
         }
