@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class RoomManager : MonoBehaviour
 {
-    private List<GameObject> TurretGOS;
+    public List<GameObject> TurretGOS;
     private void Awake()
     {
-        int NumTurrets = Random.Range(1, TurretGOS.Count - 1);
+        int NumTurrets = Random.Range(0, TurretGOS.Count - 1);
+        Debug.Log("NumTurrets: " + NumTurrets);
         for ( int i = NumTurrets; i > -1; i-- ) {
             int temp = Random.Range(0, TurretGOS.Count - 1);
+            Debug.Log("Destory Turrets: " + temp);
+            Debug.Log("TurretFalse");
             TurretGOS[temp].SetActive(false);
             TurretGOS.RemoveAt(temp);
         }
