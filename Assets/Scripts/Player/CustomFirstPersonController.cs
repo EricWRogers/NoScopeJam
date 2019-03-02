@@ -36,6 +36,7 @@ public class CustomFirstPersonController : MonoBehaviour
     [SerializeField] private float _thrusterWallImpluse;
     [SerializeField] private float _thrusterChargeDepletionRate;
     [SerializeField] private float _thrusterRechargeRate;
+    [SerializeField] private bool _rechargeThrusterOnWallRun;
 
     [SerializeField] private float _slidingSpeed;
     [SerializeField] private float _slidingChargeDepletionRate;
@@ -221,6 +222,11 @@ public class CustomFirstPersonController : MonoBehaviour
             }
 
             _requiresThrusterJumpStart = true;
+
+            if (_rechargeThrusterOnWallRun)
+            {
+                _thrusterChargeLeft = 100;
+            }
         }
         else
         {
