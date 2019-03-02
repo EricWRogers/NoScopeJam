@@ -107,9 +107,6 @@ public class CustomFirstPersonController : MonoBehaviour
     {
         Gizmos.color = Color.blue;
 
-        PlayerInputController.PlayerInput playerInput = _playerInputController.GetPlayerInput();
-
-
         //        Debug.Log("WallRunDir: " + _wallRunDir.normalized);
         Gizmos.DrawRay(transform.position, _wallNormal.normalized * 10);
 
