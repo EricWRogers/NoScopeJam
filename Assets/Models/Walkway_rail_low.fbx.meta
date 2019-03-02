@@ -1,14 +1,21 @@
 fileFormatVersion: 2
-guid: 31ae821aa91b58c4283f47c9b807b669
+guid: b5db687558ff04547a81f6205c3c0ebf
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
+    100000: Walkway_rail_high
+    100002: //RootNode
+    100004: Walkway_rail_low
+    400000: Walkway_rail_high
+    400002: //RootNode
+    400004: Walkway_rail_low
     2100000: lambert1
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Walkway_Tile2
+    2300000: Walkway_rail_high
+    2300002: Walkway_rail_low
+    3300000: Walkway_rail_high
+    3300002: Walkway_rail_low
+    4300000: Walkway_rail_high
+    4300002: Walkway_rail_low
   externalObjects: {}
   materials:
     importMaterials: 0
