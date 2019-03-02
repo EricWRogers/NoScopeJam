@@ -292,10 +292,11 @@ public class CustomFirstPersonController : MonoBehaviour
 
         if (move.z > 0 && _wallRunChargeLeft > 0)
         {
+            int playerLayerMask = LayerMask.NameToLayer("Player");
+            int wallRunnableLayerMask = LayerMask.GetMask("WallRunnable");
+
             if (!_isWallRunning && (playerInput.JumpStart || (!m_CharacterController.isGrounded && playerInput.Jump)))
             {
-                int playerLayerMask = LayerMask.NameToLayer("Player");
-
                 Vector3 raycastDir1 = moveWorldDir;
                 Vector3 raycastDir2 = Vector3.zero;
 
@@ -318,10 +319,10 @@ public class CustomFirstPersonController : MonoBehaviour
                 }
 
                 RaycastHit hit;
-                if (Physics.Raycast(transform.position, raycastDir1, out hit,
-                        _wallRunMaxDistance, playerLayerMask)
-                    || Physics.Raycast(transform.position, raycastDir2, out hit,
-                        _wallRunMaxDistance, playerLayerMask))
+                if ((Physics.Raycast(transform.position, raycastDir1, out hit,
+                         _wallRunMaxDistance, wallRunnableLayerMask) ||
+                     Physics.Raycast(transform.position, raycastDir2, out hit,
+                         _wallRunMaxDistance, wallRunnableLayerMask)))
                 {
                     _isWallRunning = true;
 
@@ -356,7 +357,7 @@ public class CustomFirstPersonController : MonoBehaviour
             {
                 RaycastHit hit;
                 if (Physics.Raycast(transform.position, -_wallNormal, out hit, _wallRunMaxDistance,
-                    LayerMask.NameToLayer("Player")))
+                    wallRunnableLayerMask))
                 {
                     m_MoveDir = _wallRunDir * _wallRunSpeed;
                     m_MoveDir.y = _wallRunChargeLeft * _wallRunClimbFactor * Time.fixedDeltaTime;
