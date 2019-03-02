@@ -10,6 +10,7 @@ public class PlayerInputController : MonoBehaviour
         public bool Jump;
         public bool JumpStart;
         public bool Slide;
+        public bool SlideStart;
     }
 
     private PlayerInput _playerInput = new PlayerInput();
@@ -29,6 +30,7 @@ public class PlayerInputController : MonoBehaviour
         _playerInput.Jump = CrossPlatformInputManager.GetButton("Jump");
         _playerInput.JumpStart = CrossPlatformInputManager.GetButtonDown("Jump");
         _playerInput.Slide = CrossPlatformInputManager.GetButton("Slide");
+        _playerInput.SlideStart = CrossPlatformInputManager.GetButtonDown("Slide");
     }
 
     public PlayerInput GetPlayerInput()
