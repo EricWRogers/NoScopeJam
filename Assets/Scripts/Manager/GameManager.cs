@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
             }
         }
         // SpawnPlayer
-        PlayerCurrentGO = Instantiate( PlayerPrefabGO, CheckPointsGOS[ StartLevelNumerator ].transform );
+        PlayerCurrentGO = Instantiate( PlayerPrefabGO, CheckPointsGOS[ StartLevelNumerator ].transform.position, Quaternion.identity );
     }
     private void Start()
     {
@@ -59,20 +59,21 @@ public class GameManager : MonoBehaviour
     public void SavePlayerStats(string slot)
     {
         // GameObject TempPlayer = GameObject.FindGameObjectWithTag("Player");
-        // string json = JsonUtility.ToJson(myObject);
+        string json = JsonUtility.ToJson(PlayerStats.Instance);
+        
+        PlayerPrefs.SetString(slot, json);
         // Check if string of slots is in there
         if( PlayerPrefs.HasKey("SlotsNames")) {
             Slots TempSlots = JsonUtility.FromJson<Slots>(PlayerPrefs.GetString("SlotsNames"));
             TempSlots.slots.Add(slot);
-            string json = JsonUtility.ToJson(TempSlots);
+            json = JsonUtility.ToJson(TempSlots);
             PlayerPrefs.SetString("SlotsName", json);
         }
-        //PlayerPrefs.SetString(slot, m_PlayerName);
     }
     public void LoadPlayerStats(string slot)
     {
         string json = PlayerPrefs.GetString(slot);
-        // myObject = JsonUtility.FromJson<MyClass>(json);
+        PlayerStats.Instance = JsonUtility.FromJson<PlayerStats>(json);
     }
     public List<string> PlayerStatsKeys()
     {
