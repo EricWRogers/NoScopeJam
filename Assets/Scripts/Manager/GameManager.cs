@@ -6,10 +6,9 @@ public class GameManager : MonoBehaviour
 {
     public GameObject[] LevelsGOS;
     public GameObject[] CheckPointsGOS;
-    public GameObject PlayerGO;
-    public GameObject CurrentLevelGO;
-    public string SaveLevel;
-    public string SavePlayer;
+    public GameObject PlayerPrefabGO;
+    private GameObject PlayerCurrentGO;
+    private GameObject CurrentLevelGO;
     public int StartLevelNumerator;
     private int CurrentLevelNumerator;
     public bool ShowAllLevels = false;
@@ -31,7 +30,7 @@ public class GameManager : MonoBehaviour
             }
         }
         // SpawnPlayer
-        Instantiate( PlayerGO, CheckPointsGOS[ StartLevelNumerator ].transform );
+        PlayerCurrentGO = Instantiate( PlayerPrefabGO, CheckPointsGOS[ StartLevelNumerator ].transform );
     }
     private void Start()
     {
@@ -50,7 +49,36 @@ public class GameManager : MonoBehaviour
     {
         Destroy(KillMe, LifeTime);
     }
-    
+    public void SavePlayerStats(string slot)
+    {
+        // GameObject TempPlayer = GameObject.FindGameObjectWithTag("Player");
+        // string json = JsonUtility.ToJson(myObject);
+        // Check if string of slots is in there
+        if( PlayerPrefs.HasKey("SlotsNames")) {
+            Slots TempSlots = JsonUtility.FromJson<Slots>(PlayerPrefs.GetString("SlotsNames"));
+            TempSlots.slots.Add(slot);
+            string json = JsonUtility.ToJson(TempSlots);
+            PlayerPrefs.SetString("SlotsName", json);
+        }
+        //PlayerPrefs.SetString(slot, m_PlayerName);
+    }
+    public void LoadPlayerStats(string slot)
+    {
+        string json = PlayerPrefs.GetString(slot);
+        // myObject = JsonUtility.FromJson<MyClass>(json);
+    }
+    public List<string> PlayerStatsKeys()
+    {
+        if( PlayerPrefs.HasKey("SlotsNames")) {
+            Slots TempSlots = JsonUtility.FromJson<Slots>(PlayerPrefs.GetString("SlotsNames"));
+            return TempSlots.slots;
+        }
+        return new List<string>{"null"};
+    }
 
-
+}
+[System.Serializable]
+public class Slots
+{
+    public List<string> slots;
 }
