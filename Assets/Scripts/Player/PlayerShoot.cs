@@ -1,18 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityStandardAssets.CrossPlatformInput;
 using UnityEngine;
 
 public class PlayerShoot : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public GunType currentGun;
+    public Transform barrel;
+    
+
+
+    private void Update()
     {
-        
+        if(CrossPlatformInputManager.GetButtonDown("Fire 1"))
+        {
+            Shoot();
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    void Shoot()
     {
-        
+        RaycastHit hit;
+        if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, currentGun.range))
+        {
+
+        }
     }
+
 }
