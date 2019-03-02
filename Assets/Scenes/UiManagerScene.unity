@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.5748171, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028355, g: 0.22571374, b: 0.30692255, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -112,6 +112,42 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &538416202 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2073072495843712000, guid: b2d35c60834044574b9bc50d902aee76,
+    type: 3}
+  m_PrefabInstance: {fileID: 2575319713922266221}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3993a5a1b7234e1fb2e3651a135d300, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1264984432 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1264984432, guid: 3ddf82ac18e044b569be1188530257f0,
+    type: 3}
+  m_PrefabInstance: {fileID: 8209329911906972143}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1314497640 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 700288879, guid: 3ddf82ac18e044b569be1188530257f0,
+    type: 3}
+  m_PrefabInstance: {fileID: 8209329911906972143}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1457693202 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8209329912398165008, guid: 3ddf82ac18e044b569be1188530257f0,
+    type: 3}
+  m_PrefabInstance: {fileID: 8209329911906972143}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1827793121 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3748596897949394764, guid: 3ddf82ac18e044b569be1188530257f0,
+    type: 3}
+  m_PrefabInstance: {fileID: 8209329911906972143}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1997396416
 GameObject:
   m_ObjectHideFlags: 0
@@ -341,6 +377,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HudCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 1596678980793303082, guid: 244b8717e387c41069eb8743bf0c1534,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1596678980793303094, guid: 244b8717e387c41069eb8743bf0c1534,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -520,6 +561,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2073072495843712000, guid: b2d35c60834044574b9bc50d902aee76,
+        type: 3}
+      propertyPath: startMenu
+      value: 
+      objectReference: {fileID: 1457693202}
+    - target: {fileID: 2073072495843712000, guid: b2d35c60834044574b9bc50d902aee76,
+        type: 3}
+      propertyPath: optionsMenu
+      value: 
+      objectReference: {fileID: 1314497640}
+    - target: {fileID: 2073072495843712000, guid: b2d35c60834044574b9bc50d902aee76,
+        type: 3}
+      propertyPath: loadSaveMenu
+      value: 
+      objectReference: {fileID: 1827793121}
+    - target: {fileID: 2073072495843712000, guid: b2d35c60834044574b9bc50d902aee76,
+        type: 3}
+      propertyPath: saveQuitButtton
+      value: 
+      objectReference: {fileID: 1264984432}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2d35c60834044574b9bc50d902aee76, type: 3}
 --- !u!1001 &8209329911906972143
@@ -639,5 +700,24 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8209329910835539139, guid: 3ddf82ac18e044b569be1188530257f0,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 538416202}
+    - target: {fileID: 8209329912077266599, guid: 3ddf82ac18e044b569be1188530257f0,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 538416202}
+    - target: {fileID: 8209329912225979711, guid: 3ddf82ac18e044b569be1188530257f0,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 538416202}
+    - target: {fileID: 231424867, guid: 3ddf82ac18e044b569be1188530257f0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 538416202}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ddf82ac18e044b569be1188530257f0, type: 3}
