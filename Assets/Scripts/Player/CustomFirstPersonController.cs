@@ -238,7 +238,7 @@ public class CustomFirstPersonController : MonoBehaviour
         }
 
         float rotationLerpSpeed = _wallRunTiltSpeed;
-        
+
         float xRot = 0;
         if (_isSliding)
         {
@@ -407,6 +407,10 @@ public class CustomFirstPersonController : MonoBehaviour
             {
                 _extraThrusterForce = _wallNormal.normalized * _thrusterWallImpluse;
                 _extraThrusterForce += _wallRunDir.normalized * 100;
+                _extraThrusterForce.y = 0;
+
+                _extraThrusterForce = _extraThrusterForce.normalized *
+                                      (Mathf.Clamp(_extraThrusterForce.magnitude, 0, _thrusterWallImpluse));
 
                 _isWallRunning = false;
                 _wallRunChargeLeft = 100;
