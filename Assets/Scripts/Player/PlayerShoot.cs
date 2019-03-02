@@ -12,6 +12,7 @@ public class PlayerShoot : MonoBehaviour
     public Animator anim;
     private bool isAiming;
     public float aimingFOV;
+    public float aimTime;
     private float originalFOV;
 
     private void Start()
@@ -22,6 +23,8 @@ public class PlayerShoot : MonoBehaviour
     private void Update()
     {
         WeaponCamera.fieldOfView = Camera.main.fieldOfView;
+
+        AimEffects();
 
         if(CrossPlatformInputManager.GetButtonDown("Fire1"))
         {
@@ -36,27 +39,39 @@ public class PlayerShoot : MonoBehaviour
             isAiming = false;
         }
 
+        
+    }
+
+    void AimEffects()
+    {
         if (isAiming)
         {
             anim.SetBool("isAiming", true);
-            Camera.main.fieldOfView = aimingFOV;
+            float newFOV = Mathf.Lerp(Camera.main.fieldOfView, aimingFOV, aimTime);
+            Camera.main.fieldOfView = newFOV;
         }
         else
         {
             anim.SetBool("isAiming", false);
-            Camera.main.fieldOfView = originalFOV;
+            float newFOV = Mathf.Lerp(Camera.main.fieldOfView, originalFOV, aimTime);
+            Camera.main.fieldOfView = newFOV;
         }
     }
 
     void Shoot()
     {
+        anim.SetTrigger("Fire");
         muzzleFlash.Play();
 
         RaycastHit hit;
 
-        if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, currentGun.range))
+        if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, currentGun.range, 9))
         {
-            var _fx = Instantiate(Resources.Load(currentGun.hitFX.name), hit.point, Quaternion.LookRotation(hit.normal)) as GameObject;
+            if(hit.collider.tag != "Player")
+            {
+                var _fx = Instantiate(Resources.Load(currentGun.hitFX.name), hit.point, Quaternion.LookRotation(hit.normal)) as GameObject;
+
+            }
         }
     }
 
