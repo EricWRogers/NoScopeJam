@@ -36,8 +36,13 @@ public class GameManager : MonoBehaviour
                 LoadLevel( StartLevelNumerator );
             }
         }
-        // SpawnPlayer
-        PlayerCurrentGO = Instantiate( PlayerPrefabGO, CheckPointsGOS[ StartLevelNumerator ].transform.position, Quaternion.identity );
+
+        if (PlayerPrefabGO)
+        {
+            // SpawnPlayer
+            PlayerCurrentGO = Instantiate(PlayerPrefabGO, CheckPointsGOS[StartLevelNumerator].transform.position,
+                Quaternion.identity);
+        }
     }
     private void Start()
     {
