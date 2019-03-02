@@ -42,6 +42,8 @@ public class CustomFirstPersonController : MonoBehaviour
     [SerializeField] private float _slidingRechargeRate;
     [SerializeField] private float _slidingCameraDrop;
     [SerializeField] private float _slidingCameraAngle;
+    [SerializeField] private float _slidingRotationSpeed;
+
 
     [SerializeField] private Transform _cameraPivot;
 
@@ -66,17 +68,17 @@ public class CustomFirstPersonController : MonoBehaviour
     private bool m_Jumping;
     private AudioSource m_AudioSource;
 
-    private bool _isWallRunning = false;
+    [SerializeField] [ReadOnly] private bool _isWallRunning = false;
     private Vector3 _wallNormal = Vector3.zero;
     private Vector3 _wallRunDir = Vector3.zero;
     private float _wallRunChargeLeft = 100f;
 
-    private bool _isUsingThrusters = false;
+    [SerializeField] [ReadOnly] private bool _isUsingThrusters = false;
     private float _thrusterChargeLeft = 100f;
     private bool _requiresThrusterJumpStart = false;
     private Vector3 _extraThrusterForce = Vector3.zero;
 
-    private bool _isSliding = false;
+    [SerializeField] [ReadOnly] private bool _isSliding = false;
     private float _slidingChargeLeft = 100f;
 
 
@@ -225,22 +227,30 @@ public class CustomFirstPersonController : MonoBehaviour
             GroundMove(speed);
         }
 
+        if (_playerInputController.GetPlayerInput().JumpStart)
+        {
+            Debug.Log("Jumping");
+        }
+
         if (wasWallRunning || !_isWallRunning)
         {
             UseThrusters();
         }
 
+        float rotationLerpSpeed = _wallRunTiltSpeed;
+
         float xRot = 0;
         if (_isSliding)
         {
             xRot = _slidingCameraAngle;
+            rotationLerpSpeed = _slidingRotationSpeed;
         }
 
         Quaternion targetRotation = Quaternion.Euler(xRot,
             _cameraPivot.rotation.eulerAngles.y, targetZRotation);
 
         _cameraPivot.rotation =
-            Quaternion.Lerp(_cameraPivot.rotation, targetRotation, Time.fixedDeltaTime * _wallRunTiltSpeed);
+            Quaternion.Lerp(_cameraPivot.rotation, targetRotation, Time.fixedDeltaTime * rotationLerpSpeed);
 
         m_CollisionFlags = m_CharacterController.Move(m_MoveDir * Time.fixedDeltaTime);
     }
@@ -282,12 +292,37 @@ public class CustomFirstPersonController : MonoBehaviour
 
         if (move.z > 0 && _wallRunChargeLeft > 0)
         {
+            int playerLayerMask = LayerMask.NameToLayer("Player");
+            int wallRunnableLayerMask = LayerMask.GetMask("WallRunnable");
+
             if (!_isWallRunning && (playerInput.JumpStart || (!m_CharacterController.isGrounded && playerInput.Jump)))
             {
+                Vector3 raycastDir1 = moveWorldDir;
+                Vector3 raycastDir2 = Vector3.zero;
+
+                if (!m_CharacterController.isGrounded)
+                {
+                    if (_extraThrusterForce.magnitude > 0)
+                    {
+                        Vector3 localDir = transform.InverseTransformDirection(_extraThrusterForce.normalized);
+                        localDir.y = 0;
+                        localDir.z = move.z;
+                        raycastDir1 = transform.TransformDirection(localDir);
+                    }
+                    else
+                    {
+                        Vector3 localDir = new Vector3(-1, 0, move.z);
+                        raycastDir1 = transform.TransformDirection(localDir);
+                        localDir = new Vector3(1, 0, move.z);
+                        raycastDir2 = transform.TransformDirection(localDir);
+                    }
+                }
+
                 RaycastHit hit;
-                if (Physics.Raycast(transform.position, moveWorldDir, out hit,
-                    _wallRunMaxDistance,
-                    LayerMask.NameToLayer("Player")))
+                if ((Physics.Raycast(transform.position, raycastDir1, out hit,
+                         _wallRunMaxDistance, wallRunnableLayerMask) ||
+                     Physics.Raycast(transform.position, raycastDir2, out hit,
+                         _wallRunMaxDistance, wallRunnableLayerMask)))
                 {
                     _isWallRunning = true;
 
@@ -322,7 +357,7 @@ public class CustomFirstPersonController : MonoBehaviour
             {
                 RaycastHit hit;
                 if (Physics.Raycast(transform.position, -_wallNormal, out hit, _wallRunMaxDistance,
-                    LayerMask.NameToLayer("Player")))
+                    wallRunnableLayerMask))
                 {
                     m_MoveDir = _wallRunDir * _wallRunSpeed;
                     m_MoveDir.y = _wallRunChargeLeft * _wallRunClimbFactor * Time.fixedDeltaTime;
@@ -361,16 +396,22 @@ public class CustomFirstPersonController : MonoBehaviour
 
         if (_thrusterChargeLeft > 0)
         {
-//            Debug.Log("Using Thruster...");
+            Debug.Log("Using Thruster...");
             if (_requiresThrusterJumpStart && playerInput.JumpStart)
             {
                 _requiresThrusterJumpStart = false;
+
+                Debug.Log("Removes Jump Start requirement");
             }
 
             if (_isWallRunning && playerInput.JumpStart)
             {
-                _extraThrusterForce = _wallNormal * _thrusterWallImpluse;
-                _extraThrusterForce += _wallRunDir * 100;
+                _extraThrusterForce = _wallNormal.normalized * _thrusterWallImpluse;
+                _extraThrusterForce += _wallRunDir.normalized * 100;
+                _extraThrusterForce.y = 0;
+
+                _extraThrusterForce = _extraThrusterForce.normalized *
+                                      (Mathf.Clamp(_extraThrusterForce.magnitude, 0, _thrusterWallImpluse));
 
                 _isWallRunning = false;
                 _wallRunChargeLeft = 100;
@@ -397,7 +438,7 @@ public class CustomFirstPersonController : MonoBehaviour
     {
         PlayerInputController.PlayerInput playerInput = _playerInputController.GetPlayerInput();
 
-        if (!_isSliding && playerInput.SlideStart && _slidingChargeLeft >= 100)
+        if (!_isWallRunning && !_isSliding && playerInput.SlideStart && _slidingChargeLeft >= 100)
         {
             _isSliding = true;
         }
