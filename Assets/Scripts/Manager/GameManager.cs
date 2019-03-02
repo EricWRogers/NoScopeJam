@@ -68,6 +68,11 @@ public class GameManager : MonoBehaviour
             TempSlots.slots.Add(slot);
             json = JsonUtility.ToJson(TempSlots);
             PlayerPrefs.SetString("SlotsName", json);
+        } else {
+            Slots NSlots =  new Slots();
+            NSlots.slots.Add(slot);
+            json = JsonUtility.ToJson(NSlots);
+            PlayerPrefs.SetString("SlotsName", json);
         }
     }
     public void LoadPlayerStats(string slot)
