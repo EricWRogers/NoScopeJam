@@ -13,8 +13,15 @@ public class GameManager : MonoBehaviour
     private int CurrentLevelNumerator;
     public bool ShowAllLevels = false;
     public bool WorkingOnLevel = false;
+    public static GameManager Instance;
     private void Awake()
     {
+        if(Instance == null) {
+            Instance = this;
+        }else{
+            Destroy(this.gameObject);
+            return;
+        }
         // Set Current Level
         CurrentLevelNumerator = StartLevelNumerator;
         // Load PlayerPref
