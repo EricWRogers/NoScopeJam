@@ -19,6 +19,7 @@ public class GunType : ScriptableObject
 
     public Ammo ammo;
     public FiringMode mode;
+    public GameObject hitFX;
 
     public int damage;
     public float range;

@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ammo: 0
   mode: 0
+  hitFX: {fileID: 3675642613381568932, guid: ba5c99ce9f833774295410c50f332f19, type: 3}
   damage: 50
   range: 100
