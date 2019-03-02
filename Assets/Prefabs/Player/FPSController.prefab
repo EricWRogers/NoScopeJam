@@ -196,6 +196,11 @@ MonoBehaviour:
   _thrusterWallImpluse: 2000
   _thrusterChargeDepletionRate: 60
   _thrusterRechargeRate: 0
+  _slidingSpeed: 3000
+  _slidingChargeDepletionRate: 100
+  _slidingRechargeRate: 30
+  _slidingCameraDrop: 5
+  _slidingCameraAngle: -30
   _cameraPivot: {fileID: 5848855630030064636}
   m_FootstepSounds:
   - {fileID: 8300000, guid: 8bc94ec6ed537e743b481638bdcd503d, type: 3}

@@ -37,6 +37,11 @@ public class CustomFirstPersonController : MonoBehaviour
     [SerializeField] private float _thrusterChargeDepletionRate;
     [SerializeField] private float _thrusterRechargeRate;
 
+    [SerializeField] private float _slidingSpeed;
+    [SerializeField] private float _slidingChargeDepletionRate;
+    [SerializeField] private float _slidingRechargeRate;
+    [SerializeField] private float _slidingCameraDrop;
+    [SerializeField] private float _slidingCameraAngle;
 
     [SerializeField] private Transform _cameraPivot;
 
@@ -70,6 +75,10 @@ public class CustomFirstPersonController : MonoBehaviour
     private float _thrusterChargeLeft = 100f;
     private bool _requiresThrusterJumpStart = false;
     private Vector3 _extraThrusterForce = Vector3.zero;
+
+    private bool _isSliding = false;
+    private float _slidingChargeLeft = 100f;
+
 
     private class GizmosData
     {
@@ -161,6 +170,15 @@ public class CustomFirstPersonController : MonoBehaviour
                 _thrusterChargeLeft = 100;
             }
         }*/
+
+        if (!_isSliding)
+        {
+            _slidingChargeLeft += _slidingRechargeRate * Time.deltaTime;
+            if (_slidingChargeLeft > 100)
+            {
+                _slidingChargeLeft = 100;
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -191,7 +209,10 @@ public class CustomFirstPersonController : MonoBehaviour
         float targetZRotation = 0;
         bool wasWallRunning = _isWallRunning;
 
-        if (WallRun(speed))
+        if (Slide())
+        {
+        }
+        else if (WallRun(speed))
         {
 //            Debug.Log("Wall Run: " + m_MoveDir);
             targetZRotation = _wallRunTilt;
@@ -212,8 +233,15 @@ public class CustomFirstPersonController : MonoBehaviour
             UseThrusters();
         }
 
-        Quaternion targetRotation = Quaternion.Euler(_cameraPivot.rotation.eulerAngles.x,
+        float xRot = 0;
+        if (_isSliding)
+        {
+            xRot = _slidingCameraAngle;
+        }
+
+        Quaternion targetRotation = Quaternion.Euler(xRot,
             _cameraPivot.rotation.eulerAngles.y, targetZRotation);
+
         _cameraPivot.rotation =
             Quaternion.Lerp(_cameraPivot.rotation, targetRotation, Time.fixedDeltaTime * _wallRunTiltSpeed);
 
@@ -355,6 +383,10 @@ public class CustomFirstPersonController : MonoBehaviour
             {
                 m_MoveDir.y = _thrusterForce * Time.fixedDeltaTime;
                 _thrusterChargeLeft -= _thrusterChargeDepletionRate * Time.fixedDeltaTime;
+                if (_thrusterChargeLeft < 0)
+                {
+                    _thrusterChargeLeft = 0;
+                }
 
                 _isUsingThrusters = true;
             }
@@ -364,6 +396,35 @@ public class CustomFirstPersonController : MonoBehaviour
         _extraThrusterForce = Vector3.Lerp(_extraThrusterForce, Vector3.zero, Time.fixedDeltaTime);
     }
 
+    private bool Slide()
+    {
+        PlayerInputController.PlayerInput playerInput = _playerInputController.GetPlayerInput();
+
+        if (!_isSliding && playerInput.SlideStart && _slidingChargeLeft >= 100)
+        {
+            _isSliding = true;
+        }
+
+        if (_isSliding && (playerInput.Slide || playerInput.SlideStart) && _slidingChargeLeft > 0)
+        {
+            Debug.Log("Sliding..");
+
+            m_MoveDir = transform.forward * _slidingSpeed * Time.fixedDeltaTime;
+            m_MoveDir.y = 0;
+
+            _slidingChargeLeft -= _slidingChargeDepletionRate * Time.fixedDeltaTime;
+            if (_slidingChargeLeft < 0)
+            {
+                _slidingChargeLeft = 0;
+            }
+
+            _isSliding = true;
+            return true;
+        }
+
+        _isSliding = false;
+        return false;
+    }
 
     private void PlayLandingSound()
     {
@@ -420,6 +481,17 @@ public class CustomFirstPersonController : MonoBehaviour
     private void UpdateCameraPosition(float speed)
     {
         Vector3 newCameraPosition;
+
+        if (_isSliding)
+        {
+            newCameraPosition = m_Camera.transform.localPosition;
+            newCameraPosition.y -= _slidingCameraDrop;
+
+            m_Camera.transform.localPosition =
+                Vector3.Lerp(m_Camera.transform.localPosition, newCameraPosition, Time.fixedDeltaTime);
+            return;
+        }
+
         if (!m_UseHeadBob)
         {
             return;
