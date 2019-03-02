@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 31ae821aa91b58c4283f47c9b807b669
+guid: 0a7faf8b5d9aa5d42808e50063d07e14
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
@@ -8,7 +8,7 @@ ModelImporter:
     2100000: lambert1
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Walkway_Tile2
+    4300000: PLatform
   externalObjects: {}
   materials:
     importMaterials: 0
