@@ -43,3 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3993a5a1b7234e1fb2e3651a135d300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startMenu: {fileID: 0}
+  optionsMenu: {fileID: 0}
+  loadSaveMenu: {fileID: 0}
+  saveQuitButtton: {fileID: 0}
