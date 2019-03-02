@@ -5092,11 +5092,12 @@ MonoBehaviour:
   _thrusterWallImpluse: 2000
   _thrusterChargeDepletionRate: 60
   _thrusterRechargeRate: 0
-  _slidingSpeed: 3000
-  _slidingChargeDepletionRate: 100
-  _slidingRechargeRate: 30
-  _slidingCameraDrop: 5
+  _slidingSpeed: 7000
+  _slidingChargeDepletionRate: 150
+  _slidingRechargeRate: 50
+  _slidingCameraDrop: 2
   _slidingCameraAngle: -30
+  _slidingRotationSpeed: 6
   _cameraPivot: {fileID: 5848855630030064636}
   m_FootstepSounds:
   - {fileID: 8300000, guid: 8bc94ec6ed537e743b481638bdcd503d, type: 3}
@@ -5798,15 +5799,15 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: f374a23c28ce0a74698ec91f36e92ad3, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8fadf5342915b494b8f547e0759d96dc, type: 3}
---- !u!95 &1589731940 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 9500000, guid: 8fadf5342915b494b8f547e0759d96dc,
-    type: 3}
-  m_PrefabInstance: {fileID: 1582405380}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1582796220 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400056, guid: 8fadf5342915b494b8f547e0759d96dc,
+    type: 3}
+  m_PrefabInstance: {fileID: 1582405380}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1589731940 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9500000, guid: 8fadf5342915b494b8f547e0759d96dc,
     type: 3}
   m_PrefabInstance: {fileID: 1582405380}
   m_PrefabAsset: {fileID: 0}
@@ -5817,11 +5818,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6981767698006965899}
     m_Modifications:
-    - target: {fileID: 1596678980793303082, guid: 244b8717e387c41069eb8743bf0c1534,
-        type: 3}
-      propertyPath: m_Name
-      value: HudCanvas
-      objectReference: {fileID: 0}
     - target: {fileID: 1596678980793303094, guid: 244b8717e387c41069eb8743bf0c1534,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5926,6 +5922,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1596678980793303082, guid: 244b8717e387c41069eb8743bf0c1534,
+        type: 3}
+      propertyPath: m_Name
+      value: HudCanvas
       objectReference: {fileID: 0}
     - target: {fileID: 1596678980793303081, guid: 244b8717e387c41069eb8743bf0c1534,
         type: 3}

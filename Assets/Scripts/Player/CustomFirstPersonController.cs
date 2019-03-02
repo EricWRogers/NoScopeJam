@@ -42,6 +42,8 @@ public class CustomFirstPersonController : MonoBehaviour
     [SerializeField] private float _slidingRechargeRate;
     [SerializeField] private float _slidingCameraDrop;
     [SerializeField] private float _slidingCameraAngle;
+    [SerializeField] private float _slidingRotationSpeed;
+
 
     [SerializeField] private Transform _cameraPivot;
 
@@ -235,17 +237,20 @@ public class CustomFirstPersonController : MonoBehaviour
             UseThrusters();
         }
 
+        float rotationLerpSpeed = _wallRunTiltSpeed;
+        
         float xRot = 0;
         if (_isSliding)
         {
             xRot = _slidingCameraAngle;
+            rotationLerpSpeed = _slidingRotationSpeed;
         }
 
         Quaternion targetRotation = Quaternion.Euler(xRot,
             _cameraPivot.rotation.eulerAngles.y, targetZRotation);
 
         _cameraPivot.rotation =
-            Quaternion.Lerp(_cameraPivot.rotation, targetRotation, Time.fixedDeltaTime * _wallRunTiltSpeed);
+            Quaternion.Lerp(_cameraPivot.rotation, targetRotation, Time.fixedDeltaTime * rotationLerpSpeed);
 
         m_CollisionFlags = m_CharacterController.Move(m_MoveDir * Time.fixedDeltaTime);
     }
