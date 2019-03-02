@@ -23,12 +23,21 @@ public class CustomFirstPersonController : MonoBehaviour
     [SerializeField] private CurveControlledBob m_HeadBob = new CurveControlledBob();
     [SerializeField] private LerpControlledBob m_JumpBob = new LerpControlledBob();
     [SerializeField] private float m_StepInterval;
+
     [SerializeField] private float _wallRunMaxDistance;
     [SerializeField] private float _wallRunSpeed;
     [SerializeField] private float _wallRunClimbFactor;
     [SerializeField] private float _wallRunChargeDepletionRate;
+    [SerializeField] private float _wallRunRechargeRate;
     [SerializeField] private float _wallRunTilt;
     [SerializeField] private float _wallRunTiltSpeed;
+
+    [SerializeField] private float _thrusterForce;
+    [SerializeField] private float _thrusterWallImpluse;
+    [SerializeField] private float _thrusterChargeDepletionRate;
+    [SerializeField] private float _thrusterRechargeRate;
+
+
     [SerializeField] private Transform _cameraPivot;
 
     [SerializeField]
@@ -56,6 +65,11 @@ public class CustomFirstPersonController : MonoBehaviour
     private Vector3 _wallNormal = Vector3.zero;
     private Vector3 _wallRunDir = Vector3.zero;
     private float _wallRunChargeLeft = 100f;
+
+    private bool _isUsingThrusters = false;
+    private float _thrusterChargeLeft = 100f;
+    private bool _requiresThrusterJumpStart = false;
+    private Vector3 _extraThrusterForce = Vector3.zero;
 
     private class GizmosData
     {
@@ -129,6 +143,24 @@ public class CustomFirstPersonController : MonoBehaviour
         }
 
         m_PreviouslyGrounded = m_CharacterController.isGrounded;
+
+        /*if (!_isWallRunning)
+        {
+            _wallRunChargeLeft += _wallRunRechargeRate * Time.deltaTime;
+            if (_wallRunChargeLeft > 100)
+            {
+                _wallRunChargeLeft = 100;
+            }
+        }*/
+
+        /*if (!_isUsingThrusters)
+        {
+            _thrusterChargeLeft += _thrusterRechargeRate * Time.deltaTime;
+            if (_thrusterChargeLeft > 100)
+            {
+                _thrusterChargeLeft = 100;
+            }
+        }*/
     }
 
     private void FixedUpdate()
@@ -137,6 +169,16 @@ public class CustomFirstPersonController : MonoBehaviour
         GetInput(out speed);
 
         Move(speed);
+
+        if (m_CharacterController.isGrounded)
+        {
+            _wallRunChargeLeft = 100f;
+            _thrusterChargeLeft = 100f;
+
+            _extraThrusterForce = Vector3.zero;
+
+//            _requiresThrusterJumpStart = false;
+        }
 
         ProgressStepCycle(speed);
         UpdateCameraPosition(speed);
@@ -147,6 +189,7 @@ public class CustomFirstPersonController : MonoBehaviour
     private void Move(float speed)
     {
         float targetZRotation = 0;
+        bool wasWallRunning = _isWallRunning;
 
         if (WallRun(speed))
         {
@@ -156,20 +199,28 @@ public class CustomFirstPersonController : MonoBehaviour
             {
                 targetZRotation *= -1;
             }
+
+            _requiresThrusterJumpStart = true;
         }
         else
         {
-            StandardMove(speed);
+            GroundMove(speed);
+        }
+
+        if (wasWallRunning || !_isWallRunning)
+        {
+            UseThrusters();
         }
 
         Quaternion targetRotation = Quaternion.Euler(_cameraPivot.rotation.eulerAngles.x,
             _cameraPivot.rotation.eulerAngles.y, targetZRotation);
-        _cameraPivot.rotation = Quaternion.Lerp(_cameraPivot.rotation, targetRotation, Time.fixedDeltaTime * _wallRunTiltSpeed);
+        _cameraPivot.rotation =
+            Quaternion.Lerp(_cameraPivot.rotation, targetRotation, Time.fixedDeltaTime * _wallRunTiltSpeed);
 
         m_CollisionFlags = m_CharacterController.Move(m_MoveDir * Time.fixedDeltaTime);
     }
 
-    private void StandardMove(float speed)
+    private void GroundMove(float speed)
     {
         // always move along the camera forward as it is the direction that it being aimed at
         Vector3 desiredMove = transform.forward * m_Input.y + transform.right * m_Input.x;
@@ -187,19 +238,10 @@ public class CustomFirstPersonController : MonoBehaviour
         if (m_CharacterController.isGrounded)
         {
             m_MoveDir.y = -m_StickToGroundForce;
-            _wallRunChargeLeft = 100f;
-
-            if (m_Jump)
-            {
-                m_MoveDir.y = m_JumpSpeed;
-                PlayJumpSound();
-                m_Jump = false;
-                m_Jumping = true;
-            }
         }
         else
         {
-            Debug.Log("Applying Gravity");
+//            Debug.Log("Applying Gravity");
             m_MoveDir += Physics.gravity * m_GravityMultiplier * Time.fixedDeltaTime;
         }
     }
@@ -215,7 +257,7 @@ public class CustomFirstPersonController : MonoBehaviour
 
         if (move.z > 0 && _wallRunChargeLeft > 0)
         {
-            if (!_isWallRunning && playerInput.Jump)
+            if (!_isWallRunning && (playerInput.JumpStart || (!m_CharacterController.isGrounded && playerInput.Jump)))
             {
                 RaycastHit hit;
                 if (Physics.Raycast(transform.position, moveWorldDir, out hit,
@@ -236,7 +278,6 @@ public class CustomFirstPersonController : MonoBehaviour
                     forwardYLess.y = 0;
 
                     float angle = Vector3.Angle(wallNormalYLess, moveYLess);
-//                    Debug.Log("Angle: " + Vector3.SignedAngle(wallNormalYLess, moveYLess, Vector3.up));
 
                     float compAngle = 90 - angle;
 
@@ -247,6 +288,8 @@ public class CustomFirstPersonController : MonoBehaviour
                     {
                         _wallRunDir *= -1;
                     }
+
+                    _extraThrusterForce = Vector3.zero;
                 }
             }
 
@@ -256,35 +299,8 @@ public class CustomFirstPersonController : MonoBehaviour
                 if (Physics.Raycast(transform.position, -_wallNormal, out hit, _wallRunMaxDistance,
                     LayerMask.NameToLayer("Player")))
                 {
-                    // always move along the camera forward as it is the direction that it being aimed at
-//                    Vector3 desiredMove = transform.forward + transform.right * _wallNormal.x;
-
-                    /*// get a normal for the surface that is being touched to move along it
-                    RaycastHit hitInfo;
-                    Physics.SphereCast(transform.position, m_CharacterController.radius, Vector3.down, out hitInfo,
-                        m_CharacterController.height / 2f, Physics.AllLayers, QueryTriggerInteraction.Ignore);
-                    desiredMove = Vector3.ProjectOnPlane(desiredMove, hitInfo.normal).normalized;*/
-
-//                    m_MoveDir.x = desiredMove.x * speed;
                     m_MoveDir = _wallRunDir * _wallRunSpeed;
                     m_MoveDir.y = _wallRunChargeLeft * _wallRunClimbFactor * Time.fixedDeltaTime;
-
-                    /*if (m_CharacterController.isGrounded)
-                    {
-                        m_MoveDir.y = -m_StickToGroundForce;
-    
-                        if (m_Jump)
-                        {
-                            m_MoveDir.y = m_JumpSpeed;
-                            PlayJumpSound();
-                            m_Jump = false;
-                            m_Jumping = true;
-                        }
-                    }
-                    else
-                    {
-                        m_MoveDir += Physics.gravity * m_GravityMultiplier * Time.fixedDeltaTime;
-                    }*/
 
                     _wallRunChargeLeft -= _wallRunChargeDepletionRate * Time.fixedDeltaTime;
                     if (_wallRunChargeLeft < 0)
@@ -308,9 +324,44 @@ public class CustomFirstPersonController : MonoBehaviour
             _wallRunChargeLeft = 0;
         }
 
-//        Debug.Log("No Wall Run");
         _isWallRunning = false;
         return false;
+    }
+
+
+    private void UseThrusters()
+    {
+        PlayerInputController.PlayerInput playerInput = _playerInputController.GetPlayerInput();
+        _isUsingThrusters = false;
+
+        if (_thrusterChargeLeft > 0)
+        {
+//            Debug.Log("Using Thruster...");
+            if (_requiresThrusterJumpStart && playerInput.JumpStart)
+            {
+                _requiresThrusterJumpStart = false;
+            }
+
+            if (_isWallRunning && playerInput.JumpStart)
+            {
+                _extraThrusterForce = _wallNormal * _thrusterWallImpluse;
+                _extraThrusterForce += _wallRunDir * 100;
+
+                _isWallRunning = false;
+                _wallRunChargeLeft = 100;
+            }
+
+            if (playerInput.Jump && !_requiresThrusterJumpStart)
+            {
+                m_MoveDir.y = _thrusterForce * Time.fixedDeltaTime;
+                _thrusterChargeLeft -= _thrusterChargeDepletionRate * Time.fixedDeltaTime;
+
+                _isUsingThrusters = true;
+            }
+        }
+
+        m_MoveDir += _extraThrusterForce * Time.fixedDeltaTime;
+        _extraThrusterForce = Vector3.Lerp(_extraThrusterForce, Vector3.zero, Time.fixedDeltaTime);
     }
 
 

@@ -187,10 +187,15 @@ MonoBehaviour:
   m_StepInterval: 5
   _wallRunMaxDistance: 5
   _wallRunSpeed: 30
-  _wallRunClimbFactor: 6
-  _wallRunChargeDepletionRate: 50
+  _wallRunClimbFactor: 3
+  _wallRunChargeDepletionRate: 40
+  _wallRunRechargeRate: 10
   _wallRunTilt: 20
   _wallRunTiltSpeed: 3
+  _thrusterForce: 500
+  _thrusterWallImpluse: 2000
+  _thrusterChargeDepletionRate: 60
+  _thrusterRechargeRate: 0
   _cameraPivot: {fileID: 5848855630030064636}
   m_FootstepSounds:
   - {fileID: 8300000, guid: 8bc94ec6ed537e743b481638bdcd503d, type: 3}

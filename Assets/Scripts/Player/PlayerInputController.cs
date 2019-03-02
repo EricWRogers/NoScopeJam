@@ -8,6 +8,7 @@ public class PlayerInputController : MonoBehaviour
         public Vector3 Move;
         public bool Sprint;
         public bool Jump;
+        public bool JumpStart;
         public bool Slide;
     }
 
@@ -26,6 +27,7 @@ public class PlayerInputController : MonoBehaviour
         _playerInput.Move = new Vector3(horizontal, 0f, vertical);
         _playerInput.Sprint = CrossPlatformInputManager.GetButton("Sprint");
         _playerInput.Jump = CrossPlatformInputManager.GetButton("Jump");
+        _playerInput.JumpStart = CrossPlatformInputManager.GetButtonDown("Jump");
         _playerInput.Slide = CrossPlatformInputManager.GetButton("Slide");
     }
 
