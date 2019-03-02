@@ -7,12 +7,12 @@ public class PlayerShoot : MonoBehaviour
 {
     public GunType currentGun;
     public Transform barrel;
-    
+    public ParticleSystem muzzleFlash;
 
 
     private void Update()
     {
-        if(CrossPlatformInputManager.GetButtonDown("Fire 1"))
+        if(CrossPlatformInputManager.GetButtonDown("Fire1"))
         {
             Shoot();
         }
@@ -20,10 +20,10 @@ public class PlayerShoot : MonoBehaviour
 
     void Shoot()
     {
+        muzzleFlash.Play();
         RaycastHit hit;
         if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, currentGun.range))
         {
-
         }
     }
 
