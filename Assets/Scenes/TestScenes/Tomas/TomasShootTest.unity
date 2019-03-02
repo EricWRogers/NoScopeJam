@@ -319,6 +319,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5862bbfe91a75054ca72c13b555b6ac5, type: 3}
+--- !u!1 &826129946 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2552816138923557574, guid: 1e68bf66cbbb28d49b2d399066d2d828,
+    type: 3}
+  m_PrefabInstance: {fileID: 1257529113}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &826129947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 826129946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e60d7b680a7b52942875d9ec613cd0f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentGun: {fileID: 0}
+  target: {fileID: 0}
+  turretBase: {fileID: 0}
+  hitFX: {fileID: 0}
+  deathFX: {fileID: 0}
+  maxHealth: 0
+  currentHealth: 0
 --- !u!1001 &1027873592
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -523,6 +548,30 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1812101757, guid: 1e68bf66cbbb28d49b2d399066d2d828, type: 3}
+      propertyPath: OnShot.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1812101757, guid: 1e68bf66cbbb28d49b2d399066d2d828, type: 3}
+      propertyPath: OnShot.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1812101757, guid: 1e68bf66cbbb28d49b2d399066d2d828, type: 3}
+      propertyPath: OnShot.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1812101757, guid: 1e68bf66cbbb28d49b2d399066d2d828, type: 3}
+      propertyPath: OnShot.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 826129947}
+    - target: {fileID: 1812101757, guid: 1e68bf66cbbb28d49b2d399066d2d828, type: 3}
+      propertyPath: OnShot.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: TakeDamage
+      objectReference: {fileID: 0}
+    - target: {fileID: 1812101757, guid: 1e68bf66cbbb28d49b2d399066d2d828, type: 3}
+      propertyPath: OnShot.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e68bf66cbbb28d49b2d399066d2d828, type: 3}

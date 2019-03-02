@@ -70,7 +70,6 @@ public class PlayerShoot : MonoBehaviour
             if(hit.collider.tag != "Player")
             {
                 var _fx = Instantiate(Resources.Load(currentGun.hitFX.name), hit.point, Quaternion.LookRotation(hit.normal)) as GameObject;
-
             }
         }
     }

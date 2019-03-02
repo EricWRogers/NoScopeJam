@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     public GameObject[] LevelsGOS;
     public GameObject[] CheckPointsGOS;
     public GameObject PlayerPrefabGO;
-    private GameObject PlayerCurrentGO;
+    public GameObject PlayerCurrentGO;
     private GameObject CurrentLevelGO;
     public int StartLevelNumerator;
     private int CurrentLevelNumerator;

@@ -8,7 +8,8 @@ public class GunType : ScriptableObject
     public enum Ammo
     {
         Bullets,
-        Plasma
+        Plasma,
+        Grenades
     }
 
     public enum FiringMode
@@ -21,6 +22,7 @@ public class GunType : ScriptableObject
     public FiringMode mode;
     public GameObject hitFX;
 
-    public int damage;
+    public float damage;
     public float range;
+    public float plasmaSpeed;
 }
