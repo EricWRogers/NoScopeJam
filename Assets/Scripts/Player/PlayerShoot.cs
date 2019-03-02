@@ -57,7 +57,7 @@ public class PlayerShoot : MonoBehaviour
             Camera.main.fieldOfView = newFOV;
         }
     }
-
+    
     void Shoot()
     {
         anim.SetTrigger("Fire");
