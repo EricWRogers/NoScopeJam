@@ -52,7 +52,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 camera.localRotation = m_CameraTargetRot;
             }
 
-            UpdateCursorLock();
+//            UpdateCursorLock();
         }
 
         public void SetCursorLock(bool value)

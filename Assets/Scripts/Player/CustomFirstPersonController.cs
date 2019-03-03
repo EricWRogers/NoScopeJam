@@ -206,7 +206,7 @@ public class CustomFirstPersonController : MonoBehaviour
         ProgressStepCycle(speed);
         UpdateCameraPosition(speed);
 
-        m_MouseLook.UpdateCursorLock();
+//        m_MouseLook.UpdateCursorLock();
     }
 
     private void Move(float speed)
