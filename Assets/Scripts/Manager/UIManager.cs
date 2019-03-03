@@ -22,6 +22,9 @@ public class UIManager : MonoBehaviour
     private bool animPlaying;
     private float helpingTimer = 0f;
 
+    private bool pauseEnable = false;
+    private bool outOfMenus = false;
+
     public AudioManager audioManager;
 
     private bool fromStartMenu = false;
@@ -49,17 +52,30 @@ public class UIManager : MonoBehaviour
                 }
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape) && !pauseEnable && outOfMenus)
+        {
+            Settings();
+            pauseEnable = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape) && pauseEnable && outOfMenus)
+        {
+            OptionsBack();
+            pauseEnable = false;
+        }
     }
 
     public void NewGame()
     {
         startMenu.SetActive(false);
         hud.SetActive(true);
+        outOfMenus = true;
     }
     public void Continue()
     {
         startMenu.SetActive(false);
         hud.SetActive(true);
+        outOfMenus = true;
     }
     public void Options()
     {

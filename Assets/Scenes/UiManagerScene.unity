@@ -530,11 +530,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1596678980793303082, guid: 244b8717e387c41069eb8743bf0c1534,
-        type: 3}
-      propertyPath: m_Name
-      value: HudCanvas
-      objectReference: {fileID: 0}
     - target: {fileID: 1596678980793303094, guid: 244b8717e387c41069eb8743bf0c1534,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -639,6 +634,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1596678980793303082, guid: 244b8717e387c41069eb8743bf0c1534,
+        type: 3}
+      propertyPath: m_Name
+      value: HudCanvas
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 244b8717e387c41069eb8743bf0c1534, type: 3}
