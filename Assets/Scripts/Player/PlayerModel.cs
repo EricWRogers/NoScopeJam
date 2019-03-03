@@ -6,10 +6,20 @@ using UnityEngine.SceneManagement;
 public class PlayerModel : MonoBehaviour
 {
     public Camera fpsCamera;
+    public GlitchEffect glitchEffect;
+
+    private void Awake()
+    {
+        glitchEffect = GetComponentInChildren<GlitchEffect>();
+    }
+
+    private void Start()
+    {
+        PlayerStats.Instance._playerModel = this;
+    }
 
     void Die()
     {
-        
         // Handled by PlayerStats Now
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }

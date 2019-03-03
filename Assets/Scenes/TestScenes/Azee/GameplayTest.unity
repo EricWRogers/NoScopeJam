@@ -3942,7 +3942,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &632686925
 Transform:
   m_ObjectHideFlags: 0
@@ -14315,6 +14315,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 9367cfb4d011e0c4e8d1c1a7d9b7abe5,
         type: 2}
+    - target: {fileID: 3746258085198067824, guid: de7fe9c982e6b9c3a96e524d71dd1ab6,
+        type: 3}
+      propertyPath: disableGlitchDelay
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de7fe9c982e6b9c3a96e524d71dd1ab6, type: 3}
 --- !u!114 &6015238457088142497 stripped
@@ -14410,10 +14415,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2003558653}
     m_Modifications:
-    - target: {fileID: 4429642257852009202, guid: 268c645762baa1e19a2e5112aa20e21d,
+    - target: {fileID: 7734604425440211677, guid: 268c645762baa1e19a2e5112aa20e21d,
         type: 3}
-      propertyPath: m_IsActive
-      value: 0
+      propertyPath: intensity
+      value: 0.312
+      objectReference: {fileID: 0}
+    - target: {fileID: 7734604425440211677, guid: 268c645762baa1e19a2e5112aa20e21d,
+        type: 3}
+      propertyPath: flipIntensity
+      value: 0.246
+      objectReference: {fileID: 0}
+    - target: {fileID: 7734604425440211677, guid: 268c645762baa1e19a2e5112aa20e21d,
+        type: 3}
+      propertyPath: colorIntensity
+      value: 0.143
       objectReference: {fileID: 0}
     - target: {fileID: 909, guid: 268c645762baa1e19a2e5112aa20e21d, type: 3}
       propertyPath: m_Name
@@ -14465,6 +14480,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1627, guid: 268c645762baa1e19a2e5112aa20e21d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4429642257852009202, guid: 268c645762baa1e19a2e5112aa20e21d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1021214776975660216, guid: 268c645762baa1e19a2e5112aa20e21d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1722529621157376311, guid: 268c645762baa1e19a2e5112aa20e21d,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
