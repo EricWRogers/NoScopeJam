@@ -21,6 +21,7 @@ public class GunType : ScriptableObject
     public Ammo ammo;
     public Sprite image;
     public FiringMode mode;
+    public GameObject projectile;
     public GameObject hitFX;
     public GameObject trailFX;
     public AudioClip fireSFX;
