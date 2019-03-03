@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using UnityEngine;
+using UnityEngine.Events;
 
 [Serializable]
 public class PlayerStats : MonoBehaviour
@@ -23,6 +24,11 @@ public class PlayerStats : MonoBehaviour
             ammo[GunType.Ammo.Bullets] = 100;
             unlockedGuns.Add(PlayerStats.Instance.GetGunType("Gatling").name);
         }
+    }
+
+    [Serializable]
+    public class GameOverEvent : UnityEvent<bool>
+    {
     }
 
     public float healthRechargeRate = 20f;
@@ -99,6 +105,8 @@ public class PlayerStats : MonoBehaviour
 
     public static PlayerStats Instance = null;
 
+    public GameOverEvent gameOverEvent;
+
     [ReadOnly] public PlayerStatsData playerStatsData = new PlayerStatsData();
     private CustomFirstPersonController _customFirstPersonController;
     private float nextRechargableTime = float.MinValue;
@@ -119,7 +127,11 @@ public class PlayerStats : MonoBehaviour
 
     public void Update()
     {
-        if (playerStatsData.health < 100f && Time.time > nextRechargableTime)
+        if (playerStatsData.health <= 0)
+        {
+            PlayerStats.Instance.BroadcastGameOverEvent(false);
+        }
+        else if (playerStatsData.health < 100f && Time.time > nextRechargableTime)
         {
             UpdateHealth(healthRechargeRate * Time.deltaTime);
         }
@@ -178,6 +190,11 @@ public class PlayerStats : MonoBehaviour
         {
             playerStatsData.unlockedGuns.Add(gunTypeName);
         }
+    }
+
+    public void BroadcastGameOverEvent(bool win)
+    {
+        gameOverEvent.Invoke(win);
     }
 
     public void LoadFromJsonString(string json)
