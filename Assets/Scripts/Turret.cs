@@ -16,7 +16,7 @@ public class Turret : MonoBehaviour
     public float laserActiveScale = .9f;
 
     public float maxHealth;
-    public float currentHealth;
+    private float currentHealth;
 
     public Transform barrel1, barrel2, barrel3, barrel4;
     private int order;
@@ -27,7 +27,8 @@ public class Turret : MonoBehaviour
 
 
     private bool turretActive;
-    private bool canShoot;
+    private bool attacking;
+    private bool canShoot = true;
 
 
     private void Start()
@@ -39,7 +40,6 @@ public class Turret : MonoBehaviour
         if(GameManager.Instance != null)
         {
             target = GameManager.Instance.PlayerCurrentGO.transform;
-            Debug.Log(currentGun.name + " " + currentGun.damage);
             //RapidFire();
         }
         flare.gameObject.SetActive(false);
@@ -76,6 +76,8 @@ public class Turret : MonoBehaviour
 
     void Shoot(Transform currentBarrel)
     {
+        Debug.Log("Turret shoot");
+
         if (canShoot)
         {
             //anim.SetTrigger("Fire");
@@ -154,6 +156,9 @@ public class Turret : MonoBehaviour
     {
         Sweep();
 
+        attacking = false;
+        CancelInvoke("FireGun");
+
         RaycastHit hit;
 
         // NameToLayer returns index. So, converting to it's bimask respresentation.
@@ -161,16 +166,14 @@ public class Turret : MonoBehaviour
 
         // Combining playerLayerMask and FPSLayerMask ( | ), inverting them (~), and removing from a filled bit mask(1111111....11)
         int mask = int.MaxValue & ~(enemyLayerMask);
-
         Vector3 direction = ((targetLaserEmit.forward * currentGun.range) - targetLaserEmit.transform.position).normalized;
         Vector3 targetPos = targetLaserEmit.transform.position + (direction * currentGun.range);
 
+    
+
+
+
         Vector3 newDir = Vector3.Lerp(laserTrail.GetPosition(1) + (direction * currentGun.range), targetPos, laserPassiveScale);
-
-        laserTrail.SetPosition(0, targetLaserEmit.position);
-        laserTrail.SetPosition(1, newDir);
-
-
 
         if (Physics.Raycast(targetLaserEmit.transform.position, newDir, out hit, currentGun.range, mask))
         {
@@ -189,22 +192,48 @@ public class Turret : MonoBehaviour
             }
 
         }
+
+
+        Vector3 newPos = Vector3.Lerp(laserTrail.GetPosition(1), targetPos, laserPassiveScale);
+        laserTrail.SetPosition(0, targetLaserEmit.position);
+        laserTrail.SetPosition(1, newPos);
     }
 
     void LaserSight()
     {
+        RaycastHit hit;
+
+        // NameToLayer returns index. So, converting to it's bimask respresentation.
+        int enemyLayerMask = 1 << LayerMask.NameToLayer("Enemy");
+
+        // Combining playerLayerMask and FPSLayerMask ( | ), inverting them (~), and removing from a filled bit mask(1111111....11)
+        int mask = int.MaxValue & ~(enemyLayerMask);
+
         Vector3 direction = ((targetLaserEmit.forward * currentGun.range) - targetLaserEmit.transform.position).normalized;
         Vector3 targetPos = targetLaserEmit.transform.position + (direction * currentGun.range);
 
         Vector3 newDir = Vector3.Lerp(laserTrail.GetPosition(1) + (direction * currentGun.range), targetPos, laserPassiveScale);
+        if (Physics.Raycast(targetLaserEmit.transform.position, newDir, out hit, currentGun.range, mask))
+        {
+            targetPos = hit.point;
+        }
+
+
+
+        Vector3 newPos = Vector3.Lerp(laserTrail.GetPosition(1), targetPos, laserPassiveScale);
 
         laserTrail.SetPosition(0, targetLaserEmit.position);
-        laserTrail.SetPosition(1, newDir);
+        laserTrail.SetPosition(1, newPos);
+
     }
 
     private void Attack()
     {
-
+        if (!attacking)
+        {
+            RapidFire();
+            attacking = true;
+        }
         Movement(laserActiveScale);
     }
 
