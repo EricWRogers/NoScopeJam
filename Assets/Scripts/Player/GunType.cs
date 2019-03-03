@@ -25,4 +25,5 @@ public class GunType : ScriptableObject
     public float damage;
     public float range;
     public float plasmaSpeed;
+    public float fireRate;
 }

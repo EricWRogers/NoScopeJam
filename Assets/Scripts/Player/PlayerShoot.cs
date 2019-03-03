@@ -28,7 +28,20 @@ public class PlayerShoot : MonoBehaviour
 
         if(CrossPlatformInputManager.GetButtonDown("Fire1"))
         {
-            Shoot();
+            switch (currentGun.mode)
+            {
+                case GunType.FiringMode.Auto:
+                    RapidFire();
+                    break;
+                case GunType.FiringMode.Single:
+                    Shoot();
+                    break;
+            }
+            
+        }
+        if (CrossPlatformInputManager.GetButtonUp("Fire1"))
+        {
+            CancelInvoke("Shoot");
         }
         if (CrossPlatformInputManager.GetButton("Aim"))
         {
@@ -57,6 +70,12 @@ public class PlayerShoot : MonoBehaviour
             Camera.main.fieldOfView = newFOV;
         }
     }
+
+    void RapidFire()
+    {
+        Debug.Log("Rapid Fire");
+        InvokeRepeating("Shoot", Time.deltaTime, currentGun.fireRate);
+    }
     
     void Shoot()
     {
@@ -64,12 +83,16 @@ public class PlayerShoot : MonoBehaviour
         muzzleFlash.Play();
 
         RaycastHit hit;
-
+            
         if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, currentGun.range, 9))
         {
             if(hit.collider.tag != "Player")
             {
                 var _fx = Instantiate(Resources.Load(currentGun.hitFX.name), hit.point, Quaternion.LookRotation(hit.normal)) as GameObject;
+                if(hit.collider.GetComponent<Shootable>() != null)
+                {
+                    hit.collider.GetComponent<Shootable>().Shoot(currentGun.damage, hit.point);
+                }
             }
         }
     }
