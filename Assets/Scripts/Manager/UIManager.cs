@@ -88,12 +88,12 @@ public class UIManager : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape) && !pauseEnable && outOfMenus)
+        if (Input.GetKeyDown(KeyCode.Escape) ||Input.GetKeyDown(KeyCode.JoystickButton7) && !pauseEnable && outOfMenus)
         {
             Settings();
 
         }
-        else if (Input.GetKeyDown(KeyCode.Escape) && pauseEnable && !outOfMenus)
+        else if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7) && pauseEnable && !outOfMenus)
         {
             OptionsBack();
         }
