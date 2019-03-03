@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public GameObject[] LevelsGOS;
     public GameObject[] CheckPointsGOS;
+    public GunType[] GunTypes;
     public GameObject PlayerPrefabGO;
     public GameObject PlayerCurrentGO;
     private GameObject CurrentLevelGO;
@@ -15,40 +16,52 @@ public class GameManager : MonoBehaviour
     public bool WorkingOnLevel = false;
     public bool StartFromMain = false;
     public static GameManager Instance;
+
     private void Awake()
     {
-        if(Instance == null) {
+        if (Instance == null)
+        {
             Instance = this;
-        }else{
+        }
+        else
+        {
             Destroy(this.gameObject);
             return;
         }
+
         // Set Current Level
         CurrentLevelNumerator = StartLevelNumerator;
         // Load PlayerPref
 
-        if ( !StartFromMain ) {
+        if (!StartFromMain)
+        {
             NewGame();
         }
     }
+
     private void Start()
     {
-        
     }
+
     private void Update()
     {
-        
     }
+
     public void NewGame()
     {
         // SpawnLevels
-        if ( !WorkingOnLevel ) {
-            if ( ShowAllLevels ) {
-                for ( int i = LevelsGOS.Length - 1; i > -1; i-- ) {
-                    LoadLevel( i );
+        if (!WorkingOnLevel)
+        {
+            if (ShowAllLevels)
+            {
+                for (int i = LevelsGOS.Length - 1; i > -1; i--)
+                {
+                    LoadLevel(i);
                 }
-            } else {
-                LoadLevel( StartLevelNumerator );
+            }
+            else
+            {
+                LoadLevel(StartLevelNumerator);
             }
         }
 
@@ -57,59 +70,69 @@ public class GameManager : MonoBehaviour
             // SpawnPlayer
             PlayerCurrentGO = Instantiate(PlayerPrefabGO, CheckPointsGOS[StartLevelNumerator].transform.position,
                 Quaternion.identity);
-            
+
             // Deactivate Camera
-            if ( StartFromMain )
+            if (StartFromMain)
             {
                 GameObject Camera = GameObject.FindGameObjectWithTag("MainMenuCamera");
                 Camera.SetActive(false);
             }
         }
     }
-    private void LoadLevel( int slot )
+
+    private void LoadLevel(int slot)
     {
         CurrentLevelNumerator = slot;
-        Instantiate(LevelsGOS[ slot ]);
+        Instantiate(LevelsGOS[slot]);
         AudioManager.Instance.SoundsEventTrigger(SoundEvents.BackGroundMusic, true);
     }
-    private void DestoryLevel( float LifeTime, GameObject KillMe )
+
+    private void DestoryLevel(float LifeTime, GameObject KillMe)
     {
         Destroy(KillMe, LifeTime);
     }
+
     public void SavePlayerStats(string slot)
     {
         // GameObject TempPlayer = GameObject.FindGameObjectWithTag("Player");
         string json = JsonUtility.ToJson(PlayerStats.Instance);
-        
+
         PlayerPrefs.SetString(slot, json);
         // Check if string of slots is in there
-        if( PlayerPrefs.HasKey("SlotsNames")) {
+        if (PlayerPrefs.HasKey("SlotsNames"))
+        {
             Slots TempSlots = JsonUtility.FromJson<Slots>(PlayerPrefs.GetString("SlotsNames"));
             TempSlots.slots.Add(slot);
             json = JsonUtility.ToJson(TempSlots);
             PlayerPrefs.SetString("SlotsName", json);
-        } else {
-            Slots NSlots =  new Slots();
+        }
+        else
+        {
+            Slots NSlots = new Slots();
             NSlots.slots.Add(slot);
             json = JsonUtility.ToJson(NSlots);
             PlayerPrefs.SetString("SlotsName", json);
         }
     }
+
     public void LoadPlayerStats(string slot)
     {
         string json = PlayerPrefs.GetString(slot);
         PlayerStats.Instance = JsonUtility.FromJson<PlayerStats>(json);
     }
+
     public List<string> PlayerStatsKeys()
     {
-        if( PlayerPrefs.HasKey("SlotsNames")) {
+        if (PlayerPrefs.HasKey("SlotsNames"))
+        {
             Slots TempSlots = JsonUtility.FromJson<Slots>(PlayerPrefs.GetString("SlotsNames"));
             return TempSlots.slots;
         }
-        return new List<string>{"null"};
-    }
 
+        return new List<string> {"null"};
+    }
 }
+
 [System.Serializable]
 public class Slots
 {
