@@ -11,6 +11,7 @@ TagManager:
   - Enemy
   - Water
   - Projectile
+  - WinTrigger
   layers:
   - Default
   - TransparentFX
