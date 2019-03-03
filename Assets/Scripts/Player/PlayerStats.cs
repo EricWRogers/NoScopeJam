@@ -68,9 +68,18 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
-    public List<string> UnlockedGuns
+    public List<GunType> UnlockedGuns
     {
-        get { return _playerStatsData.unlockedGuns; }
+        get
+        {
+            List<GunType> gunTypes = new List<GunType>();
+            foreach (string gunName in _playerStatsData.unlockedGuns)
+            {
+                gunTypes.Add(GetGunType(gunName));
+            }
+
+            return gunTypes;
+        }
     }
 
     public static PlayerStats Instance = null;
