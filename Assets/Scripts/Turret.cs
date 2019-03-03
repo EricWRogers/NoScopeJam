@@ -10,13 +10,14 @@ public class Turret : MonoBehaviour
     public Transform turretBase, turretBox;
 
     public GameObject hitFX, deathFX;
+    public LineRenderer laserTrail;
 
     public float maxHealth;
     public float currentHealth;
 
     public Transform barrel1, barrel2, barrel3, barrel4;
     public int order;
-    public Transform targetLaser;
+    public Transform targetLaserEmit;
     public Animator anim;
 
     private void Start()
@@ -66,6 +67,8 @@ public class Turret : MonoBehaviour
         var _linefx = Instantiate(Resources.Load(currentGun.trailFX.name), currentBarrel.transform.position, currentBarrel.transform.rotation) as GameObject;
         _linefx.GetComponent<LineRenderer>().SetPosition(0, currentBarrel.position);
         _linefx.GetComponent<LineRenderer>().SetPosition(1, targetPos);
+
+
     }
 
     void RapidFire()
@@ -106,6 +109,14 @@ public class Turret : MonoBehaviour
         {
             Die();
         }
+
+
+        Vector3 direction = (GameManager.Instance.PlayerCurrentGO.transform.position - targetLaserEmit.transform.position).normalized;
+
+        Vector3 targetPos = targetLaserEmit.transform.position + (direction * currentGun.range);
+
+        laserTrail.SetPosition(0,targetLaserEmit.position);
+        laserTrail.SetPosition(1, targetPos);
     }
 
     private void FixedUpdate()
