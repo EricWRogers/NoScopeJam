@@ -19831,6 +19831,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7998901050218744110}
     - target: {fileID: 826129947, guid: 1e68bf66cbbb28d49b2d399066d2d828, type: 3}
+      propertyPath: currentGun
+      value: 
+      objectReference: {fileID: 11400000, guid: 32b0344200bae934bbcdc8e0e6ad18c2,
+        type: 2}
+    - target: {fileID: 826129947, guid: 1e68bf66cbbb28d49b2d399066d2d828, type: 3}
       propertyPath: turretBase
       value: 
       objectReference: {fileID: 3148075853582900811}
