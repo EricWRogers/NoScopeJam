@@ -1148,7 +1148,7 @@ Transform:
   m_LocalScale: {x: 0.86198, y: 0.80549, z: 0.82741}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &290601894 stripped
 GameObject:
@@ -1288,7 +1288,7 @@ PrefabInstance:
     - target: {fileID: 641431809629858255, guid: 3707f55182325524fbc5e96d4afe0b36,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 641431809629858255, guid: 3707f55182325524fbc5e96d4afe0b36,
         type: 3}
@@ -6819,7 +6819,7 @@ PrefabInstance:
     - target: {fileID: 962268488836131422, guid: 771da247b8f344631acdb891e240c5a5,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 962268488836131422, guid: 771da247b8f344631acdb891e240c5a5,
         type: 3}
@@ -6853,14 +6853,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 888048093451058380, guid: 771da247b8f344631acdb891e240c5a5,
         type: 3}
+      propertyPath: backGroundClips.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 888048093451058380, guid: 771da247b8f344631acdb891e240c5a5,
+        type: 3}
       propertyPath: backGroundClips.Array.data[0].audio
       value: 
-      objectReference: {fileID: 8300000, guid: 305da090c6d78f7d98b58e1dbf2bd12f, type: 3}
+      objectReference: {fileID: 8300000, guid: edc356aab5274934fb78a90dd2a6a4d8, type: 3}
     - target: {fileID: 888048093451058380, guid: 771da247b8f344631acdb891e240c5a5,
         type: 3}
       propertyPath: backGroundClips.Array.data[1].audio
       value: 
-      objectReference: {fileID: 8300000, guid: f756efee7d71b1e58a18e9fae07bb33a, type: 3}
+      objectReference: {fileID: 8300000, guid: 5b27fc8796315234e971a677e5347bdc, type: 3}
     - target: {fileID: 888048093451058380, guid: 771da247b8f344631acdb891e240c5a5,
         type: 3}
       propertyPath: backGroundClips.Array.data[2].audio
@@ -7320,6 +7325,40 @@ PrefabInstance:
     - target: {fileID: 1688111692, guid: 3ddf82ac18e044b569be1188530257f0, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1265885296, guid: 3ddf82ac18e044b569be1188530257f0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1235299330}
+    - target: {fileID: 1265885296, guid: 3ddf82ac18e044b569be1188530257f0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SoundMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 1339001666, guid: 3ddf82ac18e044b569be1188530257f0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1235299330}
+    - target: {fileID: 1339001666, guid: 3ddf82ac18e044b569be1188530257f0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ControlsMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 1628753724, guid: 3ddf82ac18e044b569be1188530257f0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1235299330}
+    - target: {fileID: 1628753724, guid: 3ddf82ac18e044b569be1188530257f0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OptionsBack
+      objectReference: {fileID: 0}
+    - target: {fileID: 8209329912077266599, guid: 3ddf82ac18e044b569be1188530257f0,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1235299330}
+    - target: {fileID: 8209329912077266599, guid: 3ddf82ac18e044b569be1188530257f0,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Options
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ddf82ac18e044b569be1188530257f0, type: 3}
@@ -8026,7 +8065,7 @@ PrefabInstance:
     - target: {fileID: 4495955490191056428, guid: b2d35c60834044574b9bc50d902aee76,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4495955490191056428, guid: b2d35c60834044574b9bc50d902aee76,
         type: 3}
@@ -8358,7 +8397,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1543572614
 GameObject:
@@ -12004,6 +12043,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1820445629874753081, guid: de7fe9c982e6b9c3a96e524d71dd1ab6,
         type: 3}
+      propertyPath: GunTypes.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1820445629874753081, guid: de7fe9c982e6b9c3a96e524d71dd1ab6,
+        type: 3}
       propertyPath: PlayerPrefabGO
       value: 
       objectReference: {fileID: 5582957672525363639, guid: 500478a17a8c8b94b9f44e0160ce1644,
@@ -12068,6 +12112,24 @@ PrefabInstance:
       propertyPath: PlayerCurrentGO
       value: 
       objectReference: {fileID: 4990437304434483832}
+    - target: {fileID: 1820445629874753081, guid: de7fe9c982e6b9c3a96e524d71dd1ab6,
+        type: 3}
+      propertyPath: GunTypes.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: f4c6946aa9d8f5549a5f526c7c648f08,
+        type: 2}
+    - target: {fileID: 1820445629874753081, guid: de7fe9c982e6b9c3a96e524d71dd1ab6,
+        type: 3}
+      propertyPath: GunTypes.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 28833355284396e439e4e7bc68a73d79,
+        type: 2}
+    - target: {fileID: 1820445629874753081, guid: de7fe9c982e6b9c3a96e524d71dd1ab6,
+        type: 3}
+      propertyPath: GunTypes.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 9367cfb4d011e0c4e8d1c1a7d9b7abe5,
+        type: 2}
     - target: {fileID: 2664294225556494581, guid: de7fe9c982e6b9c3a96e524d71dd1ab6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -12106,7 +12168,7 @@ PrefabInstance:
     - target: {fileID: 2664294225556494581, guid: de7fe9c982e6b9c3a96e524d71dd1ab6,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2664294225556494581, guid: de7fe9c982e6b9c3a96e524d71dd1ab6,
         type: 3}
@@ -12392,7 +12454,7 @@ PrefabInstance:
     - target: {fileID: 7209269055665153698, guid: 0028f8a1c65218efe939d2f9d8ca9f4e,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7209269055665153698, guid: 0028f8a1c65218efe939d2f9d8ca9f4e,
         type: 3}

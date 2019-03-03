@@ -12,6 +12,7 @@ public class PlayerShoot : MonoBehaviour
     public Transform barrel;
     public ParticleSystem muzzleFlash;
     public Animator anim;
+    private AudioSource audio;
     private bool isAiming;
     private bool triggerDown = false;
     public float aimingFOV;
@@ -24,6 +25,7 @@ public class PlayerShoot : MonoBehaviour
     private void Start()
     {
         originalFOV = Camera.main.fieldOfView;
+        audio = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -158,6 +160,9 @@ public class PlayerShoot : MonoBehaviour
     {
         if (canShoot)   
         {
+            audio.clip = currentGun.fireSFX;
+            audio.Play();
+
             PlayerStats.Instance.AddAmmoCount(GunType.Ammo.Bullets, -1);
             anim.SetTrigger("Fire");
             muzzleFlash.Play();
