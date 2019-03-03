@@ -7,7 +7,7 @@ public class Turret : MonoBehaviour
     public GunType currentGun;
 
     public Transform target;
-    public Transform turretBase;
+    public Transform turretBase, turretBox;
 
     public GameObject hitFX, deathFX;
 
@@ -26,7 +26,7 @@ public class Turret : MonoBehaviour
 
     private void Update()
     {
-        if(currentHealth >= 0)
+        if(currentHealth <= 0)
         {
             Die();
         }
@@ -41,12 +41,32 @@ public class Turret : MonoBehaviour
     {
         if(target != null)
         {
-            turretBase.LookAt(target);
+            turretBase.LookAt(target, turretBase.transform.up);
+            //turretBase.rotation = Quaternion.FromToRotation(turretBase.forward, (turretBase.position - target.position).normalized);
+            Vector3 currentYRot = turretBase.localRotation.eulerAngles;
+            Debug.Log(currentYRot);
+            currentYRot.x = 0;
+            currentYRot.z = 0;
+            turretBase.localRotation = Quaternion.Euler(currentYRot);
+
+            turretBase.LookAt(target, turretBase.transform.up);
+            //turretBase.rotation = Quaternion.FromToRotation(turretBase.forward, (turretBase.position - target.position).normalized);
+            Vector3 currentXRot = turretBase.localRotation.eulerAngles;
+            Debug.Log(currentXRot);
+            currentXRot.y = 0;
+            currentXRot.z = 0;
+            turretBox.localRotation = Quaternion.Euler(currentXRot);
+
+
+
+
         }
     }
 
-    public void TakeDamage(float _damage)
+    public void TakeDamage(float _damage, Vector3 _hitPos)
     {
+        Debug.Log("turret took damage");
+        var _fx = Instantiate(Resources.Load(hitFX.name), _hitPos, hitFX.transform.rotation) as GameObject;
         currentHealth = currentHealth - _damage;
     }
 

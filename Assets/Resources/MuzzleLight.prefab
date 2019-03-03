@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5483735886488830402}
   - component: {fileID: 5483735886488830405}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: MuzzleLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}

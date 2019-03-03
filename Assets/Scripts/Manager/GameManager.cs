@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour
     {
         CurrentLevelNumerator = slot;
         Instantiate(LevelsGOS[ slot ]);
+        AudioManager.Instance.SoundsEventTrigger(SoundEvents.BackGroundMusic, true);
     }
     private void DestoryLevel( float LifeTime, GameObject KillMe )
     {
