@@ -8,7 +8,7 @@ public class PlayerStats : MonoBehaviour
 {
     private class PlayerStatsData
     {
-        public float health;
+        public float health = 100;
         public int currentLevel;
         public Dictionary<GunType.Ammo, int> ammo = new Dictionary<GunType.Ammo, int>();
         public List<string> unlockedGuns = new List<string>();
