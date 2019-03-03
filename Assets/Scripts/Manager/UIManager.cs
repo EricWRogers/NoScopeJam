@@ -81,12 +81,14 @@ public class UIManager : MonoBehaviour
         {
             Settings();
             pauseEnable = true;
+            Cursor.lockState = CursorLockMode.None;
             Time.timeScale = 0;
         }
         else if (Input.GetKeyDown(KeyCode.Escape) && pauseEnable && outOfMenus)
         {
             OptionsBack();
             pauseEnable = false;
+            Cursor.lockState = CursorLockMode.Locked;
             Time.timeScale = 1;
         }
     }
@@ -104,6 +106,7 @@ public class UIManager : MonoBehaviour
         startMenu.SetActive(false);
         hud.SetActive(true);
         Time.timeScale = 1;
+        Cursor.lockState = CursorLockMode.Locked;
         outOfMenus = true;
     }
     public void Continue()
