@@ -26,6 +26,7 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
+    [Serializable]
     public class GameOverEvent : UnityEvent<bool>
     {
     }
