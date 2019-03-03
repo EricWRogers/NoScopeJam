@@ -91,12 +91,10 @@ public class PlayerShoot : MonoBehaviour
         Vector3 targetPos = barrel.transform.position + (direction * currentGun.range);
 
         int mask = int.MaxValue & ~(playerLayerMask | FPSLayerMask);
-        Debug.Log(System.Convert.ToString(mask, 2));
         if(Physics.Raycast(barrel.transform.position, Camera.main.transform.forward, out hit, currentGun.range, mask))
         {
             targetPos = hit.point;
-
-            Debug.Log(hit.collider.name);
+            
             if(hit.collider.tag != "Player")
             {
                 var _fx = Instantiate(Resources.Load(currentGun.hitFX.name), hit.point, Quaternion.LookRotation(hit.normal)) as GameObject;

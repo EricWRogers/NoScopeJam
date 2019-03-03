@@ -40,7 +40,6 @@ public class Turret : MonoBehaviour
 
         // Combining playerLayerMask and FPSLayerMask ( | ), inverting them (~), and removing from a filled bit mask(1111111....11)
         int mask = int.MaxValue & ~(enemyLayerMask);
-        Debug.Log(System.Convert.ToString(mask, 2));
 
         Vector3 direction = (GameManager.Instance.PlayerCurrentGO.transform.position - currentBarrel.transform.position).normalized;
 
@@ -50,8 +49,7 @@ public class Turret : MonoBehaviour
         if (Physics.Raycast(currentBarrel.transform.position, direction, out hit, currentGun.range, mask))
         {
             targetPos = hit.point;
-
-            Debug.Log(hit.collider.name);
+            
             if (hit.collider.tag != "Enemy")
             {
                 var _fx = Instantiate(Resources.Load(currentGun.hitFX.name), hit.point, Quaternion.LookRotation(hit.normal)) as GameObject;
@@ -100,7 +98,6 @@ public class Turret : MonoBehaviour
             turretBase.LookAt(target, turretBase.transform.up);
             //turretBase.rotation = Quaternion.FromToRotation(turretBase.forward, (turretBase.position - target.position).normalized);
             Vector3 currentYRot = turretBase.localRotation.eulerAngles;
-            Debug.Log(currentYRot);
             currentYRot.x = 0;
             currentYRot.z = 0;
             turretBase.localRotation = Quaternion.Euler(currentYRot);
@@ -108,7 +105,6 @@ public class Turret : MonoBehaviour
             turretBase.LookAt(target, turretBase.transform.up);
             //turretBase.rotation = Quaternion.FromToRotation(turretBase.forward, (turretBase.position - target.position).normalized);
             Vector3 currentXRot = turretBase.localRotation.eulerAngles;
-            Debug.Log(currentXRot);
             currentXRot.y = 0;
             currentXRot.z = 0;
             turretBox.localRotation = Quaternion.Euler(currentXRot);
@@ -126,7 +122,6 @@ public class Turret : MonoBehaviour
     public void Die()
     {
         var _fx = Instantiate(Resources.Load(deathFX.name), this.transform.position, this.transform.rotation) as GameObject;
-        //
         Destroy(this.gameObject);
 
     }
