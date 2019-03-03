@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     private int CurrentLevelNumerator;
     public bool ShowAllLevels = false;
     public bool WorkingOnLevel = false;
+    public bool StartFromMain = false;
     public static GameManager Instance;
     private void Awake()
     {
@@ -26,6 +27,20 @@ public class GameManager : MonoBehaviour
         CurrentLevelNumerator = StartLevelNumerator;
         // Load PlayerPref
 
+        if ( !StartFromMain ) {
+            NewGame();
+        }
+    }
+    private void Start()
+    {
+        
+    }
+    private void Update()
+    {
+        
+    }
+    public void NewGame()
+    {
         // SpawnLevels
         if ( !WorkingOnLevel ) {
             if ( ShowAllLevels ) {
@@ -42,15 +57,11 @@ public class GameManager : MonoBehaviour
             // SpawnPlayer
             PlayerCurrentGO = Instantiate(PlayerPrefabGO, CheckPointsGOS[StartLevelNumerator].transform.position,
                 Quaternion.identity);
+            
+            // Deactivate Camera
+            GameObject Camera = GameObject.FindGameObjectWithTag("MainCamera");
+            Camera.SetActive(false);
         }
-    }
-    private void Start()
-    {
-        
-    }
-    private void Update()
-    {
-        
     }
     private void LoadLevel( int slot )
     {
