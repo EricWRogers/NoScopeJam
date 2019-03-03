@@ -1,18 +1,18 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Pickup : MonoBehaviour
+public abstract class Pickup : MonoBehaviour
 {
-     public float Radius;
-     public float FollowSpeed;
-     public UnityEvent OnPickedUp;
+     public float Radius = 30;
+     public float FollowSpeed = 2;
+     public UnityEvent OnPickedUpEvent;
      
      private GameObject _player;
      private bool followPlayer = false;
 
      private void Start()
      {
-          _player = GameManager.Instance.PlayerPrefabGO;
+          _player = GameManager.Instance.PlayerCurrentGO;
      }
      
      private void OnDrawGizmos()
@@ -24,6 +24,7 @@ public class Pickup : MonoBehaviour
 
      private void Update()
      {
+          Debug.Log("Dist: " + Vector3.Distance(transform.position, _player.transform.position));
           if (_player && Vector3.Distance(transform.position, _player.transform.position) < Radius)
           {
                followPlayer = true;
@@ -31,6 +32,7 @@ public class Pickup : MonoBehaviour
 
           if (followPlayer)
           {
+               Debug.Log("Following Player");
                transform.position = Vector3.Lerp(transform.position, _player.transform.position, Time.deltaTime * FollowSpeed);
           }
      }
@@ -39,8 +41,11 @@ public class Pickup : MonoBehaviour
      {
           if (other.CompareTag("Player"))
           {
-               OnPickedUp.Invoke();
+               OnPickedUp();
+               OnPickedUpEvent.Invoke();
                Destroy(this.gameObject);
           }
      }
+
+     public abstract void OnPickedUp();
 }

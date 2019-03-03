@@ -142,12 +142,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 8209329911906972143}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1827793121 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3748596897949394764, guid: 3ddf82ac18e044b569be1188530257f0,
-    type: 3}
-  m_PrefabInstance: {fileID: 8209329911906972143}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1997396416
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,7 +198,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1792
+    m_Bits: 1824
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -556,11 +550,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: HudCanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 1596678980793303082, guid: 244b8717e387c41069eb8743bf0c1534,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1596678980793303081, guid: 244b8717e387c41069eb8743bf0c1534,
         type: 3}
       propertyPath: m_Camera
@@ -594,7 +583,7 @@ PrefabInstance:
         type: 3}
       propertyPath: loadSaveMenu
       value: 
-      objectReference: {fileID: 1827793121}
+      objectReference: {fileID: 0}
     - target: {fileID: 2073072495843712000, guid: b2d35c60834044574b9bc50d902aee76,
         type: 3}
       propertyPath: saveQuitButtton
@@ -792,10 +781,6 @@ PrefabInstance:
       objectReference: {fileID: 538416202}
     - target: {fileID: 8209329912225979711, guid: 3ddf82ac18e044b569be1188530257f0,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 538416202}
-    - target: {fileID: 231424867, guid: 3ddf82ac18e044b569be1188530257f0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 538416202}
