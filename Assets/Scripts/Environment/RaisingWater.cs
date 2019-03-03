@@ -42,6 +42,11 @@ public class RaisingWater : MonoBehaviour
                 break;
         }
     }
+    
+    public void InitRaisingWater()
+    {
+        _waterState = WaterState.Raising;
+    }
 
     public void InitDrainWater()
     {
