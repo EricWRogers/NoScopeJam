@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public bool ShowAllLevels = false;
     public bool WorkingOnLevel = false;
     public bool StartFromMain = false;
+    public bool SpawnPlayer = false;
     public static GameManager Instance;
 
     private const string defaultSlotName = "default";
@@ -56,7 +57,7 @@ public class GameManager : MonoBehaviour
         {
             if (ShowAllLevels)
             {
-                for (int i = LevelsGOS.Length - 1; i > -1; i--)
+                for (int i = 0; i < LevelsGOS.Length; i++)
                 {
                     LoadLevel(i);
                 }
@@ -70,8 +71,12 @@ public class GameManager : MonoBehaviour
         if (PlayerPrefabGO)
         {
             // SpawnPlayer
-            PlayerCurrentGO = Instantiate(PlayerPrefabGO, CheckPointsGOS[StartLevelNumerator].transform.position,
+            if(SpawnPlayer)
+            {
+                PlayerCurrentGO = Instantiate(PlayerPrefabGO, CheckPointsGOS[StartLevelNumerator].transform.position,
                 Quaternion.identity);
+            }
+            
 
             // Deactivate Camera
             if (StartFromMain)
@@ -80,6 +85,9 @@ public class GameManager : MonoBehaviour
                 Camera.SetActive(false);
             }
         }
+
+        PlayerStats.Instance.playerStatsData.reset();
+        RaisingWater.Instance.InitRaisingWater();
     }
 
     private void LoadLevel(int slot)
