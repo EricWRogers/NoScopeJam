@@ -53,6 +53,9 @@ MonoBehaviour:
   masterVolume: {fileID: 0}
   backgroundVolume: {fileID: 0}
   fxVolume: {fileID: 0}
+  helpingObject: {fileID: 0}
+  helpingTextAnim: {fileID: 0}
+  helpfulText: {fileID: 0}
   audioManager: {fileID: 0}
 --- !u!82 &5217489772860649492
 AudioSource:

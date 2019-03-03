@@ -16,19 +16,39 @@ public class UIManager : MonoBehaviour
     public Slider backgroundVolume;
     public Slider fxVolume;
 
+    public GameObject helpingObject;
+    public Animator helpingTextAnim;
+    public Text helpfulText;
+    private bool animPlaying;
+    private float helpingTimer = 0f;
+
     public AudioManager audioManager;
 
     private bool fromStartMenu = false;
-    // Start is called before the first frame update
+
+
     void Start()
     {
-        
+        helpingTextAnim = helpingObject.GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (animPlaying)
+        {
+            if (helpingTimer > 0f)
+            {
+                helpingTimer -= Time.deltaTime;
+                if (helpingTimer < 0f)
+                {
+                    helpingTextAnim.SetTrigger("IN");
+                    helpingTextAnim.ResetTrigger("OUT");
+                    helpingTimer = 0f;
+                    animPlaying = false;
+                }
+            }
+        }
     }
 
     public void NewGame()
@@ -89,5 +109,14 @@ public class UIManager : MonoBehaviour
     {
         controlsMenu.SetActive(true);
         soundsMenu.SetActive(false);
+    }
+
+    public void HelpText(string message)
+    {
+        animPlaying = true;
+        helpfulText.text = message;
+        helpingTextAnim.SetTrigger("OUT");
+        helpingTextAnim.ResetTrigger("IN");
+        helpingTimer = 10f;
     }
 }

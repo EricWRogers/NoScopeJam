@@ -19,4 +19,4 @@ MonoBehaviour:
   damage: 0.0025
   range: 500
   plasmaSpeed: 0
-  fireRate: 1
+  fireRate: 0.25
