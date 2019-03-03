@@ -53,7 +53,10 @@ public class UIManager : MonoBehaviour
         }
         Time.timeScale = 0;
     }
-
+    public bool OutofMenu
+    {
+        get { return outOfMenus; }
+    }
     void Start()
     {
         helpingTextAnim = helpingObject.GetComponent<Animator>();
@@ -81,14 +84,17 @@ public class UIManager : MonoBehaviour
         {
             Settings();
             pauseEnable = true;
+            outOfMenus = false;
             Cursor.lockState = CursorLockMode.None;
             Time.timeScale = 0;
         }
-        else if (Input.GetKeyDown(KeyCode.Escape) && pauseEnable && outOfMenus)
+        else if (Input.GetKeyDown(KeyCode.Escape) && pauseEnable && !outOfMenus)
         {
             OptionsBack();
             pauseEnable = false;
+            outOfMenus = true;
             Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
             Time.timeScale = 1;
         }
     }
@@ -99,6 +105,7 @@ public class UIManager : MonoBehaviour
         ammoText.text = "" + PlayerStats.Instance.CurrentAmmo;
 
         boostMeter.fillAmount = PlayerStats.Instance.ThrusterCharge;
+
     }
 
     public void NewGame()
