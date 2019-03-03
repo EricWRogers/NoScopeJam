@@ -18,7 +18,7 @@ public class Turret : MonoBehaviour
     
     public float maxHealth;
     private float currentHealth;
-
+    private AudioSource audio;
     public Transform barrel1, barrel2, barrel3, barrel4;
     private int order;
     public float maxAgroTime = 5f;
@@ -37,6 +37,7 @@ public class Turret : MonoBehaviour
 
     private void Start()
     {
+        audio = GetComponent<AudioSource>();
         currentHealth = maxHealth;
         currentAgroTime = 0;
         turretActive = false;
@@ -86,6 +87,9 @@ public class Turret : MonoBehaviour
 
     void Shoot(Transform currentBarrel)
     {
+        audio.clip = currentGun.fireSFX;
+        audio.Play();
+
         Debug.Log("Turret shoot");
 
         if (canShoot)
