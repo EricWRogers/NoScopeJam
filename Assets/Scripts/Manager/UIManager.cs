@@ -28,6 +28,10 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI littleGameOverText;
     public GameObject gameOverMenu;
 
+    public Text healthText;
+    public Text ammoText;
+    public Image boostMeter;
+
     private bool pauseEnable = false;
     private bool outOfMenus = false;
 
@@ -47,6 +51,7 @@ public class UIManager : MonoBehaviour
             Destroy(this.gameObject);
             return;
         }
+        Time.timeScale = 0;
     }
 
     void Start()
@@ -86,16 +91,26 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        healthText.text = "" + PlayerStats.Instance.Health;
+        ammoText.text = "" + PlayerStats.Instance.CurrentAmmo;
+
+        boostMeter.fillAmount = PlayerStats.Instance.ThrusterCharge;
+    }
+
     public void NewGame()
     {
         startMenu.SetActive(false);
         hud.SetActive(true);
+        Time.timeScale = 1;
         outOfMenus = true;
     }
     public void Continue()
     {
         startMenu.SetActive(false);
         hud.SetActive(true);
+        Time.timeScale = 1;
         outOfMenus = true;
     }
     public void Options()

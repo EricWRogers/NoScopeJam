@@ -59,6 +59,9 @@ MonoBehaviour:
   bigGameOverText: {fileID: 0}
   littleGameOverText: {fileID: 0}
   gameOverMenu: {fileID: 0}
+  healthText: {fileID: 0}
+  ammoText: {fileID: 0}
+  boostMeter: {fileID: 0}
   audioManager: {fileID: 0}
 --- !u!82 &5217489772860649492
 AudioSource:

@@ -136,6 +136,18 @@ MonoBehaviour:
   m_Script: {fileID: -113659843, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &391764562 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 42648132, guid: 244b8717e387c41069eb8743bf0c1534,
+    type: 3}
+  m_PrefabInstance: {fileID: 1596678981378014950}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &419632346 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2067651684, guid: 3ddf82ac18e044b569be1188530257f0,
@@ -182,6 +194,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a8aaf99645502456ebf06d94d8717e3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1008422907 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1596678979831147968, guid: 244b8717e387c41069eb8743bf0c1534,
+    type: 3}
+  m_PrefabInstance: {fileID: 1596678981378014950}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1069145729 stripped
@@ -244,6 +268,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 8209329911906972143}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1870748917 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1596678981466877080, guid: 244b8717e387c41069eb8743bf0c1534,
+    type: 3}
+  m_PrefabInstance: {fileID: 1596678981378014950}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1997396416
 GameObject:
   m_ObjectHideFlags: 0
@@ -759,6 +795,21 @@ PrefabInstance:
       propertyPath: gameOverMenu
       value: 
       objectReference: {fileID: 1069145729}
+    - target: {fileID: 2073072495843712000, guid: b2d35c60834044574b9bc50d902aee76,
+        type: 3}
+      propertyPath: healthText
+      value: 
+      objectReference: {fileID: 1870748917}
+    - target: {fileID: 2073072495843712000, guid: b2d35c60834044574b9bc50d902aee76,
+        type: 3}
+      propertyPath: ammoText
+      value: 
+      objectReference: {fileID: 1008422907}
+    - target: {fileID: 2073072495843712000, guid: b2d35c60834044574b9bc50d902aee76,
+        type: 3}
+      propertyPath: boostMeter
+      value: 
+      objectReference: {fileID: 391764562}
     - target: {fileID: 2073072495843712000, guid: b2d35c60834044574b9bc50d902aee76,
         type: 3}
       propertyPath: audioManager
