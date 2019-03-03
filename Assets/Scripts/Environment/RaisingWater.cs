@@ -67,7 +67,7 @@ public class RaisingWater : MonoBehaviour
     private void DrainWater()
     {
         Vector3 targetPosition = transform.position;
-        targetPosition.y += WaterDrainSpeed;
+        targetPosition.y -= WaterDrainSpeed;
 
         if (targetPosition.y < startYPos)
         {
