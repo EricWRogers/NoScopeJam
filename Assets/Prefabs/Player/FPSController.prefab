@@ -9813,7 +9813,7 @@ MonoBehaviour:
   _thrusterWallImpluse: 2000
   _thrusterChargeDepletionRate: 60
   _thrusterRechargeRate: 0
-  _rechargeThrusterOnWallRun: 0
+  _rechargeThrusterOnWallRun: 1
   _slidingSpeed: 7000
   _slidingChargeDepletionRate: 150
   _slidingRechargeRate: 50
