@@ -9,6 +9,11 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(AudioSource))]
 public class CustomFirstPersonController : MonoBehaviour
 {
+    public float ThrusterChargeLeft
+    {
+        get { return _thrusterChargeLeft; }
+    }
+
     [SerializeField] private bool m_IsWalking;
     [SerializeField] private float m_WalkSpeed;
     [SerializeField] private float m_RunSpeed;

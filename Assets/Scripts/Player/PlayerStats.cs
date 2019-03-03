@@ -24,6 +24,50 @@ public class PlayerStats : MonoBehaviour
         get { return _playerStatsData.health; }
     }
 
+    public float ThrusterCharge
+    {
+        get
+        {
+            if (GameManager.Instance.PlayerCurrentGO)
+            {
+                return GameManager.Instance.PlayerCurrentGO.GetComponent<CustomFirstPersonController>()
+                    .ThrusterChargeLeft;
+            }
+
+            return 0;
+        }
+    }
+
+    public int CurrentAmmo
+    {
+        get
+        {
+            if (GameManager.Instance.PlayerCurrentGO)
+            {
+                GunType gunType = CurrentGun;
+                if (gunType)
+                {
+                    return GetAmmoCount(gunType.ammo);
+                }
+            }
+
+            return 0;
+        }
+    }
+
+    public GunType CurrentGun
+    {
+        get
+        {
+            if (GameManager.Instance.PlayerCurrentGO)
+            {
+                return GameManager.Instance.PlayerCurrentGO.GetComponent<PlayerShoot>().currentGun;
+            }
+
+            return null;
+        }
+    }
+
     public List<string> UnlockedGuns
     {
         get { return _playerStatsData.unlockedGuns; }
@@ -32,7 +76,9 @@ public class PlayerStats : MonoBehaviour
     public static PlayerStats Instance = null;
 
     [SerializeField] [ReadOnly] private PlayerStatsData _playerStatsData = new PlayerStatsData();
+    private CustomFirstPersonController _customFirstPersonController;
     private float nextRechargableTime = float.MinValue;
+
 
     public void Awake()
     {
@@ -43,6 +89,7 @@ public class PlayerStats : MonoBehaviour
         else
         {
             Destroy(this.gameObject);
+            return;
         }
     }
 
@@ -50,7 +97,7 @@ public class PlayerStats : MonoBehaviour
     {
         if (_playerStatsData.health < 100f && Time.time > nextRechargableTime)
         {
-            _playerStatsData.health += healthRechargeRate * Time.deltaTime;
+            UpdateHealth(healthRechargeRate * Time.deltaTime);
         }
     }
 
@@ -86,6 +133,19 @@ public class PlayerStats : MonoBehaviour
     public void OnNewLevelReached(int newLevel)
     {
         _playerStatsData.currentLevel = newLevel;
+    }
+
+    public GunType GetGunType(string name)
+    {
+        foreach (GunType gunType in GameManager.Instance.GunTypes)
+        {
+            if (gunType.name == name)
+            {
+                return gunType;
+            }
+        }
+
+        return null;
     }
 
     public void OnGunTypeUnlocked(string gunTypeName)
