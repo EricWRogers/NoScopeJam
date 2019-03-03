@@ -59,6 +59,7 @@ MonoBehaviour:
   bigGameOverText: {fileID: 0}
   littleGameOverText: {fileID: 0}
   gameOverMenu: {fileID: 0}
+  gunType: {fileID: 0}
   healthText: {fileID: 0}
   ammoText: {fileID: 0}
   boostMeter: {fileID: 0}

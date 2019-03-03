@@ -28,6 +28,9 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI littleGameOverText;
     public GameObject gameOverMenu;
 
+    private float lerpTime =0f;
+
+    public Image gunType;
     public Text healthText;
     public Text ammoText;
     public Image boostMeter;
@@ -95,16 +98,20 @@ public class UIManager : MonoBehaviour
             outOfMenus = true;
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-            Time.timeScale = 1;
         }
     }
 
     private void FixedUpdate()
     {
+        gunType.sprite = PlayerStats.Instance.CurrentGun.image;
         healthText.text = "" + PlayerStats.Instance.Health;
         ammoText.text = "" + PlayerStats.Instance.CurrentAmmo;
-
-        boostMeter.fillAmount = PlayerStats.Instance.ThrusterCharge;
+        boostMeter.fillAmount = Mathf.Lerp(boostMeter.fillAmount, PlayerStats.Instance.ThrusterCharge, lerpTime);
+        lerpTime += Time.deltaTime;
+        if (lerpTime > 1.0f)
+        {
+            lerpTime = 0f;
+        }
 
     }
 
@@ -142,6 +149,7 @@ public class UIManager : MonoBehaviour
         optionsMenu.SetActive(false);
         soundsMenu.SetActive(false);
         controlsMenu.SetActive(false);
+        Time.timeScale = 1;
         if (fromStartMenu)
         {
             startMenu.SetActive(true);
