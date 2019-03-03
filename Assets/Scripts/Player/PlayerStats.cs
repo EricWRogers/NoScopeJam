@@ -1,14 +1,25 @@
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using UnityEngine;
 
 [Serializable]
 public class PlayerStats : MonoBehaviour
 {
-    public float health { get; private set; }
-    private Dictionary<GunType.Ammo, int> ammo = new Dictionary<GunType.Ammo, int>();
+    private class PlayerStatsData
+    {
+        public float health;
+        public Dictionary<GunType.Ammo, int> ammo = new Dictionary<GunType.Ammo, int>();
+    }
+
+    public float Health
+    {
+        get { return _playerStatsData.health; }
+    }
 
     public static PlayerStats Instance = null;
+
+    private PlayerStatsData _playerStatsData = new PlayerStatsData();
 
     public void Awake()
     {
@@ -24,25 +35,30 @@ public class PlayerStats : MonoBehaviour
 
     public void AddAmmoCount(GunType.Ammo ammoType, int ammoCount)
     {
-        if (!ammo.ContainsKey(ammoType))
+        if (!_playerStatsData.ammo.ContainsKey(ammoType))
         {
-            ammo[ammoType] = 0;
+            _playerStatsData.ammo[ammoType] = 0;
         }
 
-        ammo[ammoType] += ammoCount;
+        _playerStatsData.ammo[ammoType] += ammoCount;
     }
 
     public int GetAmmoCount(GunType.Ammo ammoType)
     {
         int ammoCount = 0;
-        ammo.TryGetValue(ammoType, out ammoCount);
+        _playerStatsData.ammo.TryGetValue(ammoType, out ammoCount);
 
         return ammoCount;
     }
 
     public void UpdateHealth(float updateAmount)
     {
-        health += updateAmount;
-        health = Mathf.Clamp(health, 0, 100);
+        _playerStatsData.health += updateAmount;
+        _playerStatsData.health = Mathf.Clamp(_playerStatsData.health, 0, 100);
+    }
+
+    public string GetJsonString()
+    {
+        return JsonConvert.SerializeObject(_playerStatsData);
     }
 }

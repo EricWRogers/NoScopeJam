@@ -44,6 +44,8 @@ public abstract class Pickup : MonoBehaviour
                OnPickedUp();
                OnPickedUpEvent.Invoke();
                Destroy(this.gameObject);
+               
+//               Debug.Log(PlayerStats.Instance.GetJsonString());
           }
      }
 
