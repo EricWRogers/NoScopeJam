@@ -80,6 +80,8 @@ public class GameManager : MonoBehaviour
                 Camera.SetActive(false);
             }
         }
+        
+        RaisingWater.Instance.InitRaisingWater();
     }
 
     private void LoadLevel(int slot)

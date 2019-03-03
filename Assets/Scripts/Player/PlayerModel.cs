@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class PlayerModel : MonoBehaviour
 {
+    public Camera fpsCamera;
+
     void Die()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
