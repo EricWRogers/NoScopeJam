@@ -8,11 +8,13 @@ using TMPro;
 public class UIManager : MonoBehaviour
 {
     public GameObject startMenu;
+    public GameObject creditMenu;
     public GameObject optionsMenu;
     public GameObject soundsMenu;
     public GameObject controlsMenu;
     public GameObject startMenuButton;
     public GameObject hud;
+    public GameObject hudCanvas;
 
     public Slider masterVolume;
     public Slider backgroundVolume;
@@ -63,6 +65,7 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         helpingTextAnim = helpingObject.GetComponent<Animator>();
+        hudCanvas.SetActive(false);
     }
 
     // Update is called once per frame
@@ -104,8 +107,8 @@ public class UIManager : MonoBehaviour
     private void FixedUpdate()
     {
         gunType.sprite = PlayerStats.Instance.CurrentGun.image;
-        healthText.text = "" + PlayerStats.Instance.Health;
-        ammoText.text = "" + PlayerStats.Instance.CurrentAmmo;
+        healthText.text = "" + PlayerStats.Instance.Health.ToString("F0");
+        ammoText.text = "" + PlayerStats.Instance.CurrentAmmo.ToString("F0");
         boostMeter.fillAmount = Mathf.Lerp(boostMeter.fillAmount, PlayerStats.Instance.ThrusterCharge, lerpTime);
         lerpTime += Time.deltaTime;
         if (lerpTime > 1.0f)
@@ -115,20 +118,25 @@ public class UIManager : MonoBehaviour
 
     }
 
-    public void NewGame()
+    public void PlayGame()
     {
+        hudCanvas.SetActive(true);
         startMenu.SetActive(false);
         hud.SetActive(true);
         Time.timeScale = 1;
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         outOfMenus = true;
     }
-    public void Continue()
+    public void Credits()
     {
         startMenu.SetActive(false);
-        hud.SetActive(true);
-        Time.timeScale = 1;
-        outOfMenus = true;
+        creditMenu.SetActive(true);
+    }
+    public void CreditsBack()
+    {
+        startMenu.SetActive(true);
+        creditMenu.SetActive(false);
     }
     public void Options()
     {
