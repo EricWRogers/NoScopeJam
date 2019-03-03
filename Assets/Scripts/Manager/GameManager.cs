@@ -6,90 +6,153 @@ public class GameManager : MonoBehaviour
 {
     public GameObject[] LevelsGOS;
     public GameObject[] CheckPointsGOS;
+    public GunType[] GunTypes;
     public GameObject PlayerPrefabGO;
-    private GameObject PlayerCurrentGO;
+    public GameObject PlayerCurrentGO;
     private GameObject CurrentLevelGO;
     public int StartLevelNumerator;
     private int CurrentLevelNumerator;
     public bool ShowAllLevels = false;
     public bool WorkingOnLevel = false;
+    public bool StartFromMain = false;
     public static GameManager Instance;
+
+    private const string defaultSlotName = "default";
+
     private void Awake()
     {
-        if(Instance == null) {
+        if (Instance == null)
+        {
             Instance = this;
-        }else{
+        }
+        else
+        {
             Destroy(this.gameObject);
             return;
         }
+
         // Set Current Level
         CurrentLevelNumerator = StartLevelNumerator;
         // Load PlayerPref
 
-        // SpawnLevels
-        if ( !WorkingOnLevel ) {
-            if ( ShowAllLevels ) {
-                for ( int i = LevelsGOS.Length - 1; i > -1; i-- ) {
-                    LoadLevel( i );
-                }
-            } else {
-                LoadLevel( StartLevelNumerator );
-            }
+        if (!StartFromMain)
+        {
+            NewGame();
         }
-        // SpawnPlayer
-        PlayerCurrentGO = Instantiate( PlayerPrefabGO, CheckPointsGOS[ StartLevelNumerator ].transform.position, Quaternion.identity );
     }
+
     private void Start()
     {
-        
     }
+
     private void Update()
     {
-        
     }
-    private void LoadLevel( int slot )
+
+    public void NewGame()
+    {
+        // SpawnLevels
+        if (!WorkingOnLevel)
+        {
+            if (ShowAllLevels)
+            {
+                for (int i = LevelsGOS.Length - 1; i > -1; i--)
+                {
+                    LoadLevel(i);
+                }
+            }
+            else
+            {
+                LoadLevel(StartLevelNumerator);
+            }
+        }
+
+        if (PlayerPrefabGO)
+        {
+            // SpawnPlayer
+            PlayerCurrentGO = Instantiate(PlayerPrefabGO, CheckPointsGOS[StartLevelNumerator].transform.position,
+                Quaternion.identity);
+
+            // Deactivate Camera
+            if (StartFromMain)
+            {
+                GameObject Camera = GameObject.FindGameObjectWithTag("MainMenuCamera");
+                Camera.SetActive(false);
+            }
+        }
+    }
+
+    private void LoadLevel(int slot)
     {
         CurrentLevelNumerator = slot;
-        Instantiate(LevelsGOS[ slot ]);
+        Instantiate(LevelsGOS[slot]);
+        AudioManager.Instance.SoundsEventTrigger(SoundEvents.BackGroundMusic, true);
     }
-    private void DestoryLevel( float LifeTime, GameObject KillMe )
+
+    private void DestoryLevel(float LifeTime, GameObject KillMe)
     {
         Destroy(KillMe, LifeTime);
     }
+
     public void SavePlayerStats(string slot)
     {
         // GameObject TempPlayer = GameObject.FindGameObjectWithTag("Player");
-        string json = JsonUtility.ToJson(PlayerStats.Instance);
-        
+        string json = PlayerStats.Instance.GetJsonString();
+
         PlayerPrefs.SetString(slot, json);
         // Check if string of slots is in there
-        if( PlayerPrefs.HasKey("SlotsNames")) {
+        if (PlayerPrefs.HasKey("SlotsNames"))
+        {
             Slots TempSlots = JsonUtility.FromJson<Slots>(PlayerPrefs.GetString("SlotsNames"));
             TempSlots.slots.Add(slot);
             json = JsonUtility.ToJson(TempSlots);
-            PlayerPrefs.SetString("SlotsName", json);
-        } else {
-            Slots NSlots =  new Slots();
+            PlayerPrefs.SetString("SlotsNames", json);
+        }
+        else
+        {
+            Slots NSlots = new Slots();
             NSlots.slots.Add(slot);
             json = JsonUtility.ToJson(NSlots);
-            PlayerPrefs.SetString("SlotsName", json);
+            PlayerPrefs.SetString("SlotsNames", json);
         }
     }
+
     public void LoadPlayerStats(string slot)
     {
-        string json = PlayerPrefs.GetString(slot);
-        PlayerStats.Instance = JsonUtility.FromJson<PlayerStats>(json);
+        if (PlayerPrefs.HasKey(slot))
+        {
+            string json = PlayerPrefs.GetString(slot);
+            PlayerStats.Instance.LoadFromJsonString(json);
+        }
     }
+
+    public void SaveDefaultPlayerStats()
+    {
+        SavePlayerStats(defaultSlotName);
+    }
+
+    public void LoadDefaultPlayerStats()
+    {
+        LoadPlayerStats(defaultSlotName);
+    }
+
+    public bool HasASlot()
+    {
+        return PlayerStatsKeys().Count > 0;
+    }
+
     public List<string> PlayerStatsKeys()
     {
-        if( PlayerPrefs.HasKey("SlotsNames")) {
+        if (PlayerPrefs.HasKey("SlotsNames"))
+        {
             Slots TempSlots = JsonUtility.FromJson<Slots>(PlayerPrefs.GetString("SlotsNames"));
             return TempSlots.slots;
         }
-        return new List<string>{"null"};
-    }
 
+        return new List<string>();
+    }
 }
+
 [System.Serializable]
 public class Slots
 {
