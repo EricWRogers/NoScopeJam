@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
@@ -22,6 +23,10 @@ public class UIManager : MonoBehaviour
     public Text helpfulText;
     private bool animPlaying;
     private float helpingTimer = 0f;
+
+    public TextMeshProUGUI bigGameOverText;
+    public TextMeshProUGUI littleGameOverText;
+    public GameObject gameOverMenu;
 
     private bool pauseEnable = false;
     private bool outOfMenus = false;
@@ -154,6 +159,22 @@ public class UIManager : MonoBehaviour
     public void StartMenu()
     {
 
+    }
+
+    public void GameOver(bool isWin)
+    {
+        if (isWin)
+        {
+            bigGameOverText.text = "Congradulations!";
+            littleGameOverText.text = "You won!";
+            gameOverMenu.SetActive(true);
+        }
+        else
+        {
+            bigGameOverText.text = "Game Over!";
+            littleGameOverText.text = "Try again.";
+            gameOverMenu.SetActive(true);
+        }
     }
 
 }

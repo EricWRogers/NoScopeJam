@@ -56,6 +56,9 @@ MonoBehaviour:
   helpingObject: {fileID: 0}
   helpingTextAnim: {fileID: 0}
   helpfulText: {fileID: 0}
+  bigGameOverText: {fileID: 0}
+  littleGameOverText: {fileID: 0}
+  gameOverMenu: {fileID: 0}
   audioManager: {fileID: 0}
 --- !u!82 &5217489772860649492
 AudioSource:
