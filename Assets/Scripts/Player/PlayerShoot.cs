@@ -6,14 +6,19 @@ using UnityEngine;
 public class PlayerShoot : MonoBehaviour
 {
     public GunType currentGun;
+    private int gunIndex = 0;
+
     public Camera WeaponCamera;
     public Transform barrel;
     public ParticleSystem muzzleFlash;
     public Animator anim;
     private bool isAiming;
+    private bool triggerDown = false;
     public float aimingFOV;
     public float aimTime;
     private float originalFOV;
+    
+
 
     private void Start()
     {
@@ -26,7 +31,35 @@ public class PlayerShoot : MonoBehaviour
 
         AimEffects();
 
-        if(CrossPlatformInputManager.GetButtonDown("Fire1"))
+
+        if (CrossPlatformInputManager.GetAxis("Fire1") > 0.25)
+        {
+            if (!triggerDown)
+            {
+                switch (currentGun.mode)
+                {
+                    case GunType.FiringMode.Auto:
+                        RapidFire();
+                        break;
+                    case GunType.FiringMode.Single:
+                        Shoot();
+                        break;
+                }
+
+                triggerDown = true;
+            }
+        }
+        if (CrossPlatformInputManager.GetAxis("Fire1") < 0.25)
+        {
+            if (triggerDown)
+            {
+                CancelInvoke("Shoot");
+                triggerDown = false;
+            }
+        }
+        
+
+        if (CrossPlatformInputManager.GetButtonDown("Fire1"))
         {
             switch (currentGun.mode)
             {
@@ -42,14 +75,35 @@ public class PlayerShoot : MonoBehaviour
         {
             CancelInvoke("Shoot");
         }
-        if (CrossPlatformInputManager.GetButton("Aim"))
+        if (CrossPlatformInputManager.GetButton("Aim") || CrossPlatformInputManager.GetAxis("Fire2") > 0.25f)
         {
             isAiming = true;
         }
-        if(isAiming && CrossPlatformInputManager.GetButtonUp("Aim"))
+        if(isAiming && CrossPlatformInputManager.GetButtonUp("Aim") || CrossPlatformInputManager.GetAxis("Fire2") < 0.25f)
         {
             isAiming = false;
         }
+
+        if(CrossPlatformInputManager.GetButtonUp("Swap Weapon"))
+        {
+            SwitchWeapon();
+        }
+
+    }
+
+    void SwitchWeapon()
+    {
+        GunType[] unlockedGuns = PlayerStats.Instance.UnlockedGunTypes.ToArray();
+
+        gunIndex++;
+
+        if(gunIndex >= unlockedGuns.Length)
+        {
+            gunIndex = 0;
+        }
+
+        currentGun = unlockedGuns[gunIndex];
+
     }
 
     void AimEffects()
