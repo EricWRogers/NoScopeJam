@@ -91,18 +91,11 @@ public class UIManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape) && !pauseEnable && outOfMenus)
         {
             Settings();
-            pauseEnable = true;
-            outOfMenus = false;
-            Cursor.lockState = CursorLockMode.None;
-            Time.timeScale = 0;
+
         }
         else if (Input.GetKeyDown(KeyCode.Escape) && pauseEnable && !outOfMenus)
         {
             OptionsBack();
-            pauseEnable = false;
-            outOfMenus = true;
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
         }
     }
 
@@ -152,14 +145,26 @@ public class UIManager : MonoBehaviour
         optionsMenu.SetActive(true);
         fromStartMenu = false;
         startMenuButton.SetActive(true);
+        pauseEnable = true;
+        outOfMenus = false;
+        Cursor.lockState = CursorLockMode.None;
+        Time.timeScale = 0;
     }
 
     public void OptionsBack()
     {
+        if (pauseEnable)
+        {
+            Time.timeScale = 1;
+            outOfMenus = true;
+            pauseEnable = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
         optionsMenu.SetActive(false);
         soundsMenu.SetActive(false);
         controlsMenu.SetActive(false);
-        Time.timeScale = 1;
+
         if (fromStartMenu)
         {
             startMenu.SetActive(true);
@@ -201,11 +206,12 @@ public class UIManager : MonoBehaviour
     }
     public void StartMenu()
     {
-
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void GameOver(bool isWin)
     {
+        outOfMenus = false;
         if (isWin)
         {
             bigGameOverText.text = "Congradulations!";
