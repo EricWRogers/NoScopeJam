@@ -180,7 +180,8 @@ public class Turret : MonoBehaviour
         attacking = false;
         CancelInvoke("FireGun");
 
-        laserTrail2.enabled = true;
+        if(laserTrail2)
+            laserTrail2.enabled = true;
 
         RaycastHit hit;
         int enemyLayerMask = 1 << LayerMask.NameToLayer("Enemy");
