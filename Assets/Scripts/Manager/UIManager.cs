@@ -66,6 +66,8 @@ public class UIManager : MonoBehaviour
     {
         helpingTextAnim = helpingObject.GetComponent<Animator>();
         hudCanvas.SetActive(false);
+        
+        PlayerStats.Instance.gameOverEvent.AddListener(GameOver);
     }
 
     // Update is called once per frame

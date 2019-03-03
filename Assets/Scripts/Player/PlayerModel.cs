@@ -9,6 +9,8 @@ public class PlayerModel : MonoBehaviour
 
     void Die()
     {
+        
+        // Handled by PlayerStats Now
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
@@ -20,12 +22,17 @@ public class PlayerModel : MonoBehaviour
 
         float currentHealth = PlayerStats.Instance.Health;
 
-        if(currentHealth <= 0)
+        /*if(currentHealth <= 0)
         {
             Die();
-        }
+        }*/
     }
 
-    
-
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("WinTrigger"))
+        {
+            PlayerStats.Instance.BroadcastGameOverEvent(true);
+        }
+    }
 }
