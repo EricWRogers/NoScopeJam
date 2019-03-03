@@ -15,6 +15,7 @@ public class Turret : MonoBehaviour
     public float currentHealth;
 
     public Transform barrel1, barrel2, barrel3, barrel4;
+    public int order;
     public Transform targetLaser;
     public Animator anim;
 
@@ -25,6 +26,7 @@ public class Turret : MonoBehaviour
         if(GameManager.Instance != null)
         {
             target = GameManager.Instance.PlayerCurrentGO.transform;
+            Debug.Log(currentGun.name + " " + currentGun.damage);
             RapidFire();
         }
     }
@@ -56,8 +58,9 @@ public class Turret : MonoBehaviour
                 if (hit.collider.GetComponent<Shootable>() != null)
                 {
                     hit.collider.GetComponent<Shootable>().Shoot(currentGun.damage, hit.point);
+                    Debug.Log(currentGun.damage);
                 }
-            }
+            }   
         }
 
         var _linefx = Instantiate(Resources.Load(currentGun.trailFX.name), currentBarrel.transform.position, currentBarrel.transform.rotation) as GameObject;
@@ -67,15 +70,34 @@ public class Turret : MonoBehaviour
 
     void RapidFire()
     {
-        InvokeRepeating("FireAllGuns", Time.deltaTime, currentGun.fireRate);
+        InvokeRepeating("FireGun", 0f, currentGun.fireRate);
     }
 
-    void FireAllGuns()
+    void FireGun()
     {
-        Shoot(barrel1);
-        Shoot(barrel2);
-        Shoot(barrel3);
-        Shoot(barrel4);
+        switch (order)
+        {
+            case 1:
+                Shoot(barrel1);
+                break;
+            case 2:
+                Shoot(barrel2);
+                break;
+            case 3:
+                Shoot(barrel3);
+                break;
+            case 4:
+                Shoot(barrel4);
+                break;
+
+        }
+
+        order++;
+
+        if(order >= 5)
+        {
+            order = 0;
+        }
     }
 
     private void Update()
