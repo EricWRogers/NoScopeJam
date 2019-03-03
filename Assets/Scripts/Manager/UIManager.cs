@@ -7,7 +7,6 @@ public class UIManager : MonoBehaviour
 {
     public GameObject startMenu;
     public GameObject optionsMenu;
-    public GameObject saveQuitButtton;
     public GameObject soundsMenu;
     public GameObject controlsMenu;
 
@@ -44,13 +43,11 @@ public class UIManager : MonoBehaviour
         startMenu.SetActive(false);
         optionsMenu.SetActive(true);
         fromStartMenu = true;
-        saveQuitButtton.SetActive(false);
     }
     public void Settings()
     {
         optionsMenu.SetActive(true);
         fromStartMenu = false;
-        saveQuitButtton.SetActive(true);
     }
 
     public void MasterVolume()
