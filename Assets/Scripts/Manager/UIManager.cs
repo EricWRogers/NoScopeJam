@@ -57,11 +57,13 @@ public class UIManager : MonoBehaviour
         {
             Settings();
             pauseEnable = true;
+            Time.timeScale = 0;
         }
         else if (Input.GetKeyDown(KeyCode.Escape) && pauseEnable && outOfMenus)
         {
             OptionsBack();
             pauseEnable = false;
+            Time.timeScale = 1;
         }
     }
 
