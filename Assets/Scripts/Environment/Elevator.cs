@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class Elevator : MonoBehaviour
 {
-    public Door frontDoors;
-    public Door backDoors;
+    public Door frontDoor;
+    public Door backDoor;
+    public float rideDuration = 5f;
+
+    private bool openBackRequested = false;
+    private bool frontDoorClosed = false;
+    private bool inRide = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        frontDoor.OpenDoors(true);
     }
 
     // Update is called once per frame
@@ -23,17 +28,44 @@ public class Elevator : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            
+            closeDoorsInFront();
         }
     }
 
-    private void openDoorInFront()
+    public void openDoorBehind()
     {
-        frontDoors.OpenDoors();
+        if (!this.inRide)
+        {
+            backDoor.OpenDoors();
+        }
+        else
+        {
+            openBackRequested = true;
+        }
     }
 
-    private void closeDoorsBehind()
+    public void closeDoorsInFront()
     {
-        backDoors.CloseDoors();
+        if (!frontDoorClosed && !inRide)
+        {
+            frontDoorClosed = true;
+            frontDoor.CloseDoors();
+            
+            StartCoroutine(WaitAndEndRide(rideDuration));
+        }
+    }
+
+    IEnumerator WaitAndEndRide(float delay)
+    {
+        RaisingWater.Instance.InitDrainWater();
+
+        inRide = true;
+        yield return new WaitForSeconds(delay);
+        inRide = false;
+
+        if (openBackRequested)
+        {
+            openDoorBehind();
+        }
     }
 }

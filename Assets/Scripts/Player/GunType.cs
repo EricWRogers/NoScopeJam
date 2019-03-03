@@ -17,7 +17,7 @@ public class GunType : ScriptableObject
         Single,
         Auto
     }
-
+        
     public Ammo ammo;
     public Sprite image;
     public FiringMode mode;

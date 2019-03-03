@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 402796139873047403}
   - component: {fileID: 6298229077227829788}
   - component: {fileID: 5998358792686772685}
+  - component: {fileID: 870815641874139566}
   m_Layer: 0
   m_Name: Side_Door_R
   m_TagString: Untagged
@@ -77,6 +78,20 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &870815641874139566
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 818472226871019721}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 4300000, guid: 568290a6c44db3f4199ec25fe99d97c0, type: 3}
 --- !u!1 &1744903078606372646
 GameObject:
   m_ObjectHideFlags: 0
@@ -120,6 +135,7 @@ GameObject:
   - component: {fileID: 4631679789201558035}
   - component: {fileID: 6204364370273942350}
   - component: {fileID: 3691400028252872482}
+  - component: {fileID: 5017025785613520741}
   m_Layer: 0
   m_Name: Side_Door_L
   m_TagString: Untagged
@@ -186,6 +202,20 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &5017025785613520741
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4841995984692463294}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 4300002, guid: 568290a6c44db3f4199ec25fe99d97c0, type: 3}
 --- !u!1 &5343989118490914934
 GameObject:
   m_ObjectHideFlags: 0
@@ -232,6 +262,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftDoor: {fileID: 4631679789201558035}
   rightDoor: {fileID: 402796139873047403}
-  openDistance: 20
   doorSpeed: 5
-  doorState: 0
