@@ -21,6 +21,6 @@ MonoBehaviour:
   trailFX: {fileID: 3537706453057741271, guid: 8310f5774c9ffbd458eb862e4ad2deb2, type: 3}
   fireSFX: {fileID: 8300000, guid: a9119d232a9ce3b7dbae304e5b8dc592, type: 3}
   damage: 10
-  range: 500
-  plasmaSpeed: 50
+  range: 700
+  plasmaSpeed: 100
   fireRate: 0.25
