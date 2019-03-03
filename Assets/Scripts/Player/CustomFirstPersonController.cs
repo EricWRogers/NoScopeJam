@@ -506,7 +506,7 @@ public class CustomFirstPersonController : MonoBehaviour
 
     private void PlayFootStepAudio()
     {
-        if (!m_CharacterController.isGrounded)
+        if (!m_CharacterController.isGrounded || m_FootstepSounds.Length == 0)
         {
             return;
         }
