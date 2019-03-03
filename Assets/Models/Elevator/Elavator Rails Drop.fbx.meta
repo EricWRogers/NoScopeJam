@@ -1,0 +1,254 @@
+fileFormatVersion: 2
+guid: 16dce67e4e6039c42baa177b5bff3b2f
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Back_Doors
+    100002: Back_Wall_L
+    100004: Back_Wall_R
+    100006: Door_GRP
+    100008: //RootNode
+    100010: Elavator_Arch
+    100012: Front_Doors
+    100014: Glass
+    100016: Glass1
+    100018: Glass2
+    100020: Glass3
+    100022: Ground
+    100024: Rail_L
+    100026: Rail_L1
+    100028: Rail_L2
+    100030: Rail_L3
+    100032: Rail_R
+    100034: Rail_R1
+    100036: Rail_R2
+    100038: Rail_R3
+    100040: Rails
+    100042: Side_Door_L
+    100044: Side_Door_L 1
+    100046: Side_Door_R
+    100048: Side_Door_R 1
+    400000: Back_Doors
+    400002: Back_Wall_L
+    400004: Back_Wall_R
+    400006: Door_GRP
+    400008: //RootNode
+    400010: Elavator_Arch
+    400012: Front_Doors
+    400014: Glass
+    400016: Glass1
+    400018: Glass2
+    400020: Glass3
+    400022: Ground
+    400024: Rail_L
+    400026: Rail_L1
+    400028: Rail_L2
+    400030: Rail_L3
+    400032: Rail_R
+    400034: Rail_R1
+    400036: Rail_R2
+    400038: Rail_R3
+    400040: Rails
+    400042: Side_Door_L
+    400044: Side_Door_L 1
+    400046: Side_Door_R
+    400048: Side_Door_R 1
+    2100000: lambert1
+    2100002: lambert3
+    2100004: lambert2
+    2300000: Back_Wall_L
+    2300002: Back_Wall_R
+    2300004: Elavator_Arch
+    2300006: Glass
+    2300008: Glass1
+    2300010: Glass2
+    2300012: Glass3
+    2300014: Ground
+    2300016: Rail_L
+    2300018: Rail_L1
+    2300020: Rail_L2
+    2300022: Rail_L3
+    2300024: Rail_R
+    2300026: Rail_R1
+    2300028: Rail_R2
+    2300030: Rail_R3
+    2300032: Side_Door_L
+    2300034: Side_Door_L 1
+    2300036: Side_Door_R
+    2300038: Side_Door_R 1
+    3300000: Back_Wall_L
+    3300002: Back_Wall_R
+    3300004: Elavator_Arch
+    3300006: Glass
+    3300008: Glass1
+    3300010: Glass2
+    3300012: Glass3
+    3300014: Ground
+    3300016: Rail_L
+    3300018: Rail_L1
+    3300020: Rail_L2
+    3300022: Rail_L3
+    3300024: Rail_R
+    3300026: Rail_R1
+    3300028: Rail_R2
+    3300030: Rail_R3
+    3300032: Side_Door_L
+    3300034: Side_Door_L 1
+    3300036: Side_Door_R
+    3300038: Side_Door_R 1
+    4300000: Elavator_Arch
+    4300002: Glass
+    4300004: Glass1
+    4300006: Glass2
+    4300008: Glass3
+    4300010: Rail_R1
+    4300012: Rail_L2
+    4300014: Rail_L3
+    4300016: Rail_R
+    4300018: Rail_L1
+    4300020: Rail_R2
+    4300022: Rail_R3
+    4300024: Rail_L
+    4300026: Ground
+    4300028: Back_Wall_L
+    4300030: Back_Wall_R
+    4300032: Side_Door_R
+    4300034: Side_Door_L
+    4300036: Side_Door_R
+    4300038: Side_Door_L
+    6400000: Back_Wall_L
+    6400002: Back_Wall_R
+    6400004: Elavator_Arch
+    6400006: Glass
+    6400008: Glass1
+    6400010: Glass2
+    6400012: Glass3
+    6400014: Ground
+    6400016: Rail_L
+    6400018: Rail_L1
+    6400020: Rail_L2
+    6400022: Rail_L3
+    6400024: Rail_R
+    6400026: Rail_R1
+    6400028: Rail_R2
+    6400030: Rail_R3
+    6400032: Side_Door_L
+    6400034: Side_Door_L 1
+    6400036: Side_Door_R
+    6400038: Side_Door_R 1
+    7400000: Rals
+    9500000: //RootNode
+  externalObjects: {}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Rals
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 242
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 100
+    meshCompression: 0
+    addColliders: 1
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
