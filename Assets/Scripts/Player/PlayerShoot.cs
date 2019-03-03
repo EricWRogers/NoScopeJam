@@ -83,9 +83,16 @@ public class PlayerShoot : MonoBehaviour
         muzzleFlash.Play();
 
         RaycastHit hit;
-            
-        if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, currentGun.range, 9))
+        // NameToLayer returns index. So, converting to it's bimask respresentation.
+        int playerLayerMask = 1 << LayerMask.NameToLayer("Player");
+        int FPSLayerMask = 1 << LayerMask.NameToLayer("FirstPerson");
+
+        // Combining playerLayerMask and FPSLayerMask ( | ), inverting them (~), and removing from a filled bit mask(1111111....11)
+        int mask = int.MaxValue & ~(playerLayerMask | FPSLayerMask);
+        Debug.Log(System.Convert.ToString(mask, 2));
+        if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, currentGun.range, mask))
         {
+            Debug.Log(hit.collider.name);
             if(hit.collider.tag != "Player")
             {
                 var _fx = Instantiate(Resources.Load(currentGun.hitFX.name), hit.point, Quaternion.LookRotation(hit.normal)) as GameObject;
