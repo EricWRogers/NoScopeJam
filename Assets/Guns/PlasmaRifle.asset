@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: PlasmaRifle
   m_EditorClassIdentifier: 
   ammo: 1
+  image: {fileID: 21300000, guid: 2eb94d1cfe8ab483aab1d790f2bc7b54, type: 3}
   mode: 1
   hitFX: {fileID: 3675642613381568932, guid: ba5c99ce9f833774295410c50f332f19, type: 3}
   trailFX: {fileID: 3537706453057741271, guid: 8310f5774c9ffbd458eb862e4ad2deb2, type: 3}
+  fireSFX: {fileID: 0}
   damage: 10
   range: 500
   plasmaSpeed: 0

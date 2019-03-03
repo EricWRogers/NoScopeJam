@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Gatling
   m_EditorClassIdentifier: 
   ammo: 0
-  image: {fileID: 0}
+  image: {fileID: 21300000, guid: 44046700b37f74b6b91ebc2fd9d8e5c7, type: 3}
   mode: 1
   hitFX: {fileID: 3675642613381568932, guid: ba5c99ce9f833774295410c50f332f19, type: 3}
   trailFX: {fileID: 3537706453057741271, guid: 8310f5774c9ffbd458eb862e4ad2deb2, type: 3}
