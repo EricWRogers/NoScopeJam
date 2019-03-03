@@ -204,7 +204,7 @@ public class Turret : MonoBehaviour
 
     private void Attack()
     {
-        Debug.Log("Attacking");
+
         Movement(laserActiveScale);
     }
 
