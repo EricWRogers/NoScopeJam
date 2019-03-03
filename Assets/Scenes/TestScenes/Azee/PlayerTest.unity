@@ -444,7 +444,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 608217409}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -129.4, y: -6.78, z: -73.2}
+  m_LocalPosition: {x: -113.1, y: -6.78, z: -73.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 340433225}
@@ -520,8 +520,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fa9b126b5a940edadb6dfe42687536c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Radius: 20
-  FollowSpeed: 0
+  Radius: 30
+  FollowSpeed: 2
   OnPickedUp:
     m_PersistentCalls:
       m_Calls: []
@@ -778,15 +778,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1820445629874753081, guid: de7fe9c982e6b9c3a96e524d71dd1ab6,
         type: 3}
-      propertyPath: PlayerPrefabGO
-      value: 
-      objectReference: {fileID: 5582957672525363639, guid: 500478a17a8c8b94b9f44e0160ce1644,
-        type: 3}
-    - target: {fileID: 1820445629874753081, guid: de7fe9c982e6b9c3a96e524d71dd1ab6,
-        type: 3}
       propertyPath: WorkingOnLevel
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1820445629874753081, guid: de7fe9c982e6b9c3a96e524d71dd1ab6,
+        type: 3}
+      propertyPath: PlayerCurrentGO
+      value: 
+      objectReference: {fileID: 5582957672525363639}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de7fe9c982e6b9c3a96e524d71dd1ab6, type: 3}
 --- !u!1 &954725350
@@ -1419,6 +1418,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e68bf66cbbb28d49b2d399066d2d828, type: 3}
+--- !u!1 &5582957672525363639 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5582957672525363639, guid: 500478a17a8c8b94b9f44e0160ce1644,
+    type: 3}
+  m_PrefabInstance: {fileID: 8601502265080316820}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8601502265080316820
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1489,7 +1494,7 @@ PrefabInstance:
     - target: {fileID: 2352667440656489036, guid: 500478a17a8c8b94b9f44e0160ce1644,
         type: 3}
       propertyPath: _rechargeThrusterOnWallRun
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 500478a17a8c8b94b9f44e0160ce1644, type: 3}
