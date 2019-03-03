@@ -9,12 +9,19 @@ public class PlayerStats : MonoBehaviour
     private class PlayerStatsData
     {
         public float health;
+        public int currentLevel;
         public Dictionary<GunType.Ammo, int> ammo = new Dictionary<GunType.Ammo, int>();
+        public List<string> unlockedGuns = new List<string>();
     }
 
     public float Health
     {
         get { return _playerStatsData.health; }
+    }
+
+    public List<string> UnlockedGuns
+    {
+        get { return _playerStatsData.unlockedGuns; }
     }
 
     public static PlayerStats Instance = null;
@@ -31,6 +38,10 @@ public class PlayerStats : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+    }
+
+    public void Start()
+    {
     }
 
     public void AddAmmoCount(GunType.Ammo ammoType, int ammoCount)
@@ -55,6 +66,24 @@ public class PlayerStats : MonoBehaviour
     {
         _playerStatsData.health += updateAmount;
         _playerStatsData.health = Mathf.Clamp(_playerStatsData.health, 0, 100);
+    }
+
+    public void OnNewLevelReached(int newLevel)
+    {
+        _playerStatsData.currentLevel = newLevel;
+    }
+
+    public void OnGunTypeUnlocked(string gunTypeName)
+    {
+        if (_playerStatsData.unlockedGuns.IndexOf(gunTypeName) < 0)
+        {
+            _playerStatsData.unlockedGuns.Add(gunTypeName);
+        }
+    }
+
+    public void LoadFromJsonString(string json)
+    {
+        _playerStatsData = JsonConvert.DeserializeObject<PlayerStatsData>(json);
     }
 
     public string GetJsonString()
