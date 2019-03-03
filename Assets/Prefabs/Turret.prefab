@@ -38099,12 +38099,11 @@ MonoBehaviour:
   laserPassiveScale: 0.9
   laserActiveScale: 0.03
   maxHealth: 100
-  currentHealth: 100
   barrel1: {fileID: 88583762}
   barrel2: {fileID: 1944808901}
   barrel3: {fileID: 2067177228}
   barrel4: {fileID: 478825178}
-  maxAgroTime: 5
+  maxAgroTime: 10
   targetLaserEmit: {fileID: 4950010623099349336}
   anim: {fileID: 1899357281}
 --- !u!1 &4950010623098926392
