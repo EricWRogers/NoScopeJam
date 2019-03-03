@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -29,6 +30,19 @@ public class UIManager : MonoBehaviour
 
     private bool fromStartMenu = false;
 
+    public static UIManager Instance;
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+    }
 
     void Start()
     {
@@ -137,4 +151,9 @@ public class UIManager : MonoBehaviour
         helpingTextAnim.ResetTrigger("IN");
         helpingTimer = 10f;
     }
+    public void StartMenu()
+    {
+
+    }
+
 }
