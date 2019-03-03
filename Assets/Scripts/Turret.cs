@@ -56,10 +56,7 @@ public class Turret : MonoBehaviour
             currentXRot.y = 0;
             currentXRot.z = 0;
             turretBox.localRotation = Quaternion.Euler(currentXRot);
-
-
-
-
+            
         }
     }
 
@@ -73,7 +70,7 @@ public class Turret : MonoBehaviour
     public void Die()
     {
         var _fx = Instantiate(Resources.Load(deathFX.name), this.transform.position, this.transform.rotation) as GameObject;
-
+        //
         Destroy(this.gameObject);
 
     }

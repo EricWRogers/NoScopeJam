@@ -90,8 +90,12 @@ public class PlayerShoot : MonoBehaviour
         // Combining playerLayerMask and FPSLayerMask ( | ), inverting them (~), and removing from a filled bit mask(1111111....11)
         int mask = int.MaxValue & ~(playerLayerMask | FPSLayerMask);
         Debug.Log(System.Convert.ToString(mask, 2));
-        if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, currentGun.range, mask))
+        if(Physics.Raycast(barrel.transform.position, Camera.main.transform.forward, out hit, currentGun.range, mask))
         {
+            var _linefx = Instantiate(Resources.Load(currentGun.trailFX.name), barrel.transform.position, barrel.transform.rotation) as GameObject;
+            _linefx.GetComponent<LineRenderer>().SetPosition(0, barrel.position);
+            _linefx.GetComponent<LineRenderer>().SetPosition(1, hit.point);
+
             Debug.Log(hit.collider.name);
             if(hit.collider.tag != "Player")
             {
