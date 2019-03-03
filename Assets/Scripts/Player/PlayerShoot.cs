@@ -37,7 +37,6 @@ public class PlayerShoot : MonoBehaviour
                     Shoot();
                     break;
             }
-            
         }
         if (CrossPlatformInputManager.GetButtonUp("Fire1"))
         {
@@ -51,8 +50,6 @@ public class PlayerShoot : MonoBehaviour
         {
             isAiming = false;
         }
-
-        
     }
 
     void AimEffects()
@@ -88,13 +85,16 @@ public class PlayerShoot : MonoBehaviour
         int FPSLayerMask = 1 << LayerMask.NameToLayer("FirstPerson");
 
         // Combining playerLayerMask and FPSLayerMask ( | ), inverting them (~), and removing from a filled bit mask(1111111....11)
+
+
+        Vector3 direction = (Camera.main.transform.forward).normalized;
+        Vector3 targetPos = barrel.transform.position + (direction * currentGun.range);
+
         int mask = int.MaxValue & ~(playerLayerMask | FPSLayerMask);
         Debug.Log(System.Convert.ToString(mask, 2));
         if(Physics.Raycast(barrel.transform.position, Camera.main.transform.forward, out hit, currentGun.range, mask))
         {
-            var _linefx = Instantiate(Resources.Load(currentGun.trailFX.name), barrel.transform.position, barrel.transform.rotation) as GameObject;
-            _linefx.GetComponent<LineRenderer>().SetPosition(0, barrel.position);
-            _linefx.GetComponent<LineRenderer>().SetPosition(1, hit.point);
+            targetPos = hit.point;
 
             Debug.Log(hit.collider.name);
             if(hit.collider.tag != "Player")
@@ -106,6 +106,10 @@ public class PlayerShoot : MonoBehaviour
                 }
             }
         }
+
+        var _linefx = Instantiate(Resources.Load(currentGun.trailFX.name), barrel.transform.position, barrel.transform.rotation) as GameObject;
+        _linefx.GetComponent<LineRenderer>().SetPosition(0, barrel.position);
+        _linefx.GetComponent<LineRenderer>().SetPosition(1, targetPos);
     }
 
 }

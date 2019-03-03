@@ -9,6 +9,8 @@ public class UIManager : MonoBehaviour
     public GameObject optionsMenu;
     public GameObject soundsMenu;
     public GameObject controlsMenu;
+    public GameObject startMenuButton;
+    public GameObject hud;
 
     public Slider masterVolume;
     public Slider backgroundVolume;
@@ -32,22 +34,36 @@ public class UIManager : MonoBehaviour
     public void NewGame()
     {
         startMenu.SetActive(false);
+        hud.SetActive(true);
     }
-    public void Continue
-    ()
+    public void Continue()
     {
         startMenu.SetActive(false);
+        hud.SetActive(true);
     }
     public void Options()
     {
         startMenu.SetActive(false);
         optionsMenu.SetActive(true);
+        startMenuButton.SetActive(false);
         fromStartMenu = true;
     }
     public void Settings()
     {
         optionsMenu.SetActive(true);
         fromStartMenu = false;
+        startMenuButton.SetActive(true);
+    }
+
+    public void OptionsBack()
+    {
+        optionsMenu.SetActive(false);
+        soundsMenu.SetActive(false);
+        controlsMenu.SetActive(false);
+        if (fromStartMenu)
+        {
+            startMenu.SetActive(true);
+        }
     }
 
     public void MasterVolume()
@@ -67,9 +83,11 @@ public class UIManager : MonoBehaviour
     public void SoundMenu()
     {
         soundsMenu.SetActive(true);
+        controlsMenu.SetActive(false);
     }
     public void ControlsMenu()
     {
         controlsMenu.SetActive(true);
+        soundsMenu.SetActive(false);
     }
 }

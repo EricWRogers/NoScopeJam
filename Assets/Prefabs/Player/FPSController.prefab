@@ -9630,6 +9630,7 @@ GameObject:
   - component: {fileID: 1185678533471247970}
   - component: {fileID: 5815316730318749323}
   - component: {fileID: 749758951}
+  - component: {fileID: 476865171}
   m_Layer: 9
   m_Name: FPSController
   m_TagString: Player
@@ -9959,6 +9960,23 @@ MonoBehaviour:
   anim: {fileID: 1589731940}
   aimingFOV: 30
   aimTime: 0.25
+--- !u!114 &476865171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5582957672525363639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a11e2eeeca9a4fd7b36757880a8859ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnShot:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Shootable+DamageEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!1 &7839961636589772647
 GameObject:
   m_ObjectHideFlags: 0
@@ -10025,7 +10043,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 2839
+    m_Bits: 6935
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

@@ -14,6 +14,10 @@ public class Turret : MonoBehaviour
     public float maxHealth;
     public float currentHealth;
 
+    public Transform barrel1, barrel2, barrel3, barrel4;
+    public Transform targetLaser;
+    public Animator anim;
+
     private void Start()
     {
         currentHealth = maxHealth;
@@ -21,7 +25,59 @@ public class Turret : MonoBehaviour
         if(GameManager.Instance != null)
         {
             target = GameManager.Instance.PlayerCurrentGO.transform;
+            RapidFire();
         }
+    }
+
+    void Shoot(Transform currentBarrel)
+    {
+        //anim.SetTrigger("Fire");
+       currentBarrel.GetComponentInChildren<ParticleSystem>().Play();
+
+        RaycastHit hit;
+        // NameToLayer returns index. So, converting to it's bimask respresentation.
+        int enemyLayerMask = 1 << LayerMask.NameToLayer("Enemy");
+
+        // Combining playerLayerMask and FPSLayerMask ( | ), inverting them (~), and removing from a filled bit mask(1111111....11)
+        int mask = int.MaxValue & ~(enemyLayerMask);
+        Debug.Log(System.Convert.ToString(mask, 2));
+
+        Vector3 direction = (GameManager.Instance.PlayerCurrentGO.transform.position - currentBarrel.transform.position).normalized;
+
+        Vector3 targetPos = currentBarrel.transform.position + (direction * currentGun.range);
+
+
+        if (Physics.Raycast(currentBarrel.transform.position, direction, out hit, currentGun.range, mask))
+        {
+            targetPos = hit.point;
+
+            Debug.Log(hit.collider.name);
+            if (hit.collider.tag != "Enemy")
+            {
+                var _fx = Instantiate(Resources.Load(currentGun.hitFX.name), hit.point, Quaternion.LookRotation(hit.normal)) as GameObject;
+                if (hit.collider.GetComponent<Shootable>() != null)
+                {
+                    hit.collider.GetComponent<Shootable>().Shoot(currentGun.damage, hit.point);
+                }
+            }
+        }
+
+        var _linefx = Instantiate(Resources.Load(currentGun.trailFX.name), currentBarrel.transform.position, currentBarrel.transform.rotation) as GameObject;
+        _linefx.GetComponent<LineRenderer>().SetPosition(0, currentBarrel.position);
+        _linefx.GetComponent<LineRenderer>().SetPosition(1, targetPos);
+    }
+
+    void RapidFire()
+    {
+        InvokeRepeating("FireAllGuns", Time.deltaTime, currentGun.fireRate);
+    }
+
+    void FireAllGuns()
+    {
+        Shoot(barrel1);
+        Shoot(barrel2);
+        Shoot(barrel3);
+        Shoot(barrel4);
     }
 
     private void Update()
