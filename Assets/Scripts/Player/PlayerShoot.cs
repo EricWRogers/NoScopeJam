@@ -160,46 +160,74 @@ public class PlayerShoot : MonoBehaviour
     {
         if (canShoot)   
         {
+            if(currentGun.ammo == GunType.Ammo.Bullets)
+            {
+                audio.clip = currentGun.fireSFX;
+                audio.Play();
+
+                PlayerStats.Instance.AddAmmoCount(GunType.Ammo.Bullets, -1);
+                anim.SetTrigger("Fire");
+                muzzleFlash.Play();
+
+                RaycastHit hit;
+                // NameToLayer returns index. So, converting to it's bimask respresentation.
+                int playerLayerMask = 1 << LayerMask.NameToLayer("Player");
+                int FPSLayerMask = 1 << LayerMask.NameToLayer("FirstPerson");
+
+                // Combining playerLayerMask and FPSLayerMask ( | ), inverting them (~), and removing from a filled bit mask(1111111....11)
+
+
+                Vector3 direction = (Camera.main.transform.forward).normalized;
+                Vector3 targetPos = barrel.transform.position + (direction * currentGun.range);
+
+                int mask = int.MaxValue & ~(playerLayerMask | FPSLayerMask);
+                if (Physics.Raycast(barrel.transform.position, Camera.main.transform.forward, out hit, currentGun.range, mask))
+                {
+                    targetPos = hit.point;
+
+                    if (hit.collider.tag != "Player")
+                    {
+                        if (hit.collider.tag != "Enemy")
+                        {
+                            var _fx = Instantiate(Resources.Load(currentGun.hitFX.name), hit.point, Quaternion.LookRotation(hit.normal)) as GameObject;
+                        }
+                        if (hit.collider.GetComponent<Shootable>() != null)
+                        {
+                            hit.collider.GetComponent<Shootable>().Shoot(currentGun.damage, hit.point);
+                        }
+                    }
+                }
+
+                var _linefx = Instantiate(Resources.Load(currentGun.trailFX.name), barrel.transform.position, barrel.transform.rotation) as GameObject;
+                _linefx.GetComponent<LineRenderer>().SetPosition(0, barrel.position);
+                _linefx.GetComponent<LineRenderer>().SetPosition(1, targetPos);
+            }
+        }
+        if(currentGun.ammo == GunType.Ammo.Plasma)
+        {
             audio.clip = currentGun.fireSFX;
             audio.Play();
-
+            muzzleFlash.Play();
             PlayerStats.Instance.AddAmmoCount(GunType.Ammo.Bullets, -1);
             anim.SetTrigger("Fire");
-            muzzleFlash.Play();
-
-            RaycastHit hit;
-            // NameToLayer returns index. So, converting to it's bimask respresentation.
-            int playerLayerMask = 1 << LayerMask.NameToLayer("Player");
-            int FPSLayerMask = 1 << LayerMask.NameToLayer("FirstPerson");
-
-            // Combining playerLayerMask and FPSLayerMask ( | ), inverting them (~), and removing from a filled bit mask(1111111....11)
-
+            PlayerStats.Instance.AddAmmoCount(GunType.Ammo.Plasma, -1);
 
             Vector3 direction = (Camera.main.transform.forward).normalized;
             Vector3 targetPos = barrel.transform.position + (direction * currentGun.range);
 
-            int mask = int.MaxValue & ~(playerLayerMask | FPSLayerMask);
-            if (Physics.Raycast(barrel.transform.position, Camera.main.transform.forward, out hit, currentGun.range, mask))
-            {
-                targetPos = hit.point;
+            var _bullet = Instantiate((currentGun.projectile), barrel.position, Quaternion.LookRotation((barrel.forward - targetPos).normalized, barrel.transform.up), null) as GameObject;
+            _bullet.gameObject.layer = 9;
+            _bullet.GetComponent<FXDestroy>().destroyTime = currentGun.range;
+            _bullet.GetComponent<Projectile>().direction = Camera.main.transform.forward.normalized;
+            _bullet.GetComponent<Projectile>().speed = currentGun.plasmaSpeed;
+            // _bullet.GetComponent<Rigidbody>().velocity = (Camera.main.transform.forward * currentGun.plasmaSpeed);
+            _bullet.GetComponent<Projectile>().enemyBullet = false; 
+            _bullet.GetComponent<Projectile>().hitFX = currentGun.hitFX;
+            _bullet.GetComponent<Projectile>().damage = currentGun.damage;
 
-                if (hit.collider.tag != "Player")
-                {
-                    if (hit.collider.tag != "Enemy")
-                    {
-                        var _fx = Instantiate(Resources.Load(currentGun.hitFX.name), hit.point, Quaternion.LookRotation(hit.normal)) as GameObject;
-                    }
-                    if (hit.collider.GetComponent<Shootable>() != null)
-                    {
-                        hit.collider.GetComponent<Shootable>().Shoot(currentGun.damage, hit.point);
-                    }
-                }
-            }
 
-            var _linefx = Instantiate(Resources.Load(currentGun.trailFX.name), barrel.transform.position, barrel.transform.rotation) as GameObject;
-            _linefx.GetComponent<LineRenderer>().SetPosition(0, barrel.position);
-            _linefx.GetComponent<LineRenderer>().SetPosition(1, targetPos);
         }
+            
         
     }
 
