@@ -68,7 +68,12 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
-    public List<GunType> UnlockedGuns
+    public List<string> UnlockedGuns
+    {
+        get { return _playerStatsData.unlockedGuns; }
+    }
+    
+    public List<GunType> UnlockedGunTypes
     {
         get
         {
@@ -77,7 +82,7 @@ public class PlayerStats : MonoBehaviour
             {
                 gunTypes.Add(GetGunType(gunName));
             }
-
+            
             return gunTypes;
         }
     }
@@ -100,6 +105,7 @@ public class PlayerStats : MonoBehaviour
             Destroy(this.gameObject);
             return;
         }
+
     }
 
     public void Update()
