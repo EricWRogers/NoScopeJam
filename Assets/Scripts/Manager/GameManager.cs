@@ -59,8 +59,11 @@ public class GameManager : MonoBehaviour
                 Quaternion.identity);
             
             // Deactivate Camera
-            GameObject Camera = GameObject.FindGameObjectWithTag("MainCamera");
-            Camera.SetActive(false);
+            if ( StartFromMain )
+            {
+                GameObject Camera = GameObject.FindGameObjectWithTag("MainMenuCamera");
+                Camera.SetActive(false);
+            }
         }
     }
     private void LoadLevel( int slot )
