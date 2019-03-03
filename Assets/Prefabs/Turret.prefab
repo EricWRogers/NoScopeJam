@@ -38095,6 +38095,12 @@ MonoBehaviour:
   hitFX: {fileID: 3675642613381568932, guid: f2bbb4645ac9f7740898497865eacb65, type: 3}
   deathFX: {fileID: 974820134202267895, guid: c852ae050da9a4443ba98dbe00e8a4d1, type: 3}
   flare: {fileID: 330408268}
+  ammoPickup: {fileID: 4492472214605860818, guid: ecb88733c86208946867883865d62a67,
+    type: 3}
+  plasmaPickup: {fileID: 4492472214605860818, guid: 07ccc7bf2688061499f7f561dcc78fc5,
+    type: 3}
+  healthPickup: {fileID: 8789533077722132392, guid: 93acc02ba6a02414b88ee6e46352facb,
+    type: 3}
   laserTrail: {fileID: 4632929845468475471}
   laserTrail2: {fileID: 5889930054578552162}
   laserPassiveScale: 0.9

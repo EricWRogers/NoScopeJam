@@ -11,6 +11,7 @@ public class Turret : MonoBehaviour
 
     public GameObject hitFX, deathFX;
     public GameObject flare;
+    public GameObject ammoPickup, plasmaPickup, healthPickup;
     public LineRenderer laserTrail, laserTrail2;
     public float laserPassiveScale = .9f;
     public float laserActiveScale = .9f;
@@ -316,9 +317,45 @@ public class Turret : MonoBehaviour
         currentHealth = currentHealth - _damage;
     }
 
+    public void SpawnPickups()
+    {
+        Random.InitState(System.DateTime.Now.Millisecond);
+        for (int i = 0; i < 3; i++)
+        {
+            Vector3 offset = new Vector3(Random.Range(-5,5), 0, Random.Range(-5, 5));
+
+            int roll = Random.Range(0, 3);
+
+            bool hasPlasmaGun = PlayerStats.Instance.UnlockedGuns.Contains("PlasmaRifle");
+
+            switch (roll)
+            {
+                case 0:
+                    var _ammoDrop = Instantiate(ammoPickup, turretBox.position + offset, this.transform.rotation) as GameObject;
+                    break;
+                case 1:
+                    var _healthDrop = Instantiate(healthPickup, turretBox.position + offset, this.transform.rotation) as GameObject;
+                    break;
+                case 2:
+                    if (hasPlasmaGun)
+                    {
+                        var _plasmaDrop = Instantiate(plasmaPickup, turretBox.position + offset, this.transform.rotation) as GameObject;
+                    }
+                    else
+                    {
+                        var _ammoReplaceDrop = Instantiate(ammoPickup, turretBox.position + offset, this.transform.rotation) as GameObject;
+                    }
+                    break;
+                
+            }
+            
+        }
+    }
+
     public void Die()
     {
         var _fx = Instantiate(Resources.Load(deathFX.name), this.transform.position, this.transform.rotation) as GameObject;
+        SpawnPickups();
         Destroy(this.gameObject);
 
     }
