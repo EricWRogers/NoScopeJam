@@ -45,11 +45,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startMenu: {fileID: 0}
+  creditMenu: {fileID: 0}
   optionsMenu: {fileID: 0}
   soundsMenu: {fileID: 0}
   controlsMenu: {fileID: 0}
   startMenuButton: {fileID: 0}
   hud: {fileID: 0}
+  hudCanvas: {fileID: 0}
   masterVolume: {fileID: 0}
   backgroundVolume: {fileID: 0}
   fxVolume: {fileID: 0}
@@ -59,6 +61,7 @@ MonoBehaviour:
   bigGameOverText: {fileID: 0}
   littleGameOverText: {fileID: 0}
   gameOverMenu: {fileID: 0}
+  gunType: {fileID: 0}
   healthText: {fileID: 0}
   ammoText: {fileID: 0}
   boostMeter: {fileID: 0}

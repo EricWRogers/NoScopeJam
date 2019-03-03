@@ -27,7 +27,10 @@ public class RaisingWater : MonoBehaviour
         else
         {
             Destroy(this.gameObject);
+            return;
         }
+
+        startYPos = transform.position.y;
     }
 
     private void Update()
@@ -69,7 +72,7 @@ public class RaisingWater : MonoBehaviour
         if (targetPosition.y < startYPos)
         {
             targetPosition.y = startYPos;
-            _waterState = WaterState.Raising;
+            _waterState = WaterState.None;
         }
 
         transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime);
