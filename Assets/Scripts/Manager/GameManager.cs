@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     public bool StartFromMain = false;
     public static GameManager Instance;
 
+    private const string defaultSlotName = "default";
+
     private void Awake()
     {
         if (Instance == null)
@@ -95,7 +97,7 @@ public class GameManager : MonoBehaviour
     public void SavePlayerStats(string slot)
     {
         // GameObject TempPlayer = GameObject.FindGameObjectWithTag("Player");
-        string json = JsonUtility.ToJson(PlayerStats.Instance);
+        string json = PlayerStats.Instance.GetJsonString();
 
         PlayerPrefs.SetString(slot, json);
         // Check if string of slots is in there
@@ -104,21 +106,39 @@ public class GameManager : MonoBehaviour
             Slots TempSlots = JsonUtility.FromJson<Slots>(PlayerPrefs.GetString("SlotsNames"));
             TempSlots.slots.Add(slot);
             json = JsonUtility.ToJson(TempSlots);
-            PlayerPrefs.SetString("SlotsName", json);
+            PlayerPrefs.SetString("SlotsNames", json);
         }
         else
         {
             Slots NSlots = new Slots();
             NSlots.slots.Add(slot);
             json = JsonUtility.ToJson(NSlots);
-            PlayerPrefs.SetString("SlotsName", json);
+            PlayerPrefs.SetString("SlotsNames", json);
         }
     }
 
     public void LoadPlayerStats(string slot)
     {
-        string json = PlayerPrefs.GetString(slot);
-        PlayerStats.Instance = JsonUtility.FromJson<PlayerStats>(json);
+        if (PlayerPrefs.HasKey(slot))
+        {
+            string json = PlayerPrefs.GetString(slot);
+            PlayerStats.Instance.LoadFromJsonString(json);
+        }
+    }
+
+    public void SaveDefaultPlayerStats()
+    {
+        SavePlayerStats(defaultSlotName);
+    }
+
+    public void LoadDefaultPlayerStats()
+    {
+        LoadPlayerStats(defaultSlotName);
+    }
+
+    public bool HasASlot()
+    {
+        return PlayerStatsKeys().Count > 0;
     }
 
     public List<string> PlayerStatsKeys()
@@ -129,7 +149,7 @@ public class GameManager : MonoBehaviour
             return TempSlots.slots;
         }
 
-        return new List<string> {"null"};
+        return new List<string>();
     }
 }
 
