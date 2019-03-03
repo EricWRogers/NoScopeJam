@@ -80,7 +80,8 @@ public class GameManager : MonoBehaviour
                 Camera.SetActive(false);
             }
         }
-        
+
+        PlayerStats.Instance.playerStatsData.reset();
         RaisingWater.Instance.InitRaisingWater();
     }
 

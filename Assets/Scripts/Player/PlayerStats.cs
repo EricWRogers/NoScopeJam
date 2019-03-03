@@ -7,12 +7,22 @@ using UnityEngine;
 public class PlayerStats : MonoBehaviour
 {
     [Serializable]
-    private class PlayerStatsData
+    public class PlayerStatsData
     {
         public float health = 100;
-        public int currentLevel;
+        public int currentLevel = 0;
         public Dictionary<GunType.Ammo, int> ammo = new Dictionary<GunType.Ammo, int>();
         public List<string> unlockedGuns = new List<string>();
+
+        public void reset()
+        {
+            health = 100;
+            ammo.Clear();
+            unlockedGuns.Clear();
+
+            ammo[GunType.Ammo.Bullets] = 100;
+            unlockedGuns.Add(PlayerStats.Instance.GetGunType("Gatling").name);
+        }
     }
 
     public float healthRechargeRate = 20f;
@@ -21,7 +31,7 @@ public class PlayerStats : MonoBehaviour
 
     public float Health
     {
-        get { return _playerStatsData.health; }
+        get { return playerStatsData.health; }
     }
 
     public float ThrusterCharge
@@ -70,26 +80,26 @@ public class PlayerStats : MonoBehaviour
 
     public List<string> UnlockedGuns
     {
-        get { return _playerStatsData.unlockedGuns; }
+        get { return playerStatsData.unlockedGuns; }
     }
-    
+
     public List<GunType> UnlockedGunTypes
     {
         get
         {
             List<GunType> gunTypes = new List<GunType>();
-            foreach (string gunName in _playerStatsData.unlockedGuns)
+            foreach (string gunName in playerStatsData.unlockedGuns)
             {
                 gunTypes.Add(GetGunType(gunName));
             }
-            
+
             return gunTypes;
         }
     }
 
     public static PlayerStats Instance = null;
 
-    [SerializeField] [ReadOnly] private PlayerStatsData _playerStatsData = new PlayerStatsData();
+    [ReadOnly] public PlayerStatsData playerStatsData = new PlayerStatsData();
     private CustomFirstPersonController _customFirstPersonController;
     private float nextRechargableTime = float.MinValue;
 
@@ -105,12 +115,11 @@ public class PlayerStats : MonoBehaviour
             Destroy(this.gameObject);
             return;
         }
-
     }
 
     public void Update()
     {
-        if (_playerStatsData.health < 100f && Time.time > nextRechargableTime)
+        if (playerStatsData.health < 100f && Time.time > nextRechargableTime)
         {
             UpdateHealth(healthRechargeRate * Time.deltaTime);
         }
@@ -118,18 +127,18 @@ public class PlayerStats : MonoBehaviour
 
     public void AddAmmoCount(GunType.Ammo ammoType, int ammoCount)
     {
-        if (!_playerStatsData.ammo.ContainsKey(ammoType))
+        if (!playerStatsData.ammo.ContainsKey(ammoType))
         {
-            _playerStatsData.ammo[ammoType] = 0;
+            playerStatsData.ammo[ammoType] = 0;
         }
 
-        _playerStatsData.ammo[ammoType] += ammoCount;
+        playerStatsData.ammo[ammoType] += ammoCount;
     }
 
     public int GetAmmoCount(GunType.Ammo ammoType)
     {
         int ammoCount = 0;
-        _playerStatsData.ammo.TryGetValue(ammoType, out ammoCount);
+        playerStatsData.ammo.TryGetValue(ammoType, out ammoCount);
 
         return ammoCount;
     }
@@ -141,13 +150,13 @@ public class PlayerStats : MonoBehaviour
             nextRechargableTime = Time.time + healthRechargeDelay;
         }
 
-        _playerStatsData.health += updateAmount;
-        _playerStatsData.health = Mathf.Clamp(_playerStatsData.health, 0, 100);
+        playerStatsData.health += updateAmount;
+        playerStatsData.health = Mathf.Clamp(playerStatsData.health, 0, 100);
     }
 
     public void OnNewLevelReached(int newLevel)
     {
-        _playerStatsData.currentLevel = newLevel;
+        playerStatsData.currentLevel = newLevel;
     }
 
     public GunType GetGunType(string name)
@@ -165,19 +174,19 @@ public class PlayerStats : MonoBehaviour
 
     public void OnGunTypeUnlocked(string gunTypeName)
     {
-        if (_playerStatsData.unlockedGuns.IndexOf(gunTypeName) < 0)
+        if (playerStatsData.unlockedGuns.IndexOf(gunTypeName) < 0)
         {
-            _playerStatsData.unlockedGuns.Add(gunTypeName);
+            playerStatsData.unlockedGuns.Add(gunTypeName);
         }
     }
 
     public void LoadFromJsonString(string json)
     {
-        _playerStatsData = JsonConvert.DeserializeObject<PlayerStatsData>(json);
+        playerStatsData = JsonConvert.DeserializeObject<PlayerStatsData>(json);
     }
 
     public string GetJsonString()
     {
-        return JsonConvert.SerializeObject(_playerStatsData);
+        return JsonConvert.SerializeObject(playerStatsData);
     }
 }
