@@ -11,7 +11,7 @@ public class Turret : MonoBehaviour
 
     public GameObject hitFX, deathFX;
     public GameObject flare;
-    public LineRenderer laserTrail;
+    public LineRenderer laserTrail, laserTrail2;
     public float laserPassiveScale = .9f;
     public float laserActiveScale = .9f;
 
@@ -22,8 +22,9 @@ public class Turret : MonoBehaviour
     private int order;
     public float maxAgroTime = 5f;
     private float currentAgroTime = 0f;
-    public Transform targetLaserEmit;
+    public Transform targetLaserEmit, sweepEmit, sweepEmit2;
     public Animator anim;
+    public float searchSpeed = 2;
 
 
     private bool turretActive;
@@ -55,6 +56,7 @@ public class Turret : MonoBehaviour
 
         if (turretActive)
         {
+            laserTrail2.enabled = false;
             Attack();
             currentAgroTime += Time.deltaTime;
 
@@ -90,12 +92,12 @@ public class Turret : MonoBehaviour
             // Combining playerLayerMask and FPSLayerMask ( | ), inverting them (~), and removing from a filled bit mask(1111111....11)
             int mask = int.MaxValue & ~(enemyLayerMask);
 
-            Vector3 direction = (GameManager.Instance.PlayerCurrentGO.transform.position - currentBarrel.transform.position).normalized;
-
+            Vector3 direction = (target.position - currentBarrel.transform.position).normalized;
             Vector3 targetPos = currentBarrel.transform.position + (direction * currentGun.range);
 
+            Vector3 newDir = Vector3.Lerp(currentBarrel.position + (direction * currentGun.range), targetPos, laserPassiveScale);
 
-            if (Physics.Raycast(currentBarrel.transform.position, direction, out hit, currentGun.range, mask))
+            if (Physics.Raycast(currentBarrel.transform.position, newDir, out hit, currentGun.range, mask))
             {
                 targetPos = hit.point;
 
@@ -159,26 +161,19 @@ public class Turret : MonoBehaviour
         attacking = false;
         CancelInvoke("FireGun");
 
+        laserTrail2.enabled = true;
+
         RaycastHit hit;
-
-        // NameToLayer returns index. So, converting to it's bimask respresentation.
         int enemyLayerMask = 1 << LayerMask.NameToLayer("Enemy");
-
-        // Combining playerLayerMask and FPSLayerMask ( | ), inverting them (~), and removing from a filled bit mask(1111111....11)
         int mask = int.MaxValue & ~(enemyLayerMask);
-        Vector3 direction = ((targetLaserEmit.forward * currentGun.range) - targetLaserEmit.transform.position).normalized;
-        Vector3 targetPos = targetLaserEmit.transform.position + (direction * currentGun.range);
-
-    
-
-
+        Vector3 direction = ((sweepEmit.forward * currentGun.range) - sweepEmit.transform.position).normalized;
+        Vector3 targetPos = sweepEmit.transform.position + (direction * currentGun.range);
 
         Vector3 newDir = Vector3.Lerp(laserTrail.GetPosition(1) + (direction * currentGun.range), targetPos, laserPassiveScale);
 
-        if (Physics.Raycast(targetLaserEmit.transform.position, newDir, out hit, currentGun.range, mask))
+        if (Physics.Raycast(sweepEmit.transform.position, newDir, out hit, currentGun.range, mask))
         {
             targetPos = hit.point;
-
             if (hit.collider.tag == "Player")
             {
                 Debug.Log("Turret Found Player");
@@ -190,13 +185,38 @@ public class Turret : MonoBehaviour
             {
                 flare.gameObject.SetActive(false);
             }
-
         }
-
-
+        
         Vector3 newPos = Vector3.Lerp(laserTrail.GetPosition(1), targetPos, laserPassiveScale);
         laserTrail.SetPosition(0, targetLaserEmit.position);
         laserTrail.SetPosition(1, newPos);
+
+
+        RaycastHit hit2;
+        Vector3 direction2 = ((sweepEmit2.forward * currentGun.range) - sweepEmit2.transform.position).normalized;
+        Vector3 targetPos2 = sweepEmit2.transform.position + (direction2 * currentGun.range);
+
+        Vector3 newDir2 = Vector3.Lerp(laserTrail2.GetPosition(1) + (direction2 * currentGun.range), targetPos2, laserPassiveScale);
+
+        if (Physics.Raycast(sweepEmit2.transform.position, newDir2, out hit2, currentGun.range, mask))
+        {
+            targetPos2 = hit2.point;
+            if (hit2.collider.tag == "Player")
+            {
+                Debug.Log("Turret Found Player");
+                flare.gameObject.SetActive(true);
+                currentAgroTime = 0;
+                turretActive = true;
+            }
+            else
+            {
+                flare.gameObject.SetActive(false);
+            }
+        }
+
+        Vector3 newPos2 = Vector3.Lerp(laserTrail2.GetPosition(1), targetPos2, laserPassiveScale);
+        laserTrail2.SetPosition(0, targetLaserEmit.position);
+        laserTrail2.SetPosition(1, newPos2);
     }
 
     void LaserSight()
@@ -216,9 +236,12 @@ public class Turret : MonoBehaviour
         if (Physics.Raycast(targetLaserEmit.transform.position, newDir, out hit, currentGun.range, mask))
         {
             targetPos = hit.point;
+
+            if(hit.collider.tag == "Player")
+            {
+                currentAgroTime = 0;
+            }
         }
-
-
 
         Vector3 newPos = Vector3.Lerp(laserTrail.GetPosition(1), targetPos, laserPassiveScale);
 
@@ -239,7 +262,7 @@ public class Turret : MonoBehaviour
 
     void Sweep()
     {
-        turretBase.Rotate(turretBase.transform.up, 2);
+        turretBase.Rotate(turretBase.transform.up, searchSpeed);
     }
 
     void Movement(float _scale)
