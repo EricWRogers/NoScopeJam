@@ -9988,7 +9988,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b66d7363c459c6a43a0214780ee583b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentGun: {fileID: 11400000, guid: 28833355284396e439e4e7bc68a73d79, type: 2}
+  currentGun: {fileID: 11400000, guid: f4c6946aa9d8f5549a5f526c7c648f08, type: 2}
   WeaponCamera: {fileID: 6775858}
   barrel: {fileID: 1823860845}
   muzzleFlash: {fileID: 447494381}
@@ -10219,6 +10219,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1716499986}
     m_Modifications:
+    - target: {fileID: 6406983326220937703, guid: 7a50408a26d59e84cb159766548f30b0,
+        type: 3}
+      propertyPath: m_Name
+      value: PLAYER)
+      objectReference: {fileID: 0}
     - target: {fileID: 4067174373137440710, guid: 7a50408a26d59e84cb159766548f30b0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10283,11 +10288,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 1.4201319
-      objectReference: {fileID: 0}
-    - target: {fileID: 6406983326220937703, guid: 7a50408a26d59e84cb159766548f30b0,
-        type: 3}
-      propertyPath: m_Name
-      value: PLAYER)
       objectReference: {fileID: 0}
     - target: {fileID: 3415258341567617927, guid: 7a50408a26d59e84cb159766548f30b0,
         type: 3}
@@ -10765,6 +10765,42 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1716499986}
     m_Modifications:
+    - target: {fileID: 100056, guid: 8fadf5342915b494b8f547e0759d96dc, type: 3}
+      propertyPath: m_Name
+      value: GunnyMcShootFace
+      objectReference: {fileID: 0}
+    - target: {fileID: 100056, guid: 8fadf5342915b494b8f547e0759d96dc, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 100056, guid: 8fadf5342915b494b8f547e0759d96dc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 8fadf5342915b494b8f547e0759d96dc, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 100010, guid: 8fadf5342915b494b8f547e0759d96dc, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 100040, guid: 8fadf5342915b494b8f547e0759d96dc, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 100042, guid: 8fadf5342915b494b8f547e0759d96dc, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 100080, guid: 8fadf5342915b494b8f547e0759d96dc, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: 8fadf5342915b494b8f547e0759d96dc, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: f374a23c28ce0a74698ec91f36e92ad3, type: 2}
     - target: {fileID: 400056, guid: 8fadf5342915b494b8f547e0759d96dc, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.16821167
@@ -10821,42 +10857,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 21.129707
       objectReference: {fileID: 0}
-    - target: {fileID: 100056, guid: 8fadf5342915b494b8f547e0759d96dc, type: 3}
-      propertyPath: m_Name
-      value: GunnyMcShootFace
-      objectReference: {fileID: 0}
-    - target: {fileID: 100056, guid: 8fadf5342915b494b8f547e0759d96dc, type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 100056, guid: 8fadf5342915b494b8f547e0759d96dc, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 8fadf5342915b494b8f547e0759d96dc, type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 100010, guid: 8fadf5342915b494b8f547e0759d96dc, type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 100040, guid: 8fadf5342915b494b8f547e0759d96dc, type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 100042, guid: 8fadf5342915b494b8f547e0759d96dc, type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 100080, guid: 8fadf5342915b494b8f547e0759d96dc, type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 9500000, guid: 8fadf5342915b494b8f547e0759d96dc, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: f374a23c28ce0a74698ec91f36e92ad3, type: 2}
     - target: {fileID: 100100, guid: 8fadf5342915b494b8f547e0759d96dc, type: 3}
       propertyPath: m_Layer
       value: 10
@@ -11217,6 +11217,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HudCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 1596678980793303082, guid: 244b8717e387c41069eb8743bf0c1534,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1596678980793303094, guid: 244b8717e387c41069eb8743bf0c1534,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -11326,11 +11331,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 13.399994
-      objectReference: {fileID: 0}
-    - target: {fileID: 1596678980793303082, guid: 244b8717e387c41069eb8743bf0c1534,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1596678980768284514, guid: 244b8717e387c41069eb8743bf0c1534,
         type: 3}
