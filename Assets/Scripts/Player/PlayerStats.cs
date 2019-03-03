@@ -76,7 +76,7 @@ public class PlayerStats : MonoBehaviour
     {
         if (updateAmount < 0)
         {
-            nextRechargableTime += healthRechargeDelay;
+            nextRechargableTime = Time.time + healthRechargeDelay;
         }
 
         _playerStatsData.health += updateAmount;
