@@ -31,6 +31,7 @@ public class AudioManager : MonoBehaviour
     public AudioSource backGroudSource;
     public AudioSource shotsSource;
 
+
     //public bool shouldLoop = false;
     public static AudioManager Instance;
     //public AudioClip backGroundMusic;
