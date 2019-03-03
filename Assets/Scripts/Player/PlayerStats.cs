@@ -104,12 +104,14 @@ public class PlayerStats : MonoBehaviour
     }
 
     public static PlayerStats Instance = null;
+    public float disableGlitchDelay;
 
     public GameOverEvent gameOverEvent;
+    [HideInInspector] public PlayerModel _playerModel;
 
     [ReadOnly] public PlayerStatsData playerStatsData = new PlayerStatsData();
-    private CustomFirstPersonController _customFirstPersonController;
     private float nextRechargableTime = float.MinValue;
+    private float disableGlitchAfter = 0;
 
 
     public void Awake()
@@ -134,6 +136,14 @@ public class PlayerStats : MonoBehaviour
         else if (playerStatsData.health < 100f && Time.time > nextRechargableTime)
         {
             UpdateHealth(healthRechargeRate * Time.deltaTime);
+        }
+
+        if (_playerModel && _playerModel.glitchEffect.enabled)
+        {
+            if (Health > 0 && Time.time > disableGlitchAfter)
+            {
+                _playerModel.glitchEffect.enabled = false;
+            }
         }
     }
 
@@ -160,6 +170,7 @@ public class PlayerStats : MonoBehaviour
         if (updateAmount < 0)
         {
             nextRechargableTime = Time.time + healthRechargeDelay;
+            OnPlayerDamageTaken();
         }
 
         playerStatsData.health += updateAmount;
@@ -205,5 +216,14 @@ public class PlayerStats : MonoBehaviour
     public string GetJsonString()
     {
         return JsonConvert.SerializeObject(playerStatsData);
+    }
+
+    private void OnPlayerDamageTaken()
+    {
+        if (_playerModel)
+        {
+            _playerModel.glitchEffect.enabled = true;
+            disableGlitchAfter = Time.time + disableGlitchDelay;
+        }
     }
 }
