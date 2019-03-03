@@ -11,7 +11,7 @@ public class PlayerShoot : MonoBehaviour
     public Camera WeaponCamera;
     public Transform barrel;
     public ParticleSystem muzzleFlash;
-    public Animator anim;
+    public Animator playerAnim, graphicAnim;
     private AudioSource audio;
     private bool isAiming;
     private bool triggerDown = false;
@@ -138,19 +138,28 @@ public class PlayerShoot : MonoBehaviour
 
         currentGun = unlockedGuns[gunIndex];
 
+        if(currentGun.mode == GunType.FiringMode.Single)
+        {
+            playerAnim.SetTrigger("Equip Single");
+        }
+        else
+        {
+            playerAnim.SetTrigger("Equip Auto");
+        }
+
     }
 
     void AimEffects()
     {
         if (isAiming)
         {
-            anim.SetBool("isAiming", true);
+            graphicAnim.SetBool("isAiming", true);
             float newFOV = Mathf.Lerp(Camera.main.fieldOfView, aimingFOV, aimTime);
             Camera.main.fieldOfView = newFOV;
         }
         else
         {
-            anim.SetBool("isAiming", false);
+            graphicAnim.SetBool("isAiming", false);
             float newFOV = Mathf.Lerp(Camera.main.fieldOfView, originalFOV, aimTime);
             Camera.main.fieldOfView = newFOV;
         }
@@ -172,7 +181,7 @@ public class PlayerShoot : MonoBehaviour
                 audio.Play();
 
                 PlayerStats.Instance.AddAmmoCount(GunType.Ammo.Bullets, -1);
-                anim.SetTrigger("Fire");
+                graphicAnim.SetTrigger("Fire");
                 muzzleFlash.Play();
 
                 RaycastHit hit;
@@ -215,7 +224,7 @@ public class PlayerShoot : MonoBehaviour
             audio.Play();
             muzzleFlash.Play();
             PlayerStats.Instance.AddAmmoCount(GunType.Ammo.Bullets, -1);
-            anim.SetTrigger("Fire");
+            graphicAnim.SetTrigger("Fire");
             PlayerStats.Instance.AddAmmoCount(GunType.Ammo.Plasma, -1);
 
             Vector3 direction = (Camera.main.transform.forward).normalized;
