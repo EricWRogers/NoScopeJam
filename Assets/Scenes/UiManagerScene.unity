@@ -944,12 +944,22 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 538416202}
-    - target: {fileID: 2244736121276713964, guid: 3ddf82ac18e044b569be1188530257f0,
+    - target: {fileID: 1105557413602594839, guid: 3ddf82ac18e044b569be1188530257f0,
         type: 3}
       propertyPath: m_havePropertiesChanged
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2244736121276713964, guid: 3ddf82ac18e044b569be1188530257f0,
+    - target: {fileID: 1105557413602594839, guid: 3ddf82ac18e044b569be1188530257f0,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7347607540271874178, guid: 3ddf82ac18e044b569be1188530257f0,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7347607540271874178, guid: 3ddf82ac18e044b569be1188530257f0,
         type: 3}
       propertyPath: m_isInputParsingRequired
       value: 1
