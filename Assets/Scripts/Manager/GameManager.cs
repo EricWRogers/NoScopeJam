@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     public bool StartFromMain = false;
     public static GameManager Instance;
 
+    private const string defaultSlotName = "default";
+
     private void Awake()
     {
         if (Instance == null)
@@ -117,17 +119,21 @@ public class GameManager : MonoBehaviour
 
     public void LoadPlayerStats(string slot)
     {
-        string json = PlayerPrefs.GetString(slot);
-        PlayerStats.Instance.LoadFromJsonString(json);
+        if (PlayerPrefs.HasKey(slot))
+        {
+            string json = PlayerPrefs.GetString(slot);
+            PlayerStats.Instance.LoadFromJsonString(json);
+        }
+    }
+
+    public void SaveDefaultPlayerStats()
+    {
+        SavePlayerStats(defaultSlotName);
     }
 
     public void LoadDefaultPlayerStats()
     {
-        List<string> slots = PlayerStatsKeys();
-        if (slots.Count > 0)
-        {
-            LoadPlayerStats(slots[0]);
-        }
+        LoadPlayerStats(defaultSlotName);
     }
 
     public bool HasASlot()
@@ -143,7 +149,7 @@ public class GameManager : MonoBehaviour
             return TempSlots.slots;
         }
 
-        return new List<string> ();
+        return new List<string>();
     }
 }
 
