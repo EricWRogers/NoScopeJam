@@ -7,7 +7,6 @@ public class UIManager : MonoBehaviour
 
     public GameObject startMenu;
     public GameObject optionsMenu;
-    public GameObject loadSaveMenu;
     public GameObject saveQuitButtton;
 
     private bool fromStartMenu = false;
@@ -27,15 +26,10 @@ public class UIManager : MonoBehaviour
     {
         startMenu.SetActive(false);
     }
-    public void LoadSave()
+    public void Continue
+    ()
     {
         startMenu.SetActive(false);
-        loadSaveMenu.SetActive(true);
-    }
-    public void LoadSaveBack()
-    {
-        startMenu.SetActive(true);
-        loadSaveMenu.SetActive(false);
     }
     public void Options()
     {
