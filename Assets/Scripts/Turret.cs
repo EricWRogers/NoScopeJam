@@ -94,52 +94,75 @@ public class Turret : MonoBehaviour
 
         if (canShoot)
         {
-            //anim.SetTrigger("Fire");
-            currentBarrel.GetComponentInChildren<ParticleSystem>().Play();
-
-            RaycastHit hit;
-            // NameToLayer returns index. So, converting to it's bimask respresentation.
-            int enemyLayerMask = 1 << LayerMask.NameToLayer("Enemy");
-
-            // Combining playerLayerMask and FPSLayerMask ( | ), inverting them (~), and removing from a filled bit mask(1111111....11)
-            int mask = int.MaxValue & ~(enemyLayerMask);
-
-
-            Random.InitState(System.DateTime.Now.Millisecond);
-            Vector3 direction = (target.position + new Vector3(Random.Range(.0f, 2f), Random.Range(.0f, 2f), Random.Range(.0f, 2f)) * Random.Range(0, 3f) - currentBarrel.position).normalized;
-            Vector3 targetPos = currentBarrel.transform.position + (direction * currentGun.range);
-
-            if(lastShotPosition == Vector3.zero)
+            if(currentGun.ammo == GunType.Ammo.Bullets)
             {
-                lastShotPosition = targetPos;
-            }
+                //anim.SetTrigger("Fire");
+                currentBarrel.GetComponentInChildren<ParticleSystem>().Play();
 
-            Vector3 newPos = Vector3.Lerp(lastShotPosition, targetPos, laserActiveScale);
+                RaycastHit hit;
+                // NameToLayer returns index. So, converting to it's bimask respresentation.
+                int enemyLayerMask = 1 << LayerMask.NameToLayer("Enemy");
 
-            lastShotPosition = Vector3.zero;
+                // Combining playerLayerMask and FPSLayerMask ( | ), inverting them (~), and removing from a filled bit mask(1111111....11)
+                int mask = int.MaxValue & ~(enemyLayerMask);
 
-            if (Physics.Raycast(currentBarrel.transform.position, direction, out hit, currentGun.range, mask))
-            {
-                targetPos = hit.point;
 
-                if (hit.collider.tag != "Enemy")
+                Random.InitState(System.DateTime.Now.Millisecond);
+                Vector3 direction = (target.position + new Vector3(Random.Range(.0f, 2f), Random.Range(.0f, 2f), Random.Range(.0f, 2f)) * Random.Range(0, 3f) - currentBarrel.position).normalized;
+                Vector3 targetPos = currentBarrel.transform.position + (direction * currentGun.range);
+
+                if (lastShotPosition == Vector3.zero)
                 {
-                    lastShotPosition = newPos;
+                    lastShotPosition = targetPos;
+                }
 
-                    var _fx = Instantiate(Resources.Load(currentGun.hitFX.name), hit.point, Quaternion.LookRotation(hit.normal)) as GameObject;
-                    if (hit.collider.GetComponent<Shootable>() != null)
+                Vector3 newPos = Vector3.Lerp(lastShotPosition, targetPos, laserActiveScale);
+
+                lastShotPosition = Vector3.zero;
+
+                if (Physics.Raycast(currentBarrel.transform.position, direction, out hit, currentGun.range, mask))
+                {
+                    targetPos = hit.point;
+
+                    if (hit.collider.tag != "Enemy")
                     {
-                        hit.collider.GetComponent<Shootable>().Shoot(currentGun.damage, hit.point);
-                        Debug.Log(currentGun.damage);
+                        lastShotPosition = newPos;
+
+                        var _fx = Instantiate(Resources.Load(currentGun.hitFX.name), hit.point, Quaternion.LookRotation(hit.normal)) as GameObject;
+                        if (hit.collider.GetComponent<Shootable>() != null)
+                        {
+                            hit.collider.GetComponent<Shootable>().Shoot(currentGun.damage, hit.point);
+                            Debug.Log(currentGun.damage);
+                        }
                     }
                 }
+
+                var _linefx = Instantiate(Resources.Load(currentGun.trailFX.name), currentBarrel.transform.position, currentBarrel.transform.rotation) as GameObject;
+                _linefx.GetComponent<LineRenderer>().SetPosition(0, currentBarrel.position);
+                _linefx.GetComponent<LineRenderer>().SetPosition(1, targetPos);
+
+
             }
+            if (currentGun.ammo == GunType.Ammo.Plasma)
+            {
+                PlayerStats.Instance.AddAmmoCount(GunType.Ammo.Plasma, -1);
 
-            var _linefx = Instantiate(Resources.Load(currentGun.trailFX.name), currentBarrel.transform.position, currentBarrel.transform.rotation) as GameObject;
-            _linefx.GetComponent<LineRenderer>().SetPosition(0, currentBarrel.position);
-            _linefx.GetComponent<LineRenderer>().SetPosition(1, targetPos);
+                Vector3 direction = (currentBarrel.transform.forward).normalized;
+                Vector3 targetPos =currentBarrel.transform.position + (direction * currentGun.range);
 
+                var _bullet = Instantiate((currentGun.projectile), currentBarrel.position, Quaternion.LookRotation((currentBarrel.forward - targetPos).normalized, currentBarrel.transform.up), null) as GameObject;
+                _bullet.gameObject.layer = 12;
+                _bullet.GetComponent<FXDestroy>().destroyTime = currentGun.range;
+                _bullet.GetComponent<Projectile>().direction = currentBarrel.forward;
+                _bullet.GetComponent<Projectile>().speed = currentGun.plasmaSpeed;
+                // _bullet.GetComponent<Rigidbody>().velocity = (Camera.main.transform.forward * currentGun.plasmaSpeed);
+                _bullet.GetComponent<Projectile>().enemyBullet = true;
+                _bullet.GetComponent<Projectile>().hitFX = currentGun.hitFX;
+                _bullet.GetComponent<Projectile>().damage = currentGun.damage;
+
+            }
         }
+
 
 
     }
