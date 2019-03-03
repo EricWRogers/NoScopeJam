@@ -38098,7 +38098,7 @@ MonoBehaviour:
   laserTrail: {fileID: 4632929845468475471}
   laserTrail2: {fileID: 5889930054578552162}
   laserPassiveScale: 0.9
-  laserActiveScale: 0.03
+  laserActiveScale: 0.09
   maxHealth: 100
   barrel1: {fileID: 88583762}
   barrel2: {fileID: 1944808901}
@@ -38110,6 +38110,7 @@ MonoBehaviour:
   sweepEmit2: {fileID: 8087177958355353005}
   anim: {fileID: 1899357281}
   searchSpeed: 0.25
+  targetRadius: 30
 --- !u!1 &3300325954371232694
 GameObject:
   m_ObjectHideFlags: 0

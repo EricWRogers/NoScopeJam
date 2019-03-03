@@ -14,7 +14,7 @@ public class Turret : MonoBehaviour
     public LineRenderer laserTrail, laserTrail2;
     public float laserPassiveScale = .9f;
     public float laserActiveScale = .9f;
-
+    
     public float maxHealth;
     private float currentHealth;
 
@@ -25,6 +25,8 @@ public class Turret : MonoBehaviour
     public Transform targetLaserEmit, sweepEmit, sweepEmit2;
     public Animator anim;
     public float searchSpeed = 2;
+    public float targetRadius = 10;
+    private Vector3 lastShotPosition = Vector3.zero; 
 
 
     private bool turretActive;
@@ -49,6 +51,11 @@ public class Turret : MonoBehaviour
 
     private void Update()
     {
+        if((this.transform.position - target.position).magnitude <= targetRadius)
+        {
+            turretActive = true;
+        }
+
         if (currentHealth <= 0)
         {
             Die();
@@ -92,17 +99,28 @@ public class Turret : MonoBehaviour
             // Combining playerLayerMask and FPSLayerMask ( | ), inverting them (~), and removing from a filled bit mask(1111111....11)
             int mask = int.MaxValue & ~(enemyLayerMask);
 
-            Vector3 direction = (target.position - currentBarrel.transform.position).normalized;
+
+            Random.InitState(System.DateTime.Now.Millisecond);
+            Vector3 direction = (target.position + new Vector3(Random.Range(.0f, 2f), Random.Range(.0f, 2f), Random.Range(.0f, 2f)) * Random.Range(0, 3f) - currentBarrel.position).normalized;
             Vector3 targetPos = currentBarrel.transform.position + (direction * currentGun.range);
 
-            Vector3 newDir = Vector3.Lerp(currentBarrel.position + (direction * currentGun.range), targetPos, laserPassiveScale);
+            if(lastShotPosition == Vector3.zero)
+            {
+                lastShotPosition = targetPos;
+            }
 
-            if (Physics.Raycast(currentBarrel.transform.position, newDir, out hit, currentGun.range, mask))
+            Vector3 newPos = Vector3.Lerp(lastShotPosition, targetPos, laserActiveScale);
+
+            lastShotPosition = Vector3.zero;
+
+            if (Physics.Raycast(currentBarrel.transform.position, direction, out hit, currentGun.range, mask))
             {
                 targetPos = hit.point;
 
                 if (hit.collider.tag != "Enemy")
                 {
+                    lastShotPosition = newPos;
+
                     var _fx = Instantiate(Resources.Load(currentGun.hitFX.name), hit.point, Quaternion.LookRotation(hit.normal)) as GameObject;
                     if (hit.collider.GetComponent<Shootable>() != null)
                     {
