@@ -9631,6 +9631,7 @@ GameObject:
   - component: {fileID: 5815316730318749323}
   - component: {fileID: 749758951}
   - component: {fileID: 476865171}
+  - component: {fileID: 476865164}
   m_Layer: 9
   m_Name: FPSController
   m_TagString: Player
@@ -9975,12 +9976,12 @@ MonoBehaviour:
   OnShot:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 476865164}
+        m_MethodName: TakeDamage
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -9988,6 +9989,18 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: Shootable+DamageEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+--- !u!114 &476865164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5582957672525363639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c44c26af4ec68ae4698bc7363194202f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7839961636589772647
 GameObject:
   m_ObjectHideFlags: 0
@@ -10000,6 +10013,7 @@ GameObject:
   - component: {fileID: 9030847183894466496}
   - component: {fileID: 5853857672150043651}
   - component: {fileID: 8621793749027758407}
+  - component: {fileID: 1312717966}
   m_Layer: 9
   m_Name: FirstPersonCharacter
   m_TagString: MainCamera
@@ -10082,6 +10096,20 @@ Behaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7839961636589772647}
   m_Enabled: 1
+--- !u!114 &1312717966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7839961636589772647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1eed1d9cbe64423499f1fefc0ce50417, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Resolution: 0
+  DefaultSpotCookie: {fileID: 0}
 --- !u!1 &9110029147748408595
 GameObject:
   m_ObjectHideFlags: 0
@@ -10550,15 +10578,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8fadf5342915b494b8f547e0759d96dc, type: 3}
---- !u!95 &1589731940 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 9500000, guid: 8fadf5342915b494b8f547e0759d96dc,
-    type: 3}
-  m_PrefabInstance: {fileID: 1582405380}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1582796220 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400056, guid: 8fadf5342915b494b8f547e0759d96dc,
+    type: 3}
+  m_PrefabInstance: {fileID: 1582405380}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1589731940 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9500000, guid: 8fadf5342915b494b8f547e0759d96dc,
     type: 3}
   m_PrefabInstance: {fileID: 1582405380}
   m_PrefabAsset: {fileID: 0}

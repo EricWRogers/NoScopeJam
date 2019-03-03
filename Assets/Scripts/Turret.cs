@@ -6,67 +6,113 @@ public class Turret : MonoBehaviour
 {
     public GunType currentGun;
 
-    public Transform target;
+    private Transform target;
     public Transform turretBase, turretBox;
 
     public GameObject hitFX, deathFX;
+    public GameObject flare;
     public LineRenderer laserTrail;
+    public float laserPassiveScale = .9f;
+    public float laserActiveScale = .9f;
 
     public float maxHealth;
     public float currentHealth;
 
     public Transform barrel1, barrel2, barrel3, barrel4;
-    public int order;
+    private int order;
+    public float maxAgroTime = 5f;
+    private float currentAgroTime = 0f;
     public Transform targetLaserEmit;
     public Animator anim;
+
+
+    private bool turretActive;
+    private bool canShoot;
+
 
     private void Start()
     {
         currentHealth = maxHealth;
+        currentAgroTime = 0;
+        turretActive = false;
 
         if(GameManager.Instance != null)
         {
             target = GameManager.Instance.PlayerCurrentGO.transform;
             Debug.Log(currentGun.name + " " + currentGun.damage);
-            RapidFire();
+            //RapidFire();
         }
+        flare.gameObject.SetActive(false);
+   
+    }
+
+    private void Update()
+    {
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+
+        if (turretActive)
+        {
+            Attack();
+            currentAgroTime += Time.deltaTime;
+
+            if (currentAgroTime >= maxAgroTime)
+            {
+                Debug.Log("Gave Up");
+                currentAgroTime = 0;
+                turretActive = false;
+            }
+
+        }
+        else
+        {
+            PassiveScan();
+        }
+
+
     }
 
     void Shoot(Transform currentBarrel)
     {
-        //anim.SetTrigger("Fire");
-       currentBarrel.GetComponentInChildren<ParticleSystem>().Play();
-
-        RaycastHit hit;
-        // NameToLayer returns index. So, converting to it's bimask respresentation.
-        int enemyLayerMask = 1 << LayerMask.NameToLayer("Enemy");
-
-        // Combining playerLayerMask and FPSLayerMask ( | ), inverting them (~), and removing from a filled bit mask(1111111....11)
-        int mask = int.MaxValue & ~(enemyLayerMask);
-
-        Vector3 direction = (GameManager.Instance.PlayerCurrentGO.transform.position - currentBarrel.transform.position).normalized;
-
-        Vector3 targetPos = currentBarrel.transform.position + (direction * currentGun.range);
-
-
-        if (Physics.Raycast(currentBarrel.transform.position, direction, out hit, currentGun.range, mask))
+        if (canShoot)
         {
-            targetPos = hit.point;
-            
-            if (hit.collider.tag != "Enemy")
-            {
-                var _fx = Instantiate(Resources.Load(currentGun.hitFX.name), hit.point, Quaternion.LookRotation(hit.normal)) as GameObject;
-                if (hit.collider.GetComponent<Shootable>() != null)
-                {
-                    hit.collider.GetComponent<Shootable>().Shoot(currentGun.damage, hit.point);
-                    Debug.Log(currentGun.damage);
-                }
-            }   
-        }
+            //anim.SetTrigger("Fire");
+            currentBarrel.GetComponentInChildren<ParticleSystem>().Play();
 
-        var _linefx = Instantiate(Resources.Load(currentGun.trailFX.name), currentBarrel.transform.position, currentBarrel.transform.rotation) as GameObject;
-        _linefx.GetComponent<LineRenderer>().SetPosition(0, currentBarrel.position);
-        _linefx.GetComponent<LineRenderer>().SetPosition(1, targetPos);
+            RaycastHit hit;
+            // NameToLayer returns index. So, converting to it's bimask respresentation.
+            int enemyLayerMask = 1 << LayerMask.NameToLayer("Enemy");
+
+            // Combining playerLayerMask and FPSLayerMask ( | ), inverting them (~), and removing from a filled bit mask(1111111....11)
+            int mask = int.MaxValue & ~(enemyLayerMask);
+
+            Vector3 direction = (GameManager.Instance.PlayerCurrentGO.transform.position - currentBarrel.transform.position).normalized;
+
+            Vector3 targetPos = currentBarrel.transform.position + (direction * currentGun.range);
+
+
+            if (Physics.Raycast(currentBarrel.transform.position, direction, out hit, currentGun.range, mask))
+            {
+                targetPos = hit.point;
+
+                if (hit.collider.tag != "Enemy")
+                {
+                    var _fx = Instantiate(Resources.Load(currentGun.hitFX.name), hit.point, Quaternion.LookRotation(hit.normal)) as GameObject;
+                    if (hit.collider.GetComponent<Shootable>() != null)
+                    {
+                        hit.collider.GetComponent<Shootable>().Shoot(currentGun.damage, hit.point);
+                        Debug.Log(currentGun.damage);
+                    }
+                }
+            }
+
+            var _linefx = Instantiate(Resources.Load(currentGun.trailFX.name), currentBarrel.transform.position, currentBarrel.transform.rotation) as GameObject;
+            _linefx.GetComponent<LineRenderer>().SetPosition(0, currentBarrel.position);
+            _linefx.GetComponent<LineRenderer>().SetPosition(1, targetPos);
+
+        }
 
 
     }
@@ -103,45 +149,93 @@ public class Turret : MonoBehaviour
         }
     }
 
-    private void Update()
+
+    private void PassiveScan()
     {
-        if(currentHealth <= 0)
-        {
-            Die();
-        }
+        Sweep();
 
+        RaycastHit hit;
 
-        Vector3 direction = (GameManager.Instance.PlayerCurrentGO.transform.position - targetLaserEmit.transform.position).normalized;
+        // NameToLayer returns index. So, converting to it's bimask respresentation.
+        int enemyLayerMask = 1 << LayerMask.NameToLayer("Enemy");
 
+        // Combining playerLayerMask and FPSLayerMask ( | ), inverting them (~), and removing from a filled bit mask(1111111....11)
+        int mask = int.MaxValue & ~(enemyLayerMask);
+
+        Vector3 direction = ((targetLaserEmit.forward * currentGun.range) - targetLaserEmit.transform.position).normalized;
         Vector3 targetPos = targetLaserEmit.transform.position + (direction * currentGun.range);
 
-        laserTrail.SetPosition(0,targetLaserEmit.position);
-        laserTrail.SetPosition(1, targetPos);
+        Vector3 newDir = Vector3.Lerp(laserTrail.GetPosition(1) + (direction * currentGun.range), targetPos, laserPassiveScale);
+
+        laserTrail.SetPosition(0, targetLaserEmit.position);
+        laserTrail.SetPosition(1, newDir);
+
+
+
+        if (Physics.Raycast(targetLaserEmit.transform.position, newDir, out hit, currentGun.range, mask))
+        {
+            targetPos = hit.point;
+
+            if (hit.collider.tag == "Player")
+            {
+                Debug.Log("Turret Found Player");
+                flare.gameObject.SetActive(true);
+                currentAgroTime = 0;
+                turretActive = true;
+            }
+            else
+            {
+                flare.gameObject.SetActive(false);
+            }
+
+        }
     }
 
-    private void FixedUpdate()
+    void LaserSight()
     {
-        Movement();
+        Vector3 direction = ((targetLaserEmit.forward * currentGun.range) - targetLaserEmit.transform.position).normalized;
+        Vector3 targetPos = targetLaserEmit.transform.position + (direction * currentGun.range);
+
+        Vector3 newDir = Vector3.Lerp(laserTrail.GetPosition(1) + (direction * currentGun.range), targetPos, laserPassiveScale);
+
+        laserTrail.SetPosition(0, targetLaserEmit.position);
+        laserTrail.SetPosition(1, newDir);
     }
 
-    void Movement()
+    private void Attack()
     {
+        Debug.Log("Attacking");
+        Movement(laserActiveScale);
+    }
+
+    void Sweep()
+    {
+        turretBase.Rotate(turretBase.transform.up, 2);
+    }
+
+    void Movement(float _scale)
+    {
+        LaserSight();
+
         if(target != null)
         {
-            turretBase.LookAt(target, turretBase.transform.up);
-            //turretBase.rotation = Quaternion.FromToRotation(turretBase.forward, (turretBase.position - target.position).normalized);
-            Vector3 currentYRot = turretBase.localRotation.eulerAngles;
-            currentYRot.x = 0;
-            currentYRot.z = 0;
-            turretBase.localRotation = Quaternion.Euler(currentYRot);
+            //turretBase.LookAt(target, turretBase.transform.up);
 
-            turretBase.LookAt(target, turretBase.transform.up);
             //turretBase.rotation = Quaternion.FromToRotation(turretBase.forward, (turretBase.position - target.position).normalized);
-            Vector3 currentXRot = turretBase.localRotation.eulerAngles;
-            currentXRot.y = 0;
-            currentXRot.z = 0;
-            turretBox.localRotation = Quaternion.Euler(currentXRot);
-            
+            Quaternion lookYRot = Quaternion.LookRotation(target.position - turretBase.position, turretBase.transform.up);
+            //Vector3 currentYRot = turretBase.localRotation.eulerAngles;
+            lookYRot.x = 0;
+            lookYRot.z = 0;
+           // new Vector3 newYRot = Vector3.Lerp(currentYRot, );
+            turretBase.localRotation = Quaternion.Lerp(turretBase.localRotation, lookYRot, _scale);
+
+
+            Quaternion lookXRot = Quaternion.LookRotation(target.position - turretBox.position, turretBox.transform.up);
+            //Vector3 currentYRot = turretBase.localRotation.eulerAngles;
+            lookXRot.y = 0;
+            lookXRot.z = 0;
+            // new Vector3 newYRot = Vector3.Lerp(currentYRot, );
+            turretBox.localRotation = Quaternion.Lerp(turretBox.localRotation, lookXRot, _scale);
         }
     }
 

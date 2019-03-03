@@ -97,7 +97,10 @@ public class PlayerShoot : MonoBehaviour
             
             if(hit.collider.tag != "Player")
             {
-                var _fx = Instantiate(Resources.Load(currentGun.hitFX.name), hit.point, Quaternion.LookRotation(hit.normal)) as GameObject;
+                if(hit.collider.tag != "Enemy")
+                {
+                    var _fx = Instantiate(Resources.Load(currentGun.hitFX.name), hit.point, Quaternion.LookRotation(hit.normal)) as GameObject;
+                }
                 if(hit.collider.GetComponent<Shootable>() != null)
                 {
                     hit.collider.GetComponent<Shootable>().Shoot(currentGun.damage, hit.point);
