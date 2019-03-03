@@ -134,6 +134,11 @@ public class CustomFirstPersonController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        if (!UIManager.Instance.OutofMenu)
+        {
+            return;
+        }
+        
         PlayerInputController.PlayerInput playerInput = _playerInputController.GetPlayerInput();
 
         RotateView();
@@ -188,6 +193,11 @@ public class CustomFirstPersonController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!UIManager.Instance.OutofMenu)
+        {
+            return;
+        }
+        
         float speed;
         GetInput(out speed);
 

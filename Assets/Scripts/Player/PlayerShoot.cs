@@ -30,6 +30,12 @@ public class PlayerShoot : MonoBehaviour
 
     private void Update()
     {
+        if (!UIManager.Instance.OutofMenu)
+        {
+            canShoot = false;
+            return;
+        }
+        
         WeaponCamera.fieldOfView = Camera.main.fieldOfView;
 
         AimEffects();
