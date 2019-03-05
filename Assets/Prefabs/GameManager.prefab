@@ -44,12 +44,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4b4105157bbfc5e0a25137a35bfed9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LevelsGOS: []
-  CheckPointsGOS: []
-  PlayerPrefabGO: {fileID: 0}
+  LevelsGOS:
+  - {fileID: 1699, guid: 43e2492fe01d0bdedbdd35d5fbbf5198, type: 3}
+  - {fileID: 547, guid: 907fe9c31e6da1de49c8ece5c45f95b5, type: 3}
+  - {fileID: 1510, guid: 75ac38344e29de401a73eb2fe1cf892a, type: 3}
+  - {fileID: 1831, guid: 2827835178e59d9449dc28de283d0152, type: 3}
+  CheckPointsGOS:
+  - {fileID: 0}
+  GunTypes:
+  - {fileID: 11400000, guid: f4c6946aa9d8f5549a5f526c7c648f08, type: 2}
+  - {fileID: 11400000, guid: 9367cfb4d011e0c4e8d1c1a7d9b7abe5, type: 2}
+  PlayerPrefabGO: {fileID: 5582957672525363639, guid: 500478a17a8c8b94b9f44e0160ce1644,
+    type: 3}
+  PlayerCurrentGO: {fileID: 0}
   StartLevelNumerator: 0
   ShowAllLevels: 0
-  WorkingOnLevel: 0
+  WorkingOnLevel: 1
+  StartFromMain: 1
+  SpawnPlayer: 0
 --- !u!114 &3746258085198067824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,5 +74,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edb82e1b16914d70a4796cb4d73547fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
-  ammo: 0
+  healthRechargeRate: 20
+  healthRechargeDelay: 3
+  disableGlitchDelay: 0
+  gameOverEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: PlayerStats+GameOverEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  _playerModel: {fileID: 0}
+  playerStatsData:
+    health: 100
+    currentLevel: 0
+    unlockedGuns: []

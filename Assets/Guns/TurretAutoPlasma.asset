@@ -22,5 +22,5 @@ MonoBehaviour:
   fireSFX: {fileID: 8300000, guid: 5c943f3d0c9fd0e5eb4a2a5af8954fa6, type: 3}
   damage: 3
   range: 500
-  plasmaSpeed: 50
+  plasmaSpeed: 100
   fireRate: 0.25

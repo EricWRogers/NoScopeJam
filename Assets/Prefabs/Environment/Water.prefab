@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 174837d650e44d76a175da5c46810a69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WaterRaiseSpeed: 0.5
-  WaterDrainSpeed: 0.5
+  WaterRaiseSpeed: 0.2
+  WaterDrainSpeed: 2
   _waterState: 0
 --- !u!65 &566768322
 BoxCollider:

@@ -148,6 +148,7 @@ public class UIManager : MonoBehaviour
         pauseEnable = true;
         outOfMenus = false;
         Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         Time.timeScale = 0;
     }
 
@@ -212,6 +213,8 @@ public class UIManager : MonoBehaviour
     public void GameOver(bool isWin)
     {
         outOfMenus = false;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         if (isWin)
         {
             bigGameOverText.text = "Congradulations!";
