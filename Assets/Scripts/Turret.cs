@@ -340,6 +340,7 @@ public class Turret : MonoBehaviour
 
     public void TakeDamage(float _damage, Vector3 _hitPos)
     {
+        turretActive = true;
         Debug.Log("turret took damage");
         var _fx = Instantiate(Resources.Load(hitFX.name), _hitPos, hitFX.transform.rotation) as GameObject;
         currentHealth = currentHealth - _damage;
