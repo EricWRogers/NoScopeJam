@@ -52,6 +52,8 @@ public class PlayerShoot : MonoBehaviour
 
     private void Update()
     {
+        
+
         if (!UIManager.Instance.OutofMenu)
         {
             canShoot = false;
@@ -216,8 +218,15 @@ public class PlayerShoot : MonoBehaviour
         {
             if(currentGun.ammo == GunType.Ammo.Bullets)
             {
-                audio.clip = currentGun.fireSFX;
-                audio.Play();
+                switch (currentGun.mode)
+                {
+                    case GunType.FiringMode.Auto:
+                        AudioManager.Instance.SoundsEventTrigger(SoundEvents.ChainGun, false, audio);
+                        break;
+                    case GunType.FiringMode.Single:
+                        AudioManager.Instance.SoundsEventTrigger(SoundEvents.Rifle, false, audio);
+                        break;
+                }
 
                 PlayerStats.Instance.AddAmmoCount(GunType.Ammo.Bullets, -1);
                 graphicAnim.SetTrigger("Fire");
@@ -259,8 +268,8 @@ public class PlayerShoot : MonoBehaviour
         }
         if(currentGun.ammo == GunType.Ammo.Plasma)
         {
-            audio.clip = currentGun.fireSFX;
-            audio.Play();
+            AudioManager.Instance.SoundsEventTrigger(SoundEvents.Railgun, false, audio);
+
             muzzleFlash.Play();
             PlayerStats.Instance.AddAmmoCount(GunType.Ammo.Bullets, -1);
             graphicAnim.SetTrigger("Fire");

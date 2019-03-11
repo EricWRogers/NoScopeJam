@@ -15,6 +15,8 @@ public class CustomFirstPersonController : MonoBehaviour
     }
 
     [SerializeField] private bool m_IsWalking;
+    private bool newIsWalking;
+    [SerializeField] private bool m_IsRunning;
     [SerializeField] private float m_WalkSpeed;
     [SerializeField] private float m_RunSpeed;
     [SerializeField] [Range(0f, 1f)] private float m_RunstepLenghten;
@@ -109,6 +111,20 @@ public class CustomFirstPersonController : MonoBehaviour
         m_Jumping = false;
         m_AudioSource = GetComponent<AudioSource>();
         m_MouseLook.Init(transform, m_Camera.transform);
+    }
+
+    public bool ref_isUsingThrusters()
+    {
+        return _isUsingThrusters;
+    }
+    public bool ref_isWalking()
+    {
+        return newIsWalking;
+    }
+
+    public bool ref_isRunning()
+    {
+        return m_IsRunning;
     }
 
     public void OnDrawGizmos()
@@ -278,6 +294,16 @@ public class CustomFirstPersonController : MonoBehaviour
 
     private void GroundMove(float speed)
     {
+
+        if (speed == m_RunSpeed)
+        {
+            m_IsRunning = true;
+        }
+        else
+        {
+            m_IsRunning = false;
+        }
+
         // always move along the camera forward as it is the direction that it being aimed at
         Vector3 desiredMove = transform.forward * m_Input.y + transform.right * m_Input.x;
 
@@ -290,6 +316,14 @@ public class CustomFirstPersonController : MonoBehaviour
         m_MoveDir.x = desiredMove.x * speed;
         m_MoveDir.z = desiredMove.z * speed;
 
+        if(m_MoveDir.x != 0 && !m_IsRunning || m_MoveDir.z != 0 && !m_IsRunning)
+        {
+            newIsWalking = true;
+        }
+        else
+        {
+            newIsWalking = false;
+        }
 
         if (m_CharacterController.isGrounded)
         {
@@ -590,6 +624,7 @@ public class CustomFirstPersonController : MonoBehaviour
         // set the desired speed to be walking or running
         speed = m_IsWalking ? m_WalkSpeed : m_RunSpeed;
         m_Input = new Vector2(playerInput.Move.x, playerInput.Move.z);
+
 
         // normalize input if it exceeds 1 in combined length:
         if (m_Input.sqrMagnitude > 1)
