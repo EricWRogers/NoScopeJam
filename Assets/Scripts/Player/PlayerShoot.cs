@@ -26,6 +26,28 @@ public class PlayerShoot : MonoBehaviour
     {
         originalFOV = Camera.main.fieldOfView;
         audio = GetComponent<AudioSource>();
+
+        if(currentGun.ammo == GunType.Ammo.Bullets)
+        {
+            if(currentGun.mode == GunType.FiringMode.Auto)
+            {
+                playerAnim.SetBool("Auto", true);
+                playerAnim.SetBool("Single", false);
+                playerAnim.SetBool("Plasma", false);
+            }
+            else
+            {
+                playerAnim.SetBool("Single", true);
+                playerAnim.SetBool("Auto", false);
+                playerAnim.SetBool("Plasma", false);
+            }
+        }
+        else
+        {
+            playerAnim.SetBool("Plasma", true);
+            playerAnim.SetBool("Auto", false);
+            playerAnim.SetBool("Single", false);
+        }
     }
 
     private void Update()
@@ -127,6 +149,8 @@ public class PlayerShoot : MonoBehaviour
 
     void SwitchWeapon()
     {
+        playerAnim.SetTrigger("Changing");
+
         GunType[] unlockedGuns = PlayerStats.Instance.UnlockedGunTypes.ToArray();
 
         gunIndex++;
@@ -140,11 +164,26 @@ public class PlayerShoot : MonoBehaviour
 
         if(currentGun.mode == GunType.FiringMode.Single)
         {
-            playerAnim.SetTrigger("Equip Single");
+            playerAnim.SetBool("Single", true);
+            playerAnim.SetBool("Auto", false);
+            playerAnim.SetBool("Plasma", false);
+            //playerAnim.SetTrigger("Changing");
+            // playerAnim.SetTrigger("Equip Single");
         }
         else
         {
-            playerAnim.SetTrigger("Equip Auto");
+            playerAnim.SetBool("Auto", true);
+            playerAnim.SetBool("Single", false);
+            playerAnim.SetBool("Plasma", false);
+            // playerAnim.SetTrigger("Changing");
+            //playerAnim.SetTrigger("Equip Auto");
+        }
+
+        if(currentGun.ammo == GunType.Ammo.Plasma)
+        {
+            playerAnim.SetBool("Plasma", true);
+            playerAnim.SetBool("Single", false);
+            playerAnim.SetBool("Auto", false);
         }
 
     }
