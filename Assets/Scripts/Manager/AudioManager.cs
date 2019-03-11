@@ -58,112 +58,134 @@ public class AudioManager : MonoBehaviour
         switch (soundEvents)
         {
             case SoundEvents.Pistal:
-                PistalClips(shouldLoop);
+                PistalClips(shouldLoop, shotsSource);
                 break;
             case SoundEvents.Rifle:
-                RifleClips(shouldLoop);
+                RifleClips(shouldLoop, shotsSource);
                 break;
             case SoundEvents.Railgun:
-                RailGunClips(shouldLoop);
+                RailGunClips(shouldLoop, shotsSource);
                 break;
             case SoundEvents.ChainGun:
-                ChainGunClips(shouldLoop);
+                ChainGunClips(shouldLoop, shotsSource);
                 break;
             case SoundEvents.BackGroundMusic:
-                BackGroundMusic(shouldLoop);
+                BackGroundMusic(shouldLoop, backGroudSource);
                 break;
             case SoundEvents.Ambient:
-                AmbientClip(shouldLoop);
+                AmbientClip(shouldLoop, backGroudSource);
+                break;
+
+        }
+    }
+    public void SoundsEventTrigger(SoundEvents soundEvents, bool shouldLoop, AudioSource PlaySource)
+    {
+        switch (soundEvents)
+        {
+            case SoundEvents.Pistal:
+                PistalClips(shouldLoop, PlaySource);
+                break;
+            case SoundEvents.Rifle:
+                RifleClips(shouldLoop, PlaySource);
+                break;
+            case SoundEvents.Railgun:
+                RailGunClips(shouldLoop, PlaySource);
+                break;
+            case SoundEvents.ChainGun:
+                ChainGunClips(shouldLoop, PlaySource);
+                break;
+            case SoundEvents.BackGroundMusic:
+                BackGroundMusic(shouldLoop, PlaySource);
+                break;
+            case SoundEvents.Ambient:
+                AmbientClip(shouldLoop, PlaySource);
                 break;
 
         }
     }
 
-    public void PistalClips(bool loop)
+    public void PistalClips(bool loop, AudioSource PlaySource)
     {
         int randomInt = Random.Range(0, pistalClips.Count-1);
-        shotsSource.clip = pistalClips[randomInt].audio;
+        PlaySource.clip = pistalClips[randomInt].audio;
         if (loop)
         {
-            shotsSource.loop = true;
+            PlaySource.loop = true;
         }
         else
         {
-            shotsSource.loop = false;
+            PlaySource.loop = false;
         }
-        shotsSource.Play();
+        PlaySource.Play();
     }
-
-    private void RifleClips(bool loop)
+    private void RifleClips(bool loop, AudioSource PlaySource)
     {
         int randomInt = Random.Range(0, rifleClips.Count - 1);
-        shotsSource.clip = rifleClips[randomInt].audio;
+        PlaySource.clip = rifleClips[randomInt].audio;
         if (loop)
         {
-            shotsSource.loop = true;
+            PlaySource.loop = true;
         }
         else
         {
-            shotsSource.loop = false;
+            PlaySource.loop = false;
         }
-        shotsSource.Play();
+        PlaySource.Play();
     }
-    private void RailGunClips(bool loop)
+    private void RailGunClips(bool loop, AudioSource PlaySource)
     {
         int randomInt = Random.Range(0, railGunClips.Count - 1);
-        shotsSource.clip = railGunClips[randomInt].audio;
+        PlaySource.clip = railGunClips[randomInt].audio;
         if (loop)
         {
-            shotsSource.loop = true;
+            PlaySource.loop = true;
         }
         else
         {
-            shotsSource.loop = false;
+            PlaySource.loop = false;
         }
-        shotsSource.Play();
+        PlaySource.Play();
     }
-    private void ChainGunClips(bool loop)
+    private void ChainGunClips(bool loop, AudioSource PlaySource)
     {
         int randomInt = Random.Range(0, chainGunClips.Count - 1);
-        shotsSource.clip = chainGunClips[randomInt].audio;
+        PlaySource.clip = chainGunClips[randomInt].audio;
         if (loop)
         {
-            shotsSource.loop = true;
+            PlaySource.loop = true;
         }
         else
         {
-            shotsSource.loop = false;
+            PlaySource.loop = false;
         }
-        shotsSource.Play();
+        PlaySource.Play();
     }
-
-    private void BackGroundMusic(bool loop)
+    private void BackGroundMusic(bool loop, AudioSource PlaySource)
     {
             int randomInt = Random.Range(0, backGroundClips.Count);
-            backGroudSource.clip = backGroundClips[randomInt].audio;
+            PlaySource.clip = backGroundClips[randomInt].audio;
         if (loop)
         {
-            backGroudSource.loop = true;
+            PlaySource.loop = true;
         }
         else
         {
-            backGroudSource.loop = false;
+            PlaySource.loop = false;
         }
-        backGroudSource.Play();
+        PlaySource.Play();
     }
-
-    private void AmbientClip(bool loop)
+    private void AmbientClip(bool loop, AudioSource PlaySource)
     {
-        backGroudSource.clip = ambientClips.audio;
+        PlaySource.clip = ambientClips.audio;
         if (loop)
         {
-            backGroudSource.loop = true;
+            PlaySource.loop = true;
         }
         else
         {
-            backGroudSource.loop = false;
+            PlaySource.loop = false;
         }
-        backGroudSource.Play();
+        PlaySource.Play();
     }
 }
 

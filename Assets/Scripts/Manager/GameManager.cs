@@ -66,6 +66,8 @@ public class GameManager : MonoBehaviour
             {
                 LoadLevel(StartLevelNumerator);
             }
+        }else{
+            AudioManager.Instance.SoundsEventTrigger(SoundEvents.BackGroundMusic, true);
         }
 
         if (PlayerPrefabGO)
