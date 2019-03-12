@@ -209,6 +209,10 @@ public class UIManager : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+    public void Quit()
+    {
+        Application.Quit();
+    }
 
     public void GameOver(bool isWin)
     {
