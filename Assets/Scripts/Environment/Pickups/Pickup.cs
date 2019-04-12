@@ -24,7 +24,7 @@ public abstract class Pickup : MonoBehaviour
 
      private void Update()
      {
-          Debug.Log("Dist: " + Vector3.Distance(transform.position, _player.transform.position));
+          //Debug.Log("Dist: " + Vector3.Distance(transform.position, _player.transform.position));
           if (_player && Vector3.Distance(transform.position, _player.transform.position) < Radius)
           {
                followPlayer = true;

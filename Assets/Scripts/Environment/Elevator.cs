@@ -36,16 +36,19 @@ public class Elevator : MonoBehaviour
     {
         if (!frontDoorClosed)
         {
+            Debug.Log("frontDoorClosed: " + frontDoorClosed);
             return;
         }
         
         if (!this.inRide)
         {
+            Debug.Log("this.inRide: " + this.inRide);
             _animator.SetBool("Back Open", true);
             RaisingWater.Instance.InitRaisingWater();
         }
         else
         {
+            Debug.Log("this.inRide: " + this.inRide);
             openBackRequested = true;
         }
     }
@@ -71,7 +74,7 @@ public class Elevator : MonoBehaviour
         yield return new WaitForSeconds(delay);
         inRide = false;
 
-        if (openBackRequested)
+        if (true)
         {
             openDoorBehind();
         }
